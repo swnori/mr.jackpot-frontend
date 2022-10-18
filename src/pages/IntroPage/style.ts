@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
@@ -20,7 +21,7 @@ export const IntroTitle = styled.span`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-export const IntroCardContainer = styled.div`
+export const IntroCardContainer = styled(motion.div)`
   display: flex;
   gap: 5rem;
   width: 100%;
