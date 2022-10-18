@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-export const DesktopCardContainer = styled.div`
+export const DesktopCardContainer = styled(motion.div)`
   display: flex;
   background: rgba(0, 0, 0, 0.15);
   border: 1px solid #ffffff;
@@ -21,12 +22,6 @@ export const DesktopCardContainer = styled.div`
   justify-content: center;
 
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.2);
-    transform: translateY(-1rem);
-  }
 `;
 
 export const DesktopCardTitleContainer = styled.div`
@@ -35,7 +30,7 @@ export const DesktopCardTitleContainer = styled.div`
   align-items: center;
   position: absolute;
   top: 3rem;
-  gap: 0.5rem;
+  gap: 1.5rem;
 `;
 
 export const DesktopCardTitleIcon = styled.img`
