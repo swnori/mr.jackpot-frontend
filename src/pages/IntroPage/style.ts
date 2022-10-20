@@ -14,7 +14,7 @@ export const IntroContainer = styled.div`
   gap: 5rem;
 `;
 
-export const IntroTitle = styled.span`
+export const IntroTitle = styled(motion.span)`
   font-weight: ${FontWeight.LIGHT};
   font-size: ${FontSize.XXL};
   color: ${ColorCode.WHITE};

@@ -27,8 +27,8 @@ const IntroCard = ({ img, title, desc, to }: IIntroCard) => {
     <DesktopCardContainer
       onClick={() => link.to(to)}
       variants={item}
-      whileHover={{ transform: 'translateY(-1rem)', background: 'rgba(0, 0, 0, 0.30)' }}
-      whileInView={{ background: 'rgba(0, 0, 0, 0.15)' }}
+      whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 0, 0, 0.30)' }}
+      transition={{ type: 'easeInOut', duration: 0.5 }}
     >
       <DesktopCardTitleContainer>
         <DesktopCardTitleIcon src={img} />

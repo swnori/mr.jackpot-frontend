@@ -14,6 +14,7 @@ const container = {
     transition: {
       when: 'beforeChildren',
       staggerChildren: 0.2,
+      delay: 0.7,
     },
   },
 };
@@ -22,7 +23,15 @@ const IntroPage = () => {
   return (
     <Page type='common'>
       <IntroContainer>
-        <IntroTitle>당신은 누구신가요?</IntroTitle>
+        <IntroTitle
+          transition={{ duration: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 3 } }}
+          key='a'
+        >
+          당신은 누구신가요?
+        </IntroTitle>
         <IntroCardContainer variants={container} initial='hidden' animate='show'>
           <IntroCard
             img={ClientIcon}
