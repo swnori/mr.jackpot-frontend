@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { ColorCode } from '@/constants/color';
 
@@ -18,7 +19,7 @@ export const BackgroundContainer = styled.div`
   background-color: ${ColorCode.WHITE};
 `;
 
-export const ChildrenContainer = styled.div`
+export const ChildrenContainer = styled(motion.div)`
   position: absolute;
   left: 0;
   top: 0;
