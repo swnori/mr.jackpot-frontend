@@ -1,4 +1,11 @@
-import { IntroCardContainer, IntroContainer, IntroTitle } from './style';
+import { isMobile } from 'react-device-detect';
+
+import {
+  DesktopIntroCardContainer,
+  IntroContainer,
+  IntroTitle,
+  MobileIntroCardContainer,
+} from './style';
 
 import Page from '@/components/Page';
 import IntroCard from '@/components/Intro/Card';
@@ -28,20 +35,33 @@ const IntroPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 3 } }}
-          key='a'
         >
           당신은 누구신가요?
         </IntroTitle>
-        <IntroCardContainer variants={container} initial='hidden' animate='show'>
-          <IntroCard
-            img={ClientIcon}
-            title='고객'
-            desc='특별한 날, 집으로 감동이 배달됩니다.'
-            to='/client'
-          />
-          <IntroCard img={StaffIcon} title='직원' desc='감동을 만들어 보냅니다.' to='/staff' />
-          <IntroCard img={CEOIcon} title='관리자' desc='서비스의 주인입니다.' to='/ceo' />
-        </IntroCardContainer>
+
+        {isMobile ? (
+          <MobileIntroCardContainer variants={container} initial='hidden' animate='show'>
+            <IntroCard
+              img={ClientIcon}
+              title='고객'
+              desc='특별한 날, 집으로 감동이 배달됩니다.'
+              to='/client'
+            />
+            <IntroCard img={StaffIcon} title='직원' desc='감동을 만들어 보냅니다.' to='/staff' />
+            <IntroCard img={CEOIcon} title='관리자' desc='서비스의 주인입니다.' to='/ceo' />
+          </MobileIntroCardContainer>
+        ) : (
+          <DesktopIntroCardContainer variants={container} initial='hidden' animate='show'>
+            <IntroCard
+              img={ClientIcon}
+              title='고객'
+              desc='특별한 날, 집으로 감동이 배달됩니다.'
+              to='/client'
+            />
+            <IntroCard img={StaffIcon} title='직원' desc='감동을 만들어 보냅니다.' to='/staff' />
+            <IntroCard img={CEOIcon} title='관리자' desc='서비스의 주인입니다.' to='/ceo' />
+          </DesktopIntroCardContainer>
+        )}
       </IntroContainer>
     </Page>
   );

@@ -21,10 +21,20 @@ export const IntroTitle = styled(motion.span)`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-export const IntroCardContainer = styled(motion.div)`
+export const DesktopIntroCardContainer = styled(motion.div)`
   display: flex;
   gap: 5rem;
   width: 100%;
   height: 60%;
+  justify-content: center;
+`;
+
+export const MobileIntroCardContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  width: 100%;
+  height: 60%;
+  align-items: center;
   justify-content: center;
 `;

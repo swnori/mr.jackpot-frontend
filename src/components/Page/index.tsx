@@ -37,7 +37,9 @@ const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
       <BackgroundContainer>
         {backgroundSrc && <Background src={backgroundSrc} />}
       </BackgroundContainer>
-      <ChildrenContainer>{children}</ChildrenContainer>
+      <ChildrenContainer exit={{ opacity: 0 }} transition={{ duration: 3 }}>
+        {children}
+      </ChildrenContainer>
     </>
   );
 };
