@@ -30,6 +30,16 @@ const selectBackground = (type: string, depth: number) => {
   return false;
 };
 
+const mfVariant = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
   const backgroundSrc = selectBackground(type, depth);
   return (
@@ -37,7 +47,7 @@ const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
       <BackgroundContainer>
         {backgroundSrc && <Background src={backgroundSrc} />}
       </BackgroundContainer>
-      <ChildrenContainer exit={{ opacity: 0 }} transition={{ duration: 3 }}>
+      <ChildrenContainer variants={mfVariant} initial='hidden' animate='show' exit='hidden'>
         {children}
       </ChildrenContainer>
     </>

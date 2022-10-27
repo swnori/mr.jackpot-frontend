@@ -13,13 +13,13 @@ export const MobileCardContainer = styled(motion.div)`
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 30px;
-  width: 27rem;
-  height: 32rem;
-  padding: 1.5rem 3rem;
+  width: 27em;
+  height: 32em;
+  padding: 1.5em 3em;
 
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1em;
 
   cursor: pointer;
 `;
@@ -31,7 +31,7 @@ export const MobileCardIconContainer = styled.div`
 `;
 
 export const MobileCardTitleIcon = styled.img`
-  width: 3rem;
+  width: 3em;
 `;
 
 export const MobileCardTitleText = styled.span`

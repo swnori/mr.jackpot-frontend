@@ -13,13 +13,13 @@ export const DesktopCardContainer = styled(motion.div)`
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 30px;
-  width: 17rem;
-  height: 32rem;
-  padding: 1.5rem;
+  width: 17em;
+  height: 32em;
+  padding: 1.5em;
 
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
   cursor: pointer;
 `;
@@ -29,12 +29,12 @@ export const DesktopCardTitleContainer = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 3rem;
-  gap: 1.5rem;
+  top: 3em;
+  gap: 1.5em;
 `;
 
 export const DesktopCardTitleIcon = styled.img`
-  width: 3rem;
+  width: 3em;
 `;
 
 export const DesktopCardTitleText = styled.span`
