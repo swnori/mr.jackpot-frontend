@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const IntroContainer = styled.div`
+export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -18,9 +18,15 @@ export const IntroContainer = styled.div`
   }
 `;
 
-export const IntroBtnContainer = styled.div`
+export const LoginBtnContainer = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 1em;
+`;
+
+export const LoginUtilContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 2em;
+  gap: 1em;
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const IntroContainer = styled.div`
+export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -18,9 +18,10 @@ export const IntroContainer = styled.div`
   }
 `;
 
-export const IntroBtnContainer = styled.div`
+export const SignUpUtilContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 2em;
+  padding-top: 7em;
+  gap: 1.5em;
 `;
