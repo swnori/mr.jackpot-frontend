@@ -8,4 +8,12 @@ export const LoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5rem;
+
+  div {
+    cursor: default;
+  }
+
+  @media only screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;

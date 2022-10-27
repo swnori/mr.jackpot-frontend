@@ -1,10 +1,10 @@
 export enum FontSize {
-  XS = '0.625rem',
-  S = '0.75rem',
-  M = '1rem',
-  L = '1.25rem',
-  XL = '1.5rem',
-  XXL = '2rem',
+  XS = '0.625em',
+  S = '0.75em',
+  M = '1em',
+  L = '1.25em',
+  XL = '1.5em',
+  XXL = '2em',
 }
 
 export enum FontWeight {
