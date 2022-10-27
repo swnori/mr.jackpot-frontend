@@ -21,6 +21,9 @@ export const MobileCardContainer = styled(motion.div)`
   justify-content: space-between;
   gap: 1em;
 
+  max-width: calc(100% - 15em);
+  min-width: calc(80% - 3em);
+
   cursor: pointer;
 `;
 
