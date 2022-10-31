@@ -7,6 +7,7 @@ import { ColorCode } from '@/constants/color';
 export const DesktopCardContainer = styled(motion.div)`
   display: flex;
   background: rgba(0, 0, 0, 0.15);
+  position: relative;
   border: 1px solid #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(5px);

@@ -15,22 +15,22 @@
 <filter id="filter0_f_30_150" x="-278" y="-114" width="1814" height="1814" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="150" result="effect1_foregroundBlur_30_150"/>
+<feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_30_150"/>
 </filter>
 <filter id="filter1_f_30_150" x="-816" y="-114" width="1486" height="1486" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="150" result="effect1_foregroundBlur_30_150"/>
+<feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_30_150"/>
 </filter>
 <filter id="filter2_f_30_150" x="-1047" y="-756" width="1617" height="1521" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_30_150"/>
+<feGaussianBlur stdDeviation="100" result="effect1_foregroundBlur_30_150"/>
 </filter>
 <filter id="filter3_f_30_150" x="-344.143" y="-589.124" width="1531.55" height="1141.99" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="150" result="effect1_foregroundBlur_30_150"/>
+<feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_30_150"/>
 </filter>
 <linearGradient id="paint0_linear_30_150" x1="629" y1="286" x2="629" y2="1300" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FFD8FC"/>
