@@ -13,6 +13,9 @@
     "sourceType": "module"
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+  "globals": {
+    "JSX": true
+  },
   "rules": {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [
