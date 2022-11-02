@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { FontSize } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-export const FooterContainer = styled.div`
+export const FooterContainer = styled(motion.div)`
   position: fixed;
   bottom: 2rem;
 

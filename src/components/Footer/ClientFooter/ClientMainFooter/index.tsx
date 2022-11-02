@@ -5,9 +5,20 @@ import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 import MicIcon from '@/assets/icons/icon-mic.svg';
 import BasketIcon from '@/assets/icons/icon-basket.svg';
 
+const motionVariable = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0 },
+};
+
 const ClientMainFooter = () => {
   return (
-    <FooterContainer>
+    <FooterContainer
+      variants={motionVariable}
+      initial='hidden'
+      animate='show'
+      exit='hidden'
+      transition={{ duration: 0.3 }}
+    >
       <FooterBtnContainer>
         <FooterBtn>
           <FooterIcon src={MicIcon} />
