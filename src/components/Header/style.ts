@@ -5,7 +5,7 @@ import { FontSize, FontWeight } from '@/constants/font';
 export const HeaderContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 2rem;
+  height: 3rem;
   margin-top: 3rem;
 
   display: flex;
@@ -31,4 +31,9 @@ export const HeaderBtn = styled.button`
 
 export const HeaderImg = styled.img`
   width: 100%;
+`;
+
+export const HeaderLogo = styled.img`
+  justify-self: flex-end;
+  width: 5rem;
 `;

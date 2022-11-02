@@ -1,4 +1,4 @@
-import { ItemListContainer, MainContainer } from './style';
+import { ItemListContainer, MainContainer, MainNoticeWrapper } from './style';
 
 import MobileSearch from '@/components/MobileSearch';
 import MobileItem from '@/components/MobileItem';
@@ -38,8 +38,16 @@ const dummyItemList = [
 const ClientMainPage = () => {
   return (
     <MainContainer>
-      <Header type='none' title='' />
+      <Header type='none' showLogo />
       <MobileSearch />
+      <MainNoticeWrapper
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 5 }}
+        transition={{ duration: 0.9, ease: 'easeOut', repeat: Infinity, repeatType: 'reverse' }}
+      >
+        원하시는 디너를 골라주세요
+      </MainNoticeWrapper>
       <ItemListContainer>
         {dummyItemList.map((item) => (
           <MobileItem
