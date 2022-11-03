@@ -1,5 +1,9 @@
 import { BasketBtn, FooterBtn, FooterBtnContainer, FooterContainer, FooterIcon } from '../../style';
 
+import VoiceRec from '@/components/VoiceRec';
+
+import useModal from '@/hooks/useModal';
+
 import UserIcon from '@/assets/icons/icon-user.svg';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 import MicIcon from '@/assets/icons/icon-mic.svg';
@@ -11,6 +15,13 @@ const motionVariable = {
 };
 
 const ClientMainFooter = () => {
+  const { showModal } = useModal();
+  const handleOpenVoiceRec = () => {
+    showModal({
+      type: 'none',
+      children: <VoiceRec />,
+    });
+  };
   return (
     <FooterContainer
       variants={motionVariable}
@@ -21,7 +32,7 @@ const ClientMainFooter = () => {
     >
       <FooterBtnContainer>
         <FooterBtn>
-          <FooterIcon src={MicIcon} />
+          <FooterIcon src={MicIcon} onClick={handleOpenVoiceRec} />
         </FooterBtn>
         <FooterBtn>
           <FooterIcon src={ReceiptIcon} />

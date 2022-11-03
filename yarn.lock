@@ -759,6 +759,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-speech-recognition@npm:^3.9.0":
+  version: 3.9.0
+  resolution: "@types/react-speech-recognition@npm:3.9.0"
+  checksum: fbddfe1a6bc1c7fb2b00cb7f0517d7632e7440ef6bee835c66b2f2336b54c3c5052469a464451841b17126d2060ce7f78c29615bebcf3eaf5d4c854d90ef6a7a
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.0.17":
   version: 18.0.21
   resolution: "@types/react@npm:18.0.21"
@@ -3458,6 +3465,7 @@ __metadata:
     "@types/prettier": ^2
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
+    "@types/react-speech-recognition": ^3.9.0
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.40.0
     "@typescript-eslint/parser": ^5.40.0
@@ -3478,7 +3486,9 @@ __metadata:
     react-dom: ^18.2.0
     react-is: ^18.2.0
     react-router-dom: ^6.4.2
+    react-speech-recognition: ^3.10.0
     recoil: ^0.7.6
+    regenerator-runtime: ^0.13.10
     styled-components: ^5.3.6
     styled-reset: ^4.4.2
     typescript: ^4.6.4
@@ -3978,6 +3988,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-speech-recognition@npm:^3.10.0":
+  version: 3.10.0
+  resolution: "react-speech-recognition@npm:3.10.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 40f3a2561f525d2624b154ccb6da90592a32fe131c33b3258a8892041bcf0c6f8e4527d7310718aeaee119266b1e8a1c383f9842ae984b7c97987ce9d6a5203f
+  languageName: node
+  linkType: hard
+
 "react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -4026,7 +4045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.4":
+"regenerator-runtime@npm:^0.13.10, regenerator-runtime@npm:^0.13.4":
   version: 0.13.10
   resolution: "regenerator-runtime@npm:0.13.10"
   checksum: 09893f5a9e82932642d9a999716b6c626dc53ef2a01307c952ebbf8e011802360163a37c304c18a6c358548be5a72b448e37209954a18696f21e438c81cbb4b9
