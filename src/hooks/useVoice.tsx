@@ -54,9 +54,6 @@ const useVoice = () => {
         }
         utterThis.pitch = 1;
         utterThis.rate = 1;
-
-        console.log(inputTxt);
-
         utterThis.onend = (e) => {
           resolve(e);
         };
