@@ -26,10 +26,13 @@ const GlobalStyle = createGlobalStyle`
     }
   }
   #root {
+    position: fixed;
     width: 100vw;
     height: 100vh;
     height: -webkit-fill-available;
     height: fill-available;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; /* enables “momentum” (smooth) scrolling */
   }
 `;
 
