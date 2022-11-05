@@ -26,7 +26,8 @@ export const FooterContainer = styled(motion.div)`
 
 export const FooterBtnContainer = styled.div`
   display: flex;
-  width: 60%;
+  flex: 1 0 0;
+  font-size: ${FontSize.XL};
   justify-content: space-evenly;
 `;
 
