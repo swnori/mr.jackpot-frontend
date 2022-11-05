@@ -7,19 +7,29 @@ import { ClientFrameContainer } from './style';
 import Page from '@/components/Page';
 import { ClientFooter } from '@/components/Footer';
 
+const depthMap: { [key: string]: number } =
+  {
+    main: 0,
+    orderlist: 1,
+    dinner: 1,
+  } ?? 0;
+
 const ClientFrame = () => {
   const location = useLocation();
 
   const [isScrollUp, setIsScrollUp] = useState<boolean>(true);
 
+  const splitedPath = location.pathname.split('/');
+
+  const root = document.getElementById('root')!;
+
   useEffect(() => {
     const threshold = 0;
-    let lastScrollY = window.pageYOffset;
+    let lastScrollY = root.scrollTop;
     let ticking = false;
 
     const updateScrollDir = () => {
-      const scrollY = window.pageYOffset;
-
+      const scrollY = root.scrollTop;
       if (Math.abs(scrollY - lastScrollY) < threshold) {
         ticking = false;
         return;
@@ -36,17 +46,17 @@ const ClientFrame = () => {
       }
     };
 
-    window.addEventListener('scroll', onScroll);
+    root.addEventListener('scroll', onScroll);
 
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isScrollUp]);
+    return () => root.removeEventListener('scroll', onScroll);
+  }, [root, isScrollUp]);
 
   return (
-    <Page type='client'>
+    <Page type='client' depth={depthMap[splitedPath[2]]}>
       <ClientFrameContainer>
         <Outlet />
         <AnimatePresence exitBeforeEnter>
-          {isScrollUp ? <ClientFooter path={location.pathname} /> : null}
+          {isScrollUp ? <ClientFooter pathName={splitedPath[2]} /> : null}
         </AnimatePresence>
       </ClientFrameContainer>
     </Page>

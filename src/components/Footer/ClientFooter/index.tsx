@@ -1,19 +1,25 @@
 import React from 'react';
 
 import ClientMainFooter from './ClientMainFooter';
+import ClientDinnerFooter from './ClientDinnerFooter';
 
 interface FooterValue {
-  path: string;
+  pathName: string;
 }
 
 const footerMap: { [key: string]: JSX.Element | null } =
   {
-    '/client/main': <ClientMainFooter />,
-    '/client/orderlist': <ClientMainFooter />,
+    main: <ClientMainFooter />,
+    orderlist: <ClientMainFooter />,
+    dinner: <ClientDinnerFooter />,
   } ?? null;
 
-const ClientFooter = ({ path }: FooterValue) => {
-  return footerMap[path];
+/**
+ * @param pathName url path 두번째 인자
+ * @returns pathName에 따른 footer
+ */
+const ClientFooter = ({ pathName }: FooterValue) => {
+  return footerMap[pathName];
 };
 
 export default ClientFooter;

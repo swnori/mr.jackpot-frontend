@@ -4,6 +4,8 @@ import MobileSearch from '@/components/MobileSearch';
 import MobileItem from '@/components/MobileItem';
 import Header from '@/components/Header';
 
+import { useLink } from '@/hooks/useLink';
+
 const dummyItemList = [
   {
     id: 0,
@@ -36,6 +38,7 @@ const dummyItemList = [
 ];
 
 const ClientMainPage = () => {
+  const link = useLink();
   return (
     <MainContainer>
       <Header type='none' showLogo />
@@ -57,6 +60,7 @@ const ClientMainPage = () => {
             title={item.title}
             subTitle={item.subTitle}
             desc={item.desc}
+            onClick={() => link.to(`/client/dinner/${item.id}`)}
           />
         ))}
       </ItemListContainer>

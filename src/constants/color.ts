@@ -3,5 +3,6 @@ export enum ColorCode {
   WHITE = '#FFFFFF',
   OFFWHITE = '#F7F7F7',
   GREY = '#9C9C9C',
+  DARKGREY = '#6B6B6B',
   PRIMARY = '#FF776F',
 }

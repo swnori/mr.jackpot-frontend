@@ -12,7 +12,7 @@ export const BackgroundContainer = styled.div`
   display: flex;
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
   overflow: hidden;
