@@ -4,7 +4,13 @@ import { MobileGuard } from './guards';
 
 import ClientFrame from '@/components/Frame/ClientFrame';
 
-import { ClientIntroPage, ClientLoginPage, ClientMainPage, ClientSignUpPage } from '@/pages';
+import {
+  ClientDinnerPage,
+  ClientIntroPage,
+  ClientLoginPage,
+  ClientMainPage,
+  ClientSignUpPage,
+} from '@/pages';
 
 const ClientRoute = () => {
   return (
@@ -15,6 +21,7 @@ const ClientRoute = () => {
         <Route path='/signup' element={<ClientSignUpPage />} />
         <Route element={<ClientFrame />}>
           <Route path='/main' element={<ClientMainPage />} />
+          <Route path='/dinner/:id' element={<ClientDinnerPage />} />
         </Route>
       </Route>
     </Routes>
