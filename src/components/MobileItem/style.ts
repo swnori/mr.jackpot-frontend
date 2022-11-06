@@ -13,7 +13,7 @@ export const ItemContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
   border: 1px solid ${ColorCode.WHITE};
   backdrop-filter: blur(7.5px);
   /* Note: backdrop-filter has minimal browser support */
@@ -28,7 +28,7 @@ export const ItemImgWrapper = styled.div`
 
   flex-shrink: 0;
 
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   border: 1px solid ${ColorCode.WHITE};
   backdrop-filter: blur(7.5px);
   /* Note: backdrop-filter has minimal browser support */
