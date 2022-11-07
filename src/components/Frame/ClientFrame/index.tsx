@@ -21,35 +21,37 @@ const ClientFrame = () => {
 
   const splitedPath = location.pathname.split('/');
 
-  const root = document.getElementById('root')!;
-
   useEffect(() => {
-    const threshold = 0;
-    let lastScrollY = root.scrollTop;
-    let ticking = false;
+    const root = document.getElementById('scroll-bg'); // <BackgroundContainer /> of <Page />
 
-    const updateScrollDir = () => {
-      const scrollY = root.scrollTop;
-      if (Math.abs(scrollY - lastScrollY) < threshold) {
+    if (root) {
+      const threshold = 0;
+      let lastScrollY = root.scrollTop;
+      let ticking = false;
+
+      const updateScrollDir = () => {
+        const scrollY = root.scrollTop;
+        if (Math.abs(scrollY - lastScrollY) < threshold) {
+          ticking = false;
+          return;
+        }
+        setIsScrollUp(scrollY < lastScrollY);
+        lastScrollY = scrollY > 0 ? scrollY : 0;
         ticking = false;
-        return;
-      }
-      setIsScrollUp(scrollY < lastScrollY);
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-      ticking = false;
-    };
+      };
 
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollDir);
-        ticking = true;
-      }
-    };
+      const onScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateScrollDir);
+          ticking = true;
+        }
+      };
 
-    root.addEventListener('scroll', onScroll);
+      root.addEventListener('scroll', onScroll);
 
-    return () => root.removeEventListener('scroll', onScroll);
-  }, [root, isScrollUp]);
+      return () => root.removeEventListener('scroll', onScroll);
+    }
+  }, [isScrollUp]);
 
   return (
     <Page type='client' depth={depthMap[splitedPath[2]]}>
