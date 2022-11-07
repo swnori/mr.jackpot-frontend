@@ -34,6 +34,34 @@ const dummyData = [
           name: '스테이크(Steak)',
           price: 49000,
         },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
+        {
+          name: '스테이크(Steak)',
+          price: 49000,
+        },
       ],
       side: [
         {
@@ -127,7 +155,6 @@ const ClientDinnerPage = () => {
             desc='KRW 15,000'
             checked={data.defaultMenu.style === 'deluxe'}
           />
-          <AddMenuBtn />
         </StyleContainer>
       </DinnerDetailContainer>
     </DinnerContainer>
