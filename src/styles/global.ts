@@ -33,6 +33,12 @@ const GlobalStyle = createGlobalStyle`
     height: fill-available;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch; /* enables “momentum” (smooth) scrolling */
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera*/
+    }
   }
 `;
 
