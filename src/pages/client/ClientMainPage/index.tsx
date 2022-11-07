@@ -1,4 +1,4 @@
-import { ItemListContainer, MainContainer, MainNoticeWrapper } from './style';
+import { DinnerListContainer, MainContainer, MainNoticeWrapper } from './style';
 
 import MobileSearch from '@/components/MobileSearch';
 import MobileItem from '@/components/MobileItem';
@@ -51,7 +51,7 @@ const ClientMainPage = () => {
       >
         원하시는 디너를 골라주세요
       </MainNoticeWrapper>
-      <ItemListContainer>
+      <DinnerListContainer>
         {dummyItemList.map((item) => (
           <MobileItem
             key={item.id}
@@ -63,7 +63,7 @@ const ClientMainPage = () => {
             onClick={() => link.to(`/client/dinner/${item.id}`)}
           />
         ))}
-      </ItemListContainer>
+      </DinnerListContainer>
     </MainContainer>
   );
 };

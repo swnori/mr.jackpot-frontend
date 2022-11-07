@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect';
 import React from 'react';
 
-import { Background, BackgroundContainer, ChildrenContainer } from './style';
+import { BackgroundContainer, ChildrenContainer } from './style';
 
 import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.svg';
 import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.svg';
@@ -27,7 +27,7 @@ const selectBackground = (type: string, depth: number) => {
     return MobileBackgroundImg2;
   }
 
-  return false;
+  return undefined;
 };
 
 const mfVariant = {
@@ -44,14 +44,11 @@ const mfVariant = {
 const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
   const backgroundSrc = selectBackground(type, depth);
   return (
-    <>
-      <BackgroundContainer>
-        {backgroundSrc && <Background src={backgroundSrc} />}
-      </BackgroundContainer>
+    <BackgroundContainer id='scroll-bg' src={backgroundSrc}>
       <ChildrenContainer variants={mfVariant} initial='hidden' animate='show' exit='hidden'>
         {children}
       </ChildrenContainer>
-    </>
+    </BackgroundContainer>
   );
 };
 

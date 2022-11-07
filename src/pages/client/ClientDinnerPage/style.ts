@@ -33,10 +33,11 @@ export const DinnerDetailContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
+  padding-bottom: 20rem;
 
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid ${ColorCode.WHITE};
-  backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(5px);
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 100px 100px 0 0;
@@ -62,9 +63,9 @@ export const DinnerImgWrapper = styled.div`
   top: -7.5rem;
   width: 15rem;
   height: 15rem;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   border: 1px solid #ffffff;
-  backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(3px);
   /* Note: backdrop-filter has minimal browser support */
 `;
 

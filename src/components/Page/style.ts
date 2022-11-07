@@ -3,26 +3,30 @@ import { motion } from 'framer-motion';
 
 import { ColorCode } from '@/constants/color';
 
-export const Background = styled.img`
-  min-width: 100%;
-  min-height: 100%;
-`;
+interface BackgroundContainerValue {
+  src?: string;
+}
 
-export const BackgroundContainer = styled.div`
-  display: flex;
-  position: fixed;
-  width: 100vw;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: ${ColorCode.WHITE};
+export const BackgroundContainer = styled.div<BackgroundContainerValue>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  overflow-y: scroll;
+  background-image: url(${(props) => props.src ?? ''});
+  background-color: ${ColorCode.OFFWHITE};
+  background-attachment: local;
+  background-size: cover;
+  background-repeat: repeat;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const ChildrenContainer = styled(motion.div)`
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
 `;

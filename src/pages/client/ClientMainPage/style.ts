@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-export const ItemListContainer = styled.div`
+export const DinnerListContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
