@@ -4,6 +4,8 @@ import { SectionContainer, SectionTitle } from '../style';
 
 import MobileItem from '@/components/MobileItem';
 
+import { KRWFormat } from '@/utils/format';
+
 import { styleInfoState } from '@/stores/menu';
 
 interface StyleSectionValue {
@@ -22,7 +24,7 @@ const StyleSection = ({ orderStyle, setStyleHandler }: StyleSectionValue) => {
           type='radio'
           title={item.name}
           subTitle={item.desc}
-          desc={item.price}
+          desc={KRWFormat(item.price)}
           onClick={() => setStyleHandler(item.id)}
           checked={item.id === orderStyle}
         />
