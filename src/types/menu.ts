@@ -1,26 +1,29 @@
-export type OptionId = number;
+import { ValueOf } from '@/utils/type';
 
 interface OptionType {
-  id: OptionId;
-  name: string;
-  price: number;
-}
-
-interface Option {
   id: number;
   name: string;
-  list: OptionType[];
+  price: number;
 }
 
-export type MenuId = number;
+export interface Option {
+  id: number;
+  name: string;
+  default: number;
+  list: { [key: number]: OptionType };
+}
+
+export const MenuType = {
+  MAIN_DISH: 'main',
+  SIDE: 'side',
+  DRINK: 'drink',
+} as const;
 
 export interface MenuInfo {
-  id: MenuId;
+  id: number;
   name: string;
-  type: 'main' | 'side' | 'drink';
+  type: ValueOf<typeof MenuType>;
   img?: string;
   price: number;
-  option: [Option, Option];
+  option: [Option?, Option?];
 }
-
-export type MenuOrderId = number;

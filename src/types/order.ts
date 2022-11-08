@@ -1,15 +1,11 @@
-import { MenuId, OptionId } from './menu';
-
-type OrderId = number;
-
 export interface MenuOrder {
-  id: number;
-  menuId: MenuId;
-  option: [OptionId, OptionId];
+  id?: number;
+  menuId: number;
+  option: [number, number];
 }
 
 export interface DinnerOrder {
-  id: number;
+  id?: number;
   mainDish: MenuOrder[];
   side: MenuOrder[];
   drink: MenuOrder[];
@@ -17,7 +13,7 @@ export interface DinnerOrder {
 }
 
 export interface Order {
-  id: OrderId;
+  id: number;
   // 주문자 정보, 쿠폰 여부
   dinnerList: DinnerOrder[];
 }
