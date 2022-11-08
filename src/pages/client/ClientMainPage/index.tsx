@@ -8,6 +8,8 @@ import Header from '@/components/Header';
 
 import { useLink } from '@/hooks/useLink';
 
+import { KRWFormat } from '@/utils/format';
+
 import { dinnerInfoState } from '@/stores/dinner';
 
 const ClientMainPage = () => {
@@ -33,7 +35,7 @@ const ClientMainPage = () => {
             id={item.id}
             title={item.name}
             subTitle={item.desc}
-            desc={item.price}
+            desc={KRWFormat(item.price)}
             onClick={() => link.to(`/client/dinner/${item.id}`)}
           />
         ))}
