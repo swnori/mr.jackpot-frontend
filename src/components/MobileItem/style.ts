@@ -1,9 +1,21 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-export const ItemContainer = styled.div`
+interface ItemWrapperValue {
+  isShowOption?: boolean;
+}
+
+export const ItemWrapper = styled.div`
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid ${ColorCode.WHITE};
+  backdrop-filter: blur(7.5px);
+`;
+
+export const ItemContainer = styled.div<ItemWrapperValue>`
   width: calc(100% - 2rem);
   height: 8rem;
   padding: 1rem;
@@ -13,12 +25,19 @@ export const ItemContainer = styled.div`
   align-items: center;
   gap: 1rem;
 
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid ${ColorCode.WHITE};
-  backdrop-filter: blur(7.5px);
   /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 15px;
+  border: 1px solid ${ColorCode.WHITE};
+  ${(props) =>
+    props.isShowOption
+      ? `
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(7.5px);
+        `
+      : ''}
+
+  z-index: 2;
 `;
 
 export const ItemImgWrapper = styled.div`
@@ -66,7 +85,7 @@ export const ItemSubTitle = styled.span`
   flex: 1;
   font-size: ${FontSize.L};
   font-weight: ${FontWeight.REGULAR};
-  color: ${ColorCode.GREY};
+  color: ${ColorCode.DARKGREY};
 `;
 
 export const ItemDesc = styled.span`
@@ -101,4 +120,50 @@ export const ItemRadioBox = styled.div`
 
 export const ItemRadioImg = styled.img`
   width: 2.5rem;
+`;
+
+export const ItemOptionContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  padding: 2rem 1rem;
+  overflow: hidden;
+`;
+
+export const ItemOptionSection = styled.section`
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.7rem;
+`;
+
+export const ItemOptionTitle = styled.span`
+  font-size: ${FontSize.L};
+  font-weight: ${FontWeight.MEDIUM};
+`;
+
+export const ItemOptionWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const ItemOptionRadioBox = styled.div``;
+
+export const ItemOptionRadioImg = styled.img`
+  width: 2rem;
+`;
+
+export const ItemOptionName = styled.span`
+  font-size: ${FontSize.L};
+  font-weight: ${FontWeight.REGULAR};
+  flex: 1;
+`;
+
+export const ItemOptionPrice = styled.span`
+  font-size: ${FontSize.L};
+  font-weight: ${FontWeight.REGULAR};
 `;

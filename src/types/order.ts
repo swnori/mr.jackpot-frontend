@@ -1,5 +1,5 @@
 export interface MenuOrder {
-  id: number;
+  id?: number;
   menuId: number;
   option: [number, number];
 }

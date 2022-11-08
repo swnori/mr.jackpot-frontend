@@ -6,6 +6,8 @@ import { AddMenuBtnContainer, AddMenuImg } from './style';
 
 import MobileItem from '@/components/MobileItem';
 
+import { KRWFormat } from '@/utils/format';
+
 import { menuInfoState } from '@/stores/menu';
 
 import { MenuOrder } from '@/types/order';
@@ -16,6 +18,7 @@ import AddMenuIcon from '@/assets/icons/icon-round-add.svg';
 interface DinnerSectionValue {
   title: string;
   menuOrderList: MenuOrder[];
+  setMenuOrderList: (menuOrderList: MenuOrder[]) => void;
 }
 
 interface AddMenuBtnValue {
@@ -31,7 +34,7 @@ const AddMenuBtn = ({ onClick }: AddMenuBtnValue) => {
   );
 };
 
-const DinnerSection = ({ title, menuOrderList }: DinnerSectionValue) => {
+const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
   const optionText = (option: [Option?, Option?], select: [number?, number?]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
@@ -39,19 +42,31 @@ const DinnerSection = ({ title, menuOrderList }: DinnerSectionValue) => {
 
     return opt1 + opt2;
   };
+
   return (
     <SectionContainer>
       <SectionTitle>{title}</SectionTitle>
       {menuOrderList.map((item, idx) => {
         const itemInfo = menu[item.menuId];
-
+        const setSelect = (opt1: number, opt2: number | undefined) => {
+          const nextOrder = { ...item, option: [opt1, opt2] };
+          const nextOrderList = [
+            ...[...menuOrderList].slice(0, idx),
+            nextOrder,
+            ...[...menuOrderList].slice(idx + 1),
+          ] as MenuOrder[];
+          setMenuOrderList(nextOrderList);
+        };
         return (
           <MobileItem
             key={idx}
             type='item'
             title={itemInfo.name}
             subTitle={optionText(itemInfo.option, item.option)}
-            desc={`${itemInfo.price}`}
+            desc={`${KRWFormat(itemInfo.price)}`}
+            option={itemInfo.option}
+            select={item.option}
+            setSelect={setSelect}
           />
         );
       })}

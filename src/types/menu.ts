@@ -9,6 +9,7 @@ interface OptionType {
 export interface Option {
   id: number;
   name: string;
+  default: number;
   list: { [key: number]: OptionType };
 }
 

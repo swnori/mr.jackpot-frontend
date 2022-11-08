@@ -21,6 +21,8 @@ import { dinnerOrderState } from '@/stores/order';
 import { menuInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
+import { MenuOrder } from '@/types/order';
+
 const ClientDinnerPage = () => {
   const { id } = useParams();
   const menuInfo = useRecoilValue(menuInfoState);
@@ -60,6 +62,18 @@ const ClientDinnerPage = () => {
     setDinnerOrder((prev) => ({ ...prev, style }));
   };
 
+  const setMainDishOrderList = (menuOrderList: MenuOrder[]) => {
+    setDinnerOrder((prev) => ({ ...prev, mainDish: menuOrderList }));
+  };
+
+  const setSideOrderList = (menuOrderList: MenuOrder[]) => {
+    setDinnerOrder((prev) => ({ ...prev, side: menuOrderList }));
+  };
+
+  const setDrinkOrderList = (menuOrderList: MenuOrder[]) => {
+    setDinnerOrder((prev) => ({ ...prev, drink: menuOrderList }));
+  };
+
   return (
     <DinnerContainer>
       <Header type='back' />
@@ -75,9 +89,21 @@ const ClientDinnerPage = () => {
           각 상세 메뉴를 터치하시면 <br />
           메뉴의 옵션을 수정하실 수 있습니다.
         </DinnerDetailDesc>
-        <DinnerSection title='Main Dish' menuOrderList={dinnerOrder.mainDish} />
-        <DinnerSection title='Side' menuOrderList={dinnerOrder.side} />
-        <DinnerSection title='Drink' menuOrderList={dinnerOrder.drink} />
+        <DinnerSection
+          title='Main Dish'
+          menuOrderList={dinnerOrder.mainDish}
+          setMenuOrderList={setMainDishOrderList}
+        />
+        <DinnerSection
+          title='Side'
+          menuOrderList={dinnerOrder.side}
+          setMenuOrderList={setSideOrderList}
+        />
+        <DinnerSection
+          title='Drink'
+          menuOrderList={dinnerOrder.drink}
+          setMenuOrderList={setDrinkOrderList}
+        />
         <StyleSection orderStyle={dinnerOrder.style} setStyleHandler={setStyleHandler} />
       </DinnerDetailContainer>
     </DinnerContainer>
