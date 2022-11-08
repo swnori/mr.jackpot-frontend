@@ -7,6 +7,9 @@ import { ClientFrameContainer } from './style';
 import Page from '@/components/Page';
 import { ClientFooter } from '@/components/Footer';
 
+import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.svg';
+import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.svg';
+
 const depthMap: { [key: string]: number } =
   {
     main: 0,
@@ -54,14 +57,18 @@ const ClientFrame = () => {
   }, [isScrollUp]);
 
   return (
-    <Page type='client' depth={depthMap[splitedPath[2]]}>
-      <ClientFrameContainer>
-        <Outlet />
-        <AnimatePresence exitBeforeEnter>
-          {isScrollUp ? <ClientFooter pathName={splitedPath[2]} /> : null}
-        </AnimatePresence>
-      </ClientFrameContainer>
-    </Page>
+    <>
+      <link rel='prefetch' href={MobileBackgroundImg1} />
+      <link rel='prefetch' href={MobileBackgroundImg2} />
+      <Page type='client' depth={depthMap[splitedPath[2]]}>
+        <ClientFrameContainer>
+          <Outlet />
+          <AnimatePresence exitBeforeEnter>
+            {isScrollUp ? <ClientFooter pathName={splitedPath[2]} /> : null}
+          </AnimatePresence>
+        </ClientFrameContainer>
+      </Page>
+    </>
   );
 };
 
