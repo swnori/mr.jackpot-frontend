@@ -22,7 +22,7 @@ interface ItemValue {
   img?: string;
   title?: string;
   subTitle?: string;
-  desc?: string;
+  desc?: string | number;
   checked?: boolean;
   onClick?: () => void;
   onDelete?: (id: string | number) => void;
