@@ -29,6 +29,7 @@ const ClientMainPage = () => {
           menuInfo[menuId].option[0]?.default ?? 0,
           menuInfo[menuId].option[1]?.default ?? 0,
         ],
+        isDefault: true,
       })),
       side: dinnerInfo.side.map((menuId) => ({
         menuId,
@@ -36,6 +37,7 @@ const ClientMainPage = () => {
           menuInfo[menuId].option[0]?.default ?? 0,
           menuInfo[menuId].option[1]?.default ?? 0,
         ],
+        isDefault: true,
       })),
       drink: dinnerInfo.drink.map((menuId) => ({
         menuId,
@@ -43,6 +45,7 @@ const ClientMainPage = () => {
           menuInfo[menuId].option[0]?.default ?? 0,
           menuInfo[menuId].option[1]?.default ?? 0,
         ],
+        isDefault: true,
       })),
       style: dinnerInfo.style,
     });

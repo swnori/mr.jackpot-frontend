@@ -66,6 +66,14 @@ const DinnerSection = ({
           ] as MenuOrder[];
           setMenuOrderList(nextOrderList);
         };
+        const onDelete = () => {
+          const nextOrderList = [
+            ...[...menuOrderList].slice(0, idx),
+            ...[...menuOrderList].slice(idx + 1),
+          ] as MenuOrder[];
+
+          setMenuOrderList(nextOrderList);
+        };
         return (
           <MobileItem
             key={idx}
@@ -76,6 +84,7 @@ const DinnerSection = ({
             option={itemInfo.option}
             select={item.option}
             setSelect={setSelect}
+            onDelete={item.isDefault ? undefined : onDelete}
           />
         );
       })}

@@ -2,6 +2,7 @@ export interface MenuOrder {
   id?: number;
   menuId: number;
   option: [number, number];
+  isDefault?: boolean;
 }
 
 export interface DinnerOrder {
