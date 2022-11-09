@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
 
 import {
   DinnerContainer,
@@ -16,6 +17,8 @@ import Header from '@/components/Header';
 import StyleSection from '@/components/Dinner/StyleSection';
 import DinnerSection from '@/components/Dinner/DinnerSection';
 
+import useOrder from '@/hooks/useOrder';
+
 import { dinnerOrderState } from '@/stores/order';
 import { dinnerInfoState } from '@/stores/dinner';
 
@@ -27,6 +30,14 @@ const ClientDinnerPage = () => {
   const dinnerInfoList = useRecoilValue(dinnerInfoState);
   const dinnerInfo = dinnerInfoList[Number(id)];
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
+  const { setDinnerDefault } = useOrder();
+
+  useLayoutEffect(() => {
+    if (dinnerOrder.mainDish.length === 0) {
+      // 모든 디너에는 mainDish가 무조건 존재하므로 주문 정보가 아예 초기화됐는지 검사하려면 mainDish만 검사해도 됨
+      setDinnerDefault(Number(id));
+    }
+  }, [setDinnerDefault, id, dinnerOrder]);
 
   const setStyleHandler = (style: number) => {
     setDinnerOrder((prev) => ({ ...prev, style }));
