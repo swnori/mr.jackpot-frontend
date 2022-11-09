@@ -1,16 +1,20 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { dinnerOrderState } from '@/stores/order';
-import { menuInfoState } from '@/stores/menu';
+import { menuInfoState, styleInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
+
+import { MenuOrder } from '@/types/order';
 
 const useOrder = () => {
   const dinnerList = useRecoilValue(dinnerInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
-  const setDinnerOrder = useSetRecoilState(dinnerOrderState);
-  const setDinnerDefault = (dinnerId: number) => {
-    const dinnerInfo = dinnerList[dinnerId];
+  const styleInfo = useRecoilValue(styleInfoState);
+  const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
+  const setDinnerDefault = (dinnerTypeId: number) => {
+    const dinnerInfo = dinnerList[dinnerTypeId];
     setDinnerOrder({
+      type: dinnerTypeId,
       mainDish: dinnerInfo.mainDish.map((menu) => ({
         menuId: menu.menuId,
         option: [
@@ -42,7 +46,35 @@ const useOrder = () => {
     });
   };
 
+  const menuOrderPrice = (item: MenuOrder) => {
+    const itemInfo = menuInfo[item.menuId];
+
+    const [sel1, sel2] = item.option;
+    const [opt1, opt2] = itemInfo.option;
+
+    const opt1Price = opt1 && sel1 ? opt1.list[sel1].price : 0;
+    const opt2Price = opt2 && sel2 ? opt2.list[sel2].price : 0;
+
+    return (itemInfo.price + opt1Price + opt2Price) * item.count;
+  };
+
+  const dinnerOrderPrice = (dinnerId?: number) => {
+    if (!dinnerId) {
+      const mainDishPrice = dinnerOrder.mainDish.reduce(
+        (pre, item) => pre + menuOrderPrice(item),
+        0,
+      );
+      const sidePrice = dinnerOrder.side.reduce((pre, item) => pre + menuOrderPrice(item), 0);
+      const drinkPrice = dinnerOrder.drink.reduce((pre, item) => pre + menuOrderPrice(item), 0);
+      const stylePrice = styleInfo[dinnerOrder.style].price ?? 0;
+
+      return mainDishPrice + sidePrice + drinkPrice + stylePrice;
+    }
+  };
+
   return {
+    menuOrderPrice,
+    dinnerOrderPrice,
     setDinnerDefault,
   };
 };

@@ -1,5 +1,9 @@
 import { BasketBtn, FooterBtnContainer, FooterContainer, FooterIcon } from '../../style';
 
+import useOrder from '@/hooks/useOrder';
+
+import { KRWFormat } from '@/utils/format';
+
 import BasketIcon from '@/assets/icons/icon-basket.svg';
 
 const motionVariable = {
@@ -8,6 +12,7 @@ const motionVariable = {
 };
 
 const ClientDinnerFooter = () => {
+  const { dinnerOrderPrice } = useOrder();
   return (
     <FooterContainer
       variants={motionVariable}
@@ -16,7 +21,7 @@ const ClientDinnerFooter = () => {
       exit='hidden'
       transition={{ duration: 0.3 }}
     >
-      <FooterBtnContainer>KRW 1,234,567</FooterBtnContainer>
+      <FooterBtnContainer>{KRWFormat(dinnerOrderPrice() ?? 0)}</FooterBtnContainer>
       <BasketBtn>
         <FooterIcon src={BasketIcon} />
         장바구니에 담기

@@ -12,7 +12,7 @@ const dummyData: DinnerInfo[] = [
     side: [],
     drink: [{ menuId: 5, option: [51, null], count: 1, isDefault: true }],
     style: 0,
-    price: 99000,
+    price: 74000,
   },
   {
     id: 1,
@@ -26,7 +26,7 @@ const dummyData: DinnerInfo[] = [
       { menuId: 6, option: [55, null], count: 1, isDefault: true },
     ],
     style: 0,
-    price: 99000,
+    price: 71500,
   },
   {
     id: 2,
@@ -37,10 +37,11 @@ const dummyData: DinnerInfo[] = [
     side: [
       { menuId: 1, option: [null, null], count: 1, isDefault: true },
       { menuId: 2, option: [null, null], count: 1, isDefault: true },
+      { menuId: 10, option: [null, null], count: 1, isDefault: true },
     ],
     drink: [],
     style: 0,
-    price: 99000,
+    price: 71000,
   },
   {
     id: 3,
@@ -53,8 +54,8 @@ const dummyData: DinnerInfo[] = [
     ],
     side: [{ menuId: 9, option: [null, null], count: 4, isDefault: true }],
     drink: [{ menuId: 1, option: [55, null], count: 1, isDefault: true }],
-    style: 0,
-    price: 99000,
+    style: 1,
+    price: 122000,
   },
 ];
 

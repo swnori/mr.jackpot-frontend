@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import { SectionContainer, SectionTitle } from '../style';
+import { SectionContainer, SectionDesc, SectionTitle } from '../style';
 
 import MobileItem from '@/components/MobileItem';
 
@@ -29,6 +29,8 @@ const StyleSection = ({ orderStyle, setStyleHandler }: StyleSectionValue) => {
           checked={item.id === orderStyle}
         />
       ))}
+
+      <SectionDesc>* 발렌타인 디너일 경우, 접시에 큐피드 장식이 추가됩니다</SectionDesc>
     </SectionContainer>
   );
 };

@@ -102,7 +102,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 7,
     type: MenuType.DRINK,
-    name: '커피 포트(Port of Red Wine)',
+    name: '커피 포트(Pot of Coffee)',
     price: 14000,
     option: [
       {
@@ -120,7 +120,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 8,
     type: MenuType.DRINK,
-    name: '커피 한 잔(Cup of Red Wine)',
+    name: '커피 한 잔(Cup of Coffee)',
     price: 5000,
     option: [
       {
@@ -139,6 +139,13 @@ const dummyData: MenuInfo[] = [
     id: 9,
     type: MenuType.SIDE,
     name: '바게트 빵(Baguatte)',
+    price: 1500,
+    option: [],
+  },
+  {
+    id: 10,
+    type: MenuType.SIDE,
+    name: '빵(Bread)',
     price: 1000,
     option: [],
   },

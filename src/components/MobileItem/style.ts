@@ -15,6 +15,7 @@ export const ItemWrapper = styled.div`
 `;
 
 export const ItemContainer = styled.div<ItemWrapperValue>`
+  position: relative;
   width: calc(100% - 2rem);
   height: 8rem;
   padding: 1rem;
@@ -78,6 +79,7 @@ export const ItemTitle = styled.span`
   font-size: ${FontSize.XL};
   font-weight: ${FontWeight.MEDIUM};
   color: ${ColorCode.BLACK};
+  padding: 1px 0;
 `;
 
 export const ItemSubTitle = styled.span`
@@ -85,12 +87,14 @@ export const ItemSubTitle = styled.span`
   font-size: ${FontSize.L};
   font-weight: ${FontWeight.REGULAR};
   color: ${ColorCode.DARKGREY};
+  padding: 1px 0;
 `;
 
 export const ItemDesc = styled.span`
   font-size: ${FontSize.L};
   font-weight: ${FontWeight.REGULAR};
   color: ${ColorCode.BLACK};
+  padding: 1px 0;
 `;
 
 export const ItemDeleteBtn = styled.button`
