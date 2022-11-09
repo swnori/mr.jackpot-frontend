@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil';
+import { useQuery } from 'react-query';
 
 import { DinnerListContainer, MainContainer, MainNoticeWrapper } from './style';
 
@@ -13,10 +14,16 @@ import { KRWFormat } from '@/utils/format';
 
 import { dinnerInfoState } from '@/stores/dinner';
 
+import { fetchHelloWorld } from '@/apis/client';
+
 const ClientMainPage = () => {
   const link = useLink();
   const dinnerList = useRecoilValue(dinnerInfoState);
   const { setDinnerDefault } = useOrder();
+
+  const { data } = useQuery('hello world', fetchHelloWorld);
+
+  console.log(data);
 
   const goDinnerPage = (id: number) => {
     setDinnerDefault(id);
