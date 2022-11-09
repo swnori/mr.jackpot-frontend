@@ -36,6 +36,8 @@ interface ItemValue {
   onClick?: () => void;
   onDelete?: (id: string | number) => void;
   setSelect?: (opt1: number | null, opt2: number | null) => void;
+  count?: number;
+  setCount?: (cnt: number) => void;
 }
 
 const MobileItem = ({
@@ -51,10 +53,12 @@ const MobileItem = ({
   onClick,
   onDelete,
   setSelect,
+  count,
+  setCount,
 }: ItemValue) => {
   const [optShow, setOptShow] = useState<boolean>(false);
 
-  const hasOption = type === 'item' && option && option[0];
+  const hasOption = type === 'item' && ((option && option[0]) || count);
 
   const clickItemHandler = () => {
     if (onClick) {
@@ -95,7 +99,14 @@ const MobileItem = ({
 
       <AnimatePresence>
         {hasOption && optShow ? (
-          <ItemOption menuName={title} option={option} select={select!} setSelect={setSelect!} />
+          <ItemOption
+            menuName={title}
+            option={option}
+            select={select!}
+            setSelect={setSelect!}
+            count={count!}
+            setCount={setCount!}
+          />
         ) : null}
       </AnimatePresence>
     </ItemWrapper>

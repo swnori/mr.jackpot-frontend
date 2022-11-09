@@ -6,6 +6,7 @@ import { AddMenuBtnContainer, AddMenuImg } from './style';
 
 import MobileItem from '@/components/MobileItem';
 
+import useOrder from '@/hooks/useOrder';
 import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
@@ -45,6 +46,7 @@ const DinnerSection = ({
 }: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
   const link = useLink();
+  const { menuOrderPrice } = useOrder();
   const optionText = (option: [Option?, Option?], select: [number | null, number | null]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
@@ -57,6 +59,7 @@ const DinnerSection = ({
       <SectionTitle>{title}</SectionTitle>
       {menuOrderList.map((item, idx) => {
         const itemInfo = menu[item.menuId];
+        const price = menuOrderPrice(item);
         const setSelect = (opt1: number | null, opt2: number | null) => {
           const nextOrder = { ...item, option: [opt1, opt2] };
           const nextOrderList = [
@@ -74,17 +77,28 @@ const DinnerSection = ({
 
           setMenuOrderList(nextOrderList);
         };
+        const setCount = (cnt: number) => {
+          const nextOrder = { ...item, count: cnt };
+          const nextOrderList = [
+            ...[...menuOrderList].slice(0, idx),
+            nextOrder,
+            ...[...menuOrderList].slice(idx + 1),
+          ] as MenuOrder[];
+          setMenuOrderList(nextOrderList);
+        };
         return (
           <MobileItem
             key={idx}
             type='item'
             title={itemInfo.name}
             subTitle={optionText(itemInfo.option, item.option)}
-            desc={`${item.count}개 | ${KRWFormat(itemInfo.price)}`}
+            desc={`${item.count}개 | ${KRWFormat(price)}`}
             option={itemInfo.option}
             select={item.option}
             setSelect={setSelect}
             onDelete={item.isDefault ? undefined : onDelete}
+            count={item.count}
+            setCount={setCount}
           />
         );
       })}
