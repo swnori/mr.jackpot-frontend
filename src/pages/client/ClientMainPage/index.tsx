@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { DinnerListContainer, MainContainer, MainNoticeWrapper } from './style';
 
@@ -10,11 +10,44 @@ import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
+import { dinnerOrderState } from '@/stores/order';
+import { menuInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
 const ClientMainPage = () => {
   const link = useLink();
   const dinnerList = useRecoilValue(dinnerInfoState);
+  const menuInfo = useRecoilValue(menuInfoState);
+  const setDinnerOrder = useSetRecoilState(dinnerOrderState);
+
+  const goDinnerPage = (id: number) => {
+    const dinnerInfo = dinnerList[id];
+    setDinnerOrder({
+      mainDish: dinnerInfo.mainDish.map((menuId) => ({
+        menuId,
+        option: [
+          menuInfo[menuId].option[0]?.default ?? 0,
+          menuInfo[menuId].option[1]?.default ?? 0,
+        ],
+      })),
+      side: dinnerInfo.side.map((menuId) => ({
+        menuId,
+        option: [
+          menuInfo[menuId].option[0]?.default ?? 0,
+          menuInfo[menuId].option[1]?.default ?? 0,
+        ],
+      })),
+      drink: dinnerInfo.drink.map((menuId) => ({
+        menuId,
+        option: [
+          menuInfo[menuId].option[0]?.default ?? 0,
+          menuInfo[menuId].option[1]?.default ?? 0,
+        ],
+      })),
+      style: dinnerInfo.style,
+    });
+    link.to(`/client/dinner/${id}`);
+  };
   return (
     <MainContainer>
       <Header type='none' showLogo />
@@ -35,7 +68,7 @@ const ClientMainPage = () => {
             title={item.name}
             subTitle={item.desc}
             desc={KRWFormat(item.price)}
-            onClick={() => link.to(`/client/dinner/${item.id}`)}
+            onClick={() => goDinnerPage(item.id)}
           />
         ))}
       </DinnerListContainer>

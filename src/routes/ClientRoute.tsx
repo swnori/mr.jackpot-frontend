@@ -9,6 +9,7 @@ import {
   ClientIntroPage,
   ClientLoginPage,
   ClientMainPage,
+  ClientMenuListPage,
   ClientSignUpPage,
 } from '@/pages';
 
@@ -22,6 +23,7 @@ const ClientRoute = () => {
         <Route element={<ClientFrame />}>
           <Route path='/main' element={<ClientMainPage />} />
           <Route path='/dinner/:id' element={<ClientDinnerPage />} />
+          <Route path='/menu/:type' element={<ClientMenuListPage />} />
         </Route>
       </Route>
     </Routes>

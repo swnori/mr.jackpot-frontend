@@ -6,6 +6,8 @@ import { AddMenuBtnContainer, AddMenuImg } from './style';
 
 import MobileItem from '@/components/MobileItem';
 
+import { useLink } from '@/hooks/useLink';
+
 import { KRWFormat } from '@/utils/format';
 
 import { menuInfoState } from '@/stores/menu';
@@ -17,6 +19,7 @@ import AddMenuIcon from '@/assets/icons/icon-round-add.svg';
 
 interface DinnerSectionValue {
   title: string;
+  menuListPath: string;
   menuOrderList: MenuOrder[];
   setMenuOrderList: (menuOrderList: MenuOrder[]) => void;
 }
@@ -34,8 +37,14 @@ const AddMenuBtn = ({ onClick }: AddMenuBtnValue) => {
   );
 };
 
-const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSectionValue) => {
+const DinnerSection = ({
+  title,
+  menuListPath,
+  menuOrderList,
+  setMenuOrderList,
+}: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
+  const link = useLink();
   const optionText = (option: [Option?, Option?], select: [number?, number?]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
@@ -70,7 +79,7 @@ const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSection
           />
         );
       })}
-      <AddMenuBtn />
+      <AddMenuBtn onClick={() => link.to(menuListPath)} />
     </SectionContainer>
   );
 };
