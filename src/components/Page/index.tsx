@@ -3,8 +3,8 @@ import React from 'react';
 
 import { BackgroundContainer, ChildrenContainer } from './style';
 
-import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.svg';
-import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.svg';
+import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.png';
+import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.png';
 import DesktopBackgroundImg from '@/assets/images/background-desktop.svg';
 
 interface IPage {
