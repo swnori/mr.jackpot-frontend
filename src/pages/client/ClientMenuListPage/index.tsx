@@ -29,6 +29,7 @@ const ClientMenuListPage = () => {
       menuId: newItem.id,
       option: [newItem.option[0]?.default, newItem.option[1]?.default],
       isDefault: false,
+      count: 1,
     } as MenuOrder;
     if (type === MenuType.MAIN_DISH) {
       setDinnerOrder((prev) => ({ ...prev, mainDish: [...prev.mainDish, newOrder] }));
