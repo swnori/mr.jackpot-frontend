@@ -6,6 +6,8 @@ import { AddMenuBtnContainer, AddMenuImg } from './style';
 
 import MobileItem from '@/components/MobileItem';
 
+import { useLink } from '@/hooks/useLink';
+
 import { KRWFormat } from '@/utils/format';
 
 import { menuInfoState } from '@/stores/menu';
@@ -17,6 +19,7 @@ import AddMenuIcon from '@/assets/icons/icon-round-add.svg';
 
 interface DinnerSectionValue {
   title: string;
+  menuListPath: string;
   menuOrderList: MenuOrder[];
   setMenuOrderList: (menuOrderList: MenuOrder[]) => void;
 }
@@ -34,9 +37,15 @@ const AddMenuBtn = ({ onClick }: AddMenuBtnValue) => {
   );
 };
 
-const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSectionValue) => {
+const DinnerSection = ({
+  title,
+  menuListPath,
+  menuOrderList,
+  setMenuOrderList,
+}: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
-  const optionText = (option: [Option?, Option?], select: [number?, number?]) => {
+  const link = useLink();
+  const optionText = (option: [Option?, Option?], select: [number | null, number | null]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
 
@@ -48,7 +57,7 @@ const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSection
       <SectionTitle>{title}</SectionTitle>
       {menuOrderList.map((item, idx) => {
         const itemInfo = menu[item.menuId];
-        const setSelect = (opt1: number, opt2: number | undefined) => {
+        const setSelect = (opt1: number | null, opt2: number | null) => {
           const nextOrder = { ...item, option: [opt1, opt2] };
           const nextOrderList = [
             ...[...menuOrderList].slice(0, idx),
@@ -57,20 +66,29 @@ const DinnerSection = ({ title, menuOrderList, setMenuOrderList }: DinnerSection
           ] as MenuOrder[];
           setMenuOrderList(nextOrderList);
         };
+        const onDelete = () => {
+          const nextOrderList = [
+            ...[...menuOrderList].slice(0, idx),
+            ...[...menuOrderList].slice(idx + 1),
+          ] as MenuOrder[];
+
+          setMenuOrderList(nextOrderList);
+        };
         return (
           <MobileItem
             key={idx}
             type='item'
             title={itemInfo.name}
             subTitle={optionText(itemInfo.option, item.option)}
-            desc={`${KRWFormat(itemInfo.price)}`}
+            desc={`${item.count}개 | ${KRWFormat(itemInfo.price)}`}
             option={itemInfo.option}
             select={item.option}
             setSelect={setSelect}
+            onDelete={item.isDefault ? undefined : onDelete}
           />
         );
       })}
-      <AddMenuBtn />
+      <AddMenuBtn onClick={() => link.to(menuListPath)} />
     </SectionContainer>
   );
 };

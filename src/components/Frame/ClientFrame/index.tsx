@@ -7,8 +7,8 @@ import { ClientFrameContainer } from './style';
 import Page from '@/components/Page';
 import { ClientFooter } from '@/components/Footer';
 
-import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.svg';
-import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.svg';
+import MobileBackgroundImg2 from '@/assets/images/background-mobile-2.png';
+import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.png';
 
 const depthMap: { [key: string]: number } =
   {

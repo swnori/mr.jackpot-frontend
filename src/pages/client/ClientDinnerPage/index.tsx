@@ -17,46 +17,27 @@ import Header from '@/components/Header';
 import StyleSection from '@/components/Dinner/StyleSection';
 import DinnerSection from '@/components/Dinner/DinnerSection';
 
+import useOrder from '@/hooks/useOrder';
+
 import { dinnerOrderState } from '@/stores/order';
-import { menuInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
 import { MenuOrder } from '@/types/order';
+import { MenuType } from '@/types/menu';
 
 const ClientDinnerPage = () => {
   const { id } = useParams();
-  const menuInfo = useRecoilValue(menuInfoState);
   const dinnerInfoList = useRecoilValue(dinnerInfoState);
   const dinnerInfo = dinnerInfoList[Number(id)];
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
+  const { setDinnerDefault } = useOrder();
 
   useLayoutEffect(() => {
-    setDinnerOrder((prev) => ({
-      ...prev,
-      mainDish: dinnerInfo.mainDish.map((menuId) => ({
-        menuId,
-        option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
-        ],
-      })),
-      side: dinnerInfo.side.map((menuId) => ({
-        menuId,
-        option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
-        ],
-      })),
-      drink: dinnerInfo.drink.map((menuId) => ({
-        menuId,
-        option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
-        ],
-      })),
-      style: dinnerInfo.style,
-    }));
-  }, [dinnerInfo, menuInfo, setDinnerOrder]);
+    if (dinnerOrder.mainDish.length === 0) {
+      // 모든 디너에는 mainDish가 무조건 존재하므로 주문 정보가 아예 초기화됐는지 검사하려면 mainDish만 검사해도 됨
+      setDinnerDefault(Number(id));
+    }
+  }, [setDinnerDefault, id, dinnerOrder]);
 
   const setStyleHandler = (style: number) => {
     setDinnerOrder((prev) => ({ ...prev, style }));
@@ -93,16 +74,19 @@ const ClientDinnerPage = () => {
           title='Main Dish'
           menuOrderList={dinnerOrder.mainDish}
           setMenuOrderList={setMainDishOrderList}
+          menuListPath={`/client/menu/${MenuType.MAIN_DISH}`}
         />
         <DinnerSection
           title='Side'
           menuOrderList={dinnerOrder.side}
           setMenuOrderList={setSideOrderList}
+          menuListPath={`/client/menu/${MenuType.SIDE}`}
         />
         <DinnerSection
           title='Drink'
           menuOrderList={dinnerOrder.drink}
           setMenuOrderList={setDrinkOrderList}
+          menuListPath={`/client/menu/${MenuType.DRINK}`}
         />
         <StyleSection orderStyle={dinnerOrder.style} setStyleHandler={setStyleHandler} />
       </DinnerDetailContainer>

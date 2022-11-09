@@ -135,6 +135,13 @@ const dummyData: MenuInfo[] = [
       },
     ],
   },
+  {
+    id: 9,
+    type: MenuType.SIDE,
+    name: '바게트 빵(Baguatte)',
+    price: 1000,
+    option: [],
+  },
 ];
 
 const styleDummyData = [
