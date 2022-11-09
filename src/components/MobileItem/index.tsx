@@ -39,22 +39,22 @@ interface ItemValue {
   desc?: string | number;
   checked?: boolean;
   option?: [Option?, Option?];
-  select?: [number, number?];
+  select?: [number | null, number | null];
   onClick?: () => void;
   onDelete?: (id: string | number) => void;
-  setSelect?: (opt1: number, opt2: number | undefined) => void;
+  setSelect?: (opt1: number | null, opt2: number | null) => void;
 }
 
 interface ItemOptionValue {
   menuName: string;
   option: [Option?, Option?];
-  select: [number, number?];
-  setSelect: (opt1: number, opt2: number | undefined) => void;
+  select: [number | null, number | null];
+  setSelect: (opt1: number | null, opt2: number | null) => void;
 }
 
 const ItemOption = ({ menuName, option, select, setSelect }: ItemOptionValue) => {
   const setOpt1Handler = (id: number) => {
-    setSelect(id, select[1]);
+    setSelect(id, select[1] ?? null);
   };
 
   const setOpt2Handler = (id: number) => {

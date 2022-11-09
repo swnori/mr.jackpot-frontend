@@ -1,7 +1,8 @@
 export interface MenuOrder {
   id?: number;
   menuId: number;
-  option: [number, number];
+  option: [number | null, number | null];
+  count: number;
   isDefault?: boolean;
 }
 

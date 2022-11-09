@@ -23,29 +23,32 @@ const ClientMainPage = () => {
   const goDinnerPage = (id: number) => {
     const dinnerInfo = dinnerList[id];
     setDinnerOrder({
-      mainDish: dinnerInfo.mainDish.map((menuId) => ({
-        menuId,
+      mainDish: dinnerInfo.mainDish.map((menu) => ({
+        menuId: menu.menuId,
         option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
+          menuInfo[menu.menuId].option[0]?.default ?? 0,
+          menuInfo[menu.menuId].option[1]?.default ?? 0,
         ],
         isDefault: true,
+        count: menu.count,
       })),
-      side: dinnerInfo.side.map((menuId) => ({
-        menuId,
+      side: dinnerInfo.side.map((menu) => ({
+        menuId: menu.menuId,
         option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
+          menuInfo[menu.menuId].option[0]?.default ?? 0,
+          menuInfo[menu.menuId].option[1]?.default ?? 0,
         ],
         isDefault: true,
+        count: menu.count,
       })),
-      drink: dinnerInfo.drink.map((menuId) => ({
-        menuId,
+      drink: dinnerInfo.drink.map((menu) => ({
+        menuId: menu.menuId,
         option: [
-          menuInfo[menuId].option[0]?.default ?? 0,
-          menuInfo[menuId].option[1]?.default ?? 0,
+          menuInfo[menu.menuId].option[0]?.default ?? 0,
+          menuInfo[menu.menuId].option[1]?.default ?? 0,
         ],
         isDefault: true,
+        count: menu.count,
       })),
       style: dinnerInfo.style,
     });

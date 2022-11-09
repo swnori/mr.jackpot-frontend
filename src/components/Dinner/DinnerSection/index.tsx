@@ -45,7 +45,7 @@ const DinnerSection = ({
 }: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
   const link = useLink();
-  const optionText = (option: [Option?, Option?], select: [number?, number?]) => {
+  const optionText = (option: [Option?, Option?], select: [number | null, number | null]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
 
@@ -57,7 +57,7 @@ const DinnerSection = ({
       <SectionTitle>{title}</SectionTitle>
       {menuOrderList.map((item, idx) => {
         const itemInfo = menu[item.menuId];
-        const setSelect = (opt1: number, opt2: number | undefined) => {
+        const setSelect = (opt1: number | null, opt2: number | null) => {
           const nextOrder = { ...item, option: [opt1, opt2] };
           const nextOrderList = [
             ...[...menuOrderList].slice(0, idx),
@@ -80,7 +80,7 @@ const DinnerSection = ({
             type='item'
             title={itemInfo.name}
             subTitle={optionText(itemInfo.option, item.option)}
-            desc={`${KRWFormat(itemInfo.price)}`}
+            desc={`${item.count}개 | ${KRWFormat(itemInfo.price)}`}
             option={itemInfo.option}
             select={item.option}
             setSelect={setSelect}
