@@ -8,14 +8,24 @@ export interface MenuOrder {
 
 export interface DinnerOrder {
   id?: number;
+  type: number;
   mainDish: MenuOrder[];
   side: MenuOrder[];
   drink: MenuOrder[];
   style: number;
 }
 
+interface OrderInfo {
+  reserveName: string;
+  reserveDate: Date;
+  address: string;
+  contact: string;
+  requestDetail: string;
+}
+
 export interface Order {
-  id: number;
-  // 주문자 정보, 쿠폰 여부
+  info: OrderInfo;
+  couponId?: number | null;
+  price: number;
   dinnerList: DinnerOrder[];
 }

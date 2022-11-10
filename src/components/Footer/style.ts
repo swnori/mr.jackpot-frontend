@@ -73,3 +73,19 @@ export const BasketBtn = styled.button`
     width: 1.5rem;
   }
 `;
+
+export const BasketCount = styled.div`
+  background: ${ColorCode.WHITE};
+  border: 1px solid ${ColorCode.PRIMARY};
+  color: ${ColorCode.PRIMARY};
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  font-size: ${FontSize.M};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -0.5rem;
+  right: 0.5rem;
+`;

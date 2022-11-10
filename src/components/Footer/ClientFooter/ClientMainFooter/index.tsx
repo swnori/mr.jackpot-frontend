@@ -1,8 +1,17 @@
-import { BasketBtn, FooterBtn, FooterBtnContainer, FooterContainer, FooterIcon } from '../../style';
+import {
+  BasketBtn,
+  BasketCount,
+  FooterBtn,
+  FooterBtnContainer,
+  FooterContainer,
+  FooterIcon,
+} from '../../style';
 
 import VoiceRec from '@/components/VoiceRec';
 
+import useOrder from '@/hooks/useOrder';
 import useModal from '@/hooks/useModal';
+import { useLink } from '@/hooks/useLink';
 
 import UserIcon from '@/assets/icons/icon-user.svg';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
@@ -16,12 +25,14 @@ const motionVariable = {
 
 const ClientMainFooter = () => {
   const { showModal } = useModal();
+  const link = useLink();
   const handleOpenVoiceRec = () => {
     showModal({
       type: 'none',
       children: <VoiceRec />,
     });
   };
+  const { cartLength } = useOrder();
   return (
     <FooterContainer
       variants={motionVariable}
@@ -41,9 +52,10 @@ const ClientMainFooter = () => {
           <FooterIcon src={UserIcon} />
         </FooterBtn>
       </FooterBtnContainer>
-      <BasketBtn>
+      <BasketBtn onClick={() => link.to('/client/cart')}>
         <FooterIcon src={BasketIcon} />
         장바구니
+        {cartLength > 0 ? <BasketCount>{cartLength}</BasketCount> : null}
       </BasketBtn>
     </FooterContainer>
   );
