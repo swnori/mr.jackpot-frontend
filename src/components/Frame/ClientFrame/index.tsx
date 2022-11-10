@@ -15,6 +15,7 @@ const depthMap: { [key: string]: number } =
     main: 0,
     orderlist: 1,
     dinner: 1,
+    cart: 1,
   } ?? 0;
 
 const ClientFrame = () => {

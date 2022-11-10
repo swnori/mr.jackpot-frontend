@@ -2,6 +2,7 @@ import React from 'react';
 
 import ClientMainFooter from './ClientMainFooter';
 import ClientDinnerFooter from './ClientDinnerFooter';
+import ClientCartFooter from './ClientCartFooter';
 
 interface FooterValue {
   pathName: string;
@@ -12,6 +13,7 @@ const footerMap: { [key: string]: JSX.Element | null } =
     main: <ClientMainFooter />,
     orderlist: <ClientMainFooter />,
     dinner: <ClientDinnerFooter />,
+    cart: <ClientCartFooter />,
   } ?? null;
 
 /**

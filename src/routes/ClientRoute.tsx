@@ -5,6 +5,7 @@ import { MobileGuard } from './guards';
 import ClientFrame from '@/components/Frame/ClientFrame';
 
 import {
+  ClientCartPage,
   ClientDinnerPage,
   ClientIntroPage,
   ClientLoginPage,
@@ -24,6 +25,7 @@ const ClientRoute = () => {
           <Route path='/main' element={<ClientMainPage />} />
           <Route path='/dinner/:id' element={<ClientDinnerPage />} />
           <Route path='/menu/:type' element={<ClientMenuListPage />} />
+          <Route path='/cart' element={<ClientCartPage />} />
         </Route>
       </Route>
     </Routes>

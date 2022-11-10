@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${ColorCode.BLACK};
     }
   }
+  textarea:focus-visible,
+  input:focus-visible {
+    outline: none;
+  }
   #root {
     position: fixed;
     width: 100vw;

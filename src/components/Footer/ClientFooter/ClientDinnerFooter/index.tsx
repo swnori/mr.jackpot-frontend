@@ -1,6 +1,7 @@
 import { BasketBtn, FooterBtnContainer, FooterContainer, FooterIcon } from '../../style';
 
 import useOrder from '@/hooks/useOrder';
+import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
@@ -12,7 +13,12 @@ const motionVariable = {
 };
 
 const ClientDinnerFooter = () => {
-  const { dinnerOrderPrice } = useOrder();
+  const { dinnerOrderPrice, addDinnerToCart } = useOrder();
+  const link = useLink();
+  const addCartHandler = () => {
+    addDinnerToCart();
+    link.back();
+  };
   return (
     <FooterContainer
       variants={motionVariable}
@@ -22,7 +28,7 @@ const ClientDinnerFooter = () => {
       transition={{ duration: 0.3 }}
     >
       <FooterBtnContainer>{KRWFormat(dinnerOrderPrice() ?? 0)}</FooterBtnContainer>
-      <BasketBtn>
+      <BasketBtn onClick={() => addCartHandler()}>
         <FooterIcon src={BasketIcon} />
         장바구니에 담기
       </BasketBtn>
