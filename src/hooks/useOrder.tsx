@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { dinnerOrderState } from '@/stores/order';
+import { dinnerOrderState, orderState } from '@/stores/order';
 import { menuInfoState, styleInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
@@ -11,6 +11,68 @@ const useOrder = () => {
   const menuInfo = useRecoilValue(menuInfoState);
   const styleInfo = useRecoilValue(styleInfoState);
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
+  const [order, setOrder] = useRecoilState(orderState);
+
+  const cartLength = order.dinnerList.length;
+
+  const menuOrderPrice = (item: MenuOrder) => {
+    const itemInfo = menuInfo[item.menuId];
+
+    const [sel1, sel2] = item.option;
+    const [opt1, opt2] = itemInfo.option;
+
+    const opt1Price = opt1 && sel1 ? opt1.list[sel1].price : 0;
+    const opt2Price = opt2 && sel2 ? opt2.list[sel2].price : 0;
+
+    return (itemInfo.price + opt1Price + opt2Price) * item.count;
+  };
+
+  const dinnerOrderPrice = (dinnerId?: number) => {
+    if (!dinnerId) {
+      const mainDishPrice = dinnerOrder.mainDish.reduce(
+        (pre, item) => pre + menuOrderPrice(item),
+        0,
+      );
+      const sidePrice = dinnerOrder.side.reduce((pre, item) => pre + menuOrderPrice(item), 0);
+      const drinkPrice = dinnerOrder.drink.reduce((pre, item) => pre + menuOrderPrice(item), 0);
+      const stylePrice = styleInfo[dinnerOrder.style].price ?? 0;
+
+      return mainDishPrice + sidePrice + drinkPrice + stylePrice;
+    }
+
+    const mainDishPrice = order.dinnerList[dinnerId].mainDish.reduce(
+      (pre, item) => pre + menuOrderPrice(item),
+      0,
+    );
+    const sidePrice = order.dinnerList[dinnerId].side.reduce(
+      (pre, item) => pre + menuOrderPrice(item),
+      0,
+    );
+    const drinkPrice = order.dinnerList[dinnerId].drink.reduce(
+      (pre, item) => pre + menuOrderPrice(item),
+      0,
+    );
+    const stylePrice = styleInfo[order.dinnerList[dinnerId].style].price ?? 0;
+
+    return mainDishPrice + sidePrice + drinkPrice + stylePrice;
+  };
+
+  const orderPrice = () => order.dinnerList.reduce((pre, _, idx) => pre + dinnerOrderPrice(idx), 0);
+
+  const addDinnerToCart = () => {
+    const nextDinnerList = [...order.dinnerList, dinnerOrder];
+    const nextPrice = order.price + (dinnerOrderPrice() ?? 0);
+    setOrder((prev) => ({ ...prev, dinnerList: nextDinnerList, price: nextPrice }));
+  };
+
+  const loadDinnerFromCart = (id?: number) => {
+    if (id) {
+      setDinnerOrder(order.dinnerList[id]);
+    } else {
+      setDinnerOrder(order.dinnerList[order.dinnerList.length - 1]);
+    }
+  };
+
   const setDinnerDefault = (dinnerTypeId: number) => {
     const dinnerInfo = dinnerList[dinnerTypeId];
     setDinnerOrder({
@@ -46,35 +108,13 @@ const useOrder = () => {
     });
   };
 
-  const menuOrderPrice = (item: MenuOrder) => {
-    const itemInfo = menuInfo[item.menuId];
-
-    const [sel1, sel2] = item.option;
-    const [opt1, opt2] = itemInfo.option;
-
-    const opt1Price = opt1 && sel1 ? opt1.list[sel1].price : 0;
-    const opt2Price = opt2 && sel2 ? opt2.list[sel2].price : 0;
-
-    return (itemInfo.price + opt1Price + opt2Price) * item.count;
-  };
-
-  const dinnerOrderPrice = (dinnerId?: number) => {
-    if (!dinnerId) {
-      const mainDishPrice = dinnerOrder.mainDish.reduce(
-        (pre, item) => pre + menuOrderPrice(item),
-        0,
-      );
-      const sidePrice = dinnerOrder.side.reduce((pre, item) => pre + menuOrderPrice(item), 0);
-      const drinkPrice = dinnerOrder.drink.reduce((pre, item) => pre + menuOrderPrice(item), 0);
-      const stylePrice = styleInfo[dinnerOrder.style].price ?? 0;
-
-      return mainDishPrice + sidePrice + drinkPrice + stylePrice;
-    }
-  };
-
   return {
+    cartLength,
+    addDinnerToCart,
+    loadDinnerFromCart,
     menuOrderPrice,
     dinnerOrderPrice,
+    orderPrice,
     setDinnerDefault,
   };
 };
