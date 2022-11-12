@@ -745,6 +745,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.11.9":
+  version: 18.11.9
+  resolution: "@types/node@npm:18.11.9"
+  checksum: cc0aae109e9b7adefc32eecb838d6fad931663bb06484b5e9cbbbf74865c721b03d16fd8d74ad90e31dbe093d956a7c2c306ba5429ba0c00f3f7505103d7a496
+  languageName: node
+  linkType: hard
+
 "@types/prettier@npm:^2":
   version: 2.7.1
   resolution: "@types/prettier@npm:2.7.1"
@@ -3541,6 +3548,7 @@ __metadata:
   resolution: "mr.jackpot-frontend@workspace:."
   dependencies:
     "@types/eslint": ^8
+    "@types/node": ^18.11.9
     "@types/prettier": ^2
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
