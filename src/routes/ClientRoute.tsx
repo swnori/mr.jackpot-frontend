@@ -6,6 +6,7 @@ import ClientFrame from '@/components/Frame/ClientFrame';
 
 import {
   ClientCartPage,
+  ClientCouponPage,
   ClientDinnerPage,
   ClientIntroPage,
   ClientLoginPage,
@@ -26,6 +27,7 @@ const ClientRoute = () => {
           <Route path='/dinner/:id' element={<ClientDinnerPage />} />
           <Route path='/menu/:type' element={<ClientMenuListPage />} />
           <Route path='/cart' element={<ClientCartPage />} />
+          <Route path='/coupon' element={<ClientCouponPage />} />
         </Route>
       </Route>
     </Routes>
