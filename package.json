@@ -11,8 +11,10 @@
     "lint:code": "eslint --ext .js,.jsx,.ts,.tsx src"
   },
   "dependencies": {
+    "date-fns": "^2.29.3",
     "framer-motion": "^7.5.4",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
@@ -25,10 +27,12 @@
     "styled-reset": "^4.4.2"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/eslint": "^8",
     "@types/node": "^18.11.9",
     "@types/prettier": "^2",
     "@types/react": "^18.0.17",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "^18.0.6",
     "@types/react-query": "^1.2.9",
     "@types/react-speech-recognition": "^3.9.0",
