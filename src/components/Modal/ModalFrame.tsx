@@ -5,6 +5,7 @@ import {
   ModalContainer,
   ModalInnerContainer,
   ModalRejectBtn,
+  ModalTitle,
 } from './style';
 
 import useModal from '@/hooks/useModal';
@@ -55,12 +56,12 @@ const ModalFrame = ({
         children
       ) : (
         <ModalInnerContainer>
-          {title}
+          <ModalTitle>{title}</ModalTitle>
           {children}
           {showBtn ? (
             <ModalBtnContainer>
-              <ModalConfirmBtn onClick={onConfirm}>{confirmText}</ModalConfirmBtn>
               <ModalRejectBtn onClick={onReject}>{rejectText}</ModalRejectBtn>
+              <ModalConfirmBtn onClick={onConfirm}>{confirmText}</ModalConfirmBtn>
             </ModalBtnContainer>
           ) : null}
         </ModalInnerContainer>

@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { dinnerOrderState, orderState } from '@/stores/order';
 import { menuInfoState, styleInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
+import { couponState } from '@/stores/coupon';
 
 import { MenuOrder } from '@/types/order';
 
@@ -12,6 +13,7 @@ const useOrder = () => {
   const styleInfo = useRecoilValue(styleInfoState);
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
   const [order, setOrder] = useRecoilState(orderState);
+  const coupon = useRecoilValue(couponState);
 
   const cartLength = order.dinnerList.length;
 
@@ -28,7 +30,7 @@ const useOrder = () => {
   };
 
   const dinnerOrderPrice = (dinnerId?: number) => {
-    if (!dinnerId) {
+    if (dinnerId === undefined || dinnerId === null) {
       const mainDishPrice = dinnerOrder.mainDish.reduce(
         (pre, item) => pre + menuOrderPrice(item),
         0,
@@ -39,7 +41,6 @@ const useOrder = () => {
 
       return mainDishPrice + sidePrice + drinkPrice + stylePrice;
     }
-
     const mainDishPrice = order.dinnerList[dinnerId].mainDish.reduce(
       (pre, item) => pre + menuOrderPrice(item),
       0,
@@ -57,8 +58,6 @@ const useOrder = () => {
     return mainDishPrice + sidePrice + drinkPrice + stylePrice;
   };
 
-  const orderPrice = () => order.dinnerList.reduce((pre, _, idx) => pre + dinnerOrderPrice(idx), 0);
-
   const addDinnerToCart = () => {
     const nextDinnerList = [...order.dinnerList, dinnerOrder];
     const nextPrice = order.price + (dinnerOrderPrice() ?? 0);
@@ -66,11 +65,29 @@ const useOrder = () => {
   };
 
   const loadDinnerFromCart = (id?: number) => {
-    if (id) {
+    if (id || id === 0) {
+      if (!order?.dinnerList[id]) {
+        return false;
+      }
       setDinnerOrder(order.dinnerList[id]);
-    } else {
-      setDinnerOrder(order.dinnerList[order.dinnerList.length - 1]);
+      return true;
     }
+    return false;
+  };
+
+  const updateDinnerToCart = (id: number) => {
+    const nextDinnerList = [
+      ...order.dinnerList.slice(0, id),
+      dinnerOrder,
+      ...order.dinnerList.slice(id + 1),
+    ];
+    const nextPrice = order.price - dinnerOrderPrice(id) + dinnerOrderPrice();
+    setOrder((prev) => ({ ...prev, dinnerList: nextDinnerList, price: nextPrice }));
+  };
+
+  const getSelectedCoupon = () => {
+    const { couponId } = order;
+    return coupon.find((item) => item.id === couponId);
   };
 
   const setDinnerDefault = (dinnerTypeId: number) => {
@@ -107,15 +124,25 @@ const useOrder = () => {
       style: dinnerInfo.style,
     });
   };
+  const orderPrice = () => {
+    const totalDinnerPrice = order.dinnerList.reduce(
+      (pre, _, idx) => pre + dinnerOrderPrice(idx),
+      0,
+    );
+    const couponPrice = getSelectedCoupon()?.price ?? 0;
+    return totalDinnerPrice - couponPrice + 100000;
+  };
 
   return {
     cartLength,
     addDinnerToCart,
     loadDinnerFromCart,
+    updateDinnerToCart,
     menuOrderPrice,
     dinnerOrderPrice,
     orderPrice,
     setDinnerDefault,
+    getSelectedCoupon,
   };
 };
 

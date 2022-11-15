@@ -5,4 +5,6 @@ export enum ColorCode {
   GREY = '#9C9C9C',
   DARKGREY = '#6B6B6B',
   PRIMARY = '#FF776F',
+  ERROR = '#FFB3B3',
+  CONFIRM = '#B2C8DF',
 }

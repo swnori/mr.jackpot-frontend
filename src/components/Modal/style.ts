@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
 
+import { FontSize } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
 export const ModalContainer = styled.div`
@@ -29,12 +31,48 @@ export const ModalInnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: ${ColorCode.WHITE};
-  border-radius: 4px;
+  border-radius: 15px;
+  overflow: hidden;
   z-index: 1;
 `;
 
-export const ModalBtnContainer = styled.div``;
+export const ModalTitle = styled.span`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 
-export const ModalConfirmBtn = styled.button``;
+  padding: 1rem;
+  font-size: ${FontSize.XL};
 
-export const ModalRejectBtn = styled.button``;
+  img {
+    width: ${FontSize.XL};
+  }
+`;
+
+export const ModalBtnContainer = styled.div`
+  display: flex;
+  ${isMobile
+    ? ``
+    : `padding: 1rem;
+      gap: 1rem;
+      justify-content: flex-end;`}
+`;
+
+const ModalBtn = styled.button`
+  border: none;
+  ${isMobile
+    ? `width: 100%;
+      padding: 1.25rem;
+      font-size: ${FontSize.L};`
+    : `font-size: ${FontSize.L};
+      padding: 0.5rem 2rem;
+      border-radius: calc((${FontSize.L} + 1rem) / 2);`}
+`;
+
+export const ModalConfirmBtn = styled(ModalBtn)`
+  background: ${ColorCode.CONFIRM};
+`;
+
+export const ModalRejectBtn = styled(ModalBtn)`
+  background: ${ColorCode.ERROR};
+`;
