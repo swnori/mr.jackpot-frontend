@@ -92,13 +92,12 @@ const MobileItem = ({
             <ItemRadioImg src={checked ? RadioCheckedIcon : RadioIcon} />
           </ItemRadioBox>
         ) : null}
-        {onDelete ? (
-          <ItemDeleteBtn onClick={clickDeleteHandler}>
-            <ItemDeleteImg src={DeleteIcon} />
-          </ItemDeleteBtn>
-        ) : null}
       </ItemContainer>
-
+      {onDelete ? (
+        <ItemDeleteBtn onClick={clickDeleteHandler}>
+          <ItemDeleteImg src={DeleteIcon} />
+        </ItemDeleteBtn>
+      ) : null}
       <AnimatePresence>
         {hasOption && optShow ? (
           <ItemOption

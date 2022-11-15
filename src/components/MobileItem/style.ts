@@ -113,6 +113,8 @@ export const ItemDeleteBtn = styled.button`
   outline: 0;
   border: none;
   padding: 0;
+
+  z-index: 5;
 `;
 export const ItemDeleteImg = styled.img`
   width: 100%;
