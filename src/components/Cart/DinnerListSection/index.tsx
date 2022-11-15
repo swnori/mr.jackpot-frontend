@@ -11,6 +11,7 @@ import {
 import MobileItem from '@/components/MobileItem';
 
 import useOrder from '@/hooks/useOrder';
+import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
@@ -27,6 +28,7 @@ const DinnerListSection = () => {
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
   const { dinnerOrderPrice } = useOrder();
+  const link = useLink();
   const deleteDinnerHandler = (idx: number) => {
     setOrder((prev) => {
       const nextDinnerList = [...prev.dinnerList.slice(0, idx), ...prev.dinnerList.slice(idx + 1)];
@@ -49,8 +51,11 @@ const DinnerListSection = () => {
     return (
       mainDishes +
       (mainDishes !== '' && sides !== '' ? `, ${sides}` : sides) +
-      (mainDishes !== '' && sides !== '' && drinks !== '' ? `, ${drinks}` : drinks)
+      ((mainDishes !== '' || sides !== '') && drinks !== '' ? `, ${drinks}` : drinks)
     );
+  };
+  const goUpdateDinnerPage = (id: number) => {
+    link.to(`/client/dinner/update/${id}`);
   };
   return (
     <CartSection>
@@ -73,6 +78,7 @@ const DinnerListSection = () => {
               title={info.name}
               subTitle={dinnerDetail(dinner)}
               desc={KRWFormat(dinnerOrderPrice(idx))}
+              onClick={() => goUpdateDinnerPage(idx)}
               onDelete={() => deleteDinnerHandler(idx)}
             />
           );

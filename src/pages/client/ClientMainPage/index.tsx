@@ -20,7 +20,7 @@ const ClientMainPage = () => {
 
   const goDinnerPage = (id: number) => {
     setDinnerDefault(id);
-    link.to(`/client/dinner/${id}`);
+    link.to(`/client/dinner/create/${id}`);
   };
   return (
     <MainContainer>

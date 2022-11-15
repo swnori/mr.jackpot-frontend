@@ -24,7 +24,7 @@ const ClientRoute = () => {
         <Route path='/signup' element={<ClientSignUpPage />} />
         <Route element={<ClientFrame />}>
           <Route path='/main' element={<ClientMainPage />} />
-          <Route path='/dinner/:id' element={<ClientDinnerPage />} />
+          <Route path='/dinner/:mode/:id' element={<ClientDinnerPage />} />
           <Route path='/menu/:type' element={<ClientMenuListPage />} />
           <Route path='/cart' element={<ClientCartPage />} />
           <Route path='/coupon' element={<ClientCouponPage />} />
