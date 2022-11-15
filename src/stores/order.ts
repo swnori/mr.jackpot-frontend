@@ -18,7 +18,7 @@ export const orderState = atom<Order>({
   key: 'orderState',
   default: {
     info: { reserveName: '', reserveDate: new Date(), address: '', contact: '', requestDetail: '' },
-    couponId: null,
+    couponId: 0,
     price: 0,
     dinnerList: [],
   },

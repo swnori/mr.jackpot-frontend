@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { useLayoutEffect } from 'react';
@@ -18,6 +19,7 @@ import StyleSection from '@/components/Dinner/StyleSection';
 import DinnerSection from '@/components/Dinner/DinnerSection';
 
 import useOrder from '@/hooks/useOrder';
+import { useLink } from '@/hooks/useLink';
 
 import { dinnerOrderState } from '@/stores/order';
 import { dinnerInfoState } from '@/stores/dinner';
@@ -26,18 +28,27 @@ import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
 
 const ClientDinnerPage = () => {
-  const { id } = useParams();
+  const { mode, id } = useParams();
   const dinnerInfoList = useRecoilValue(dinnerInfoState);
-  const dinnerInfo = dinnerInfoList[Number(id)];
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
-  const { setDinnerDefault } = useOrder();
+  const { setDinnerDefault, loadDinnerFromCart } = useOrder();
+  const link = useLink();
+
+  const dinnerInfo =
+    mode === 'create' ? dinnerInfoList[Number(id)] : dinnerInfoList[dinnerOrder.type];
 
   useLayoutEffect(() => {
-    if (dinnerOrder.mainDish.length === 0) {
+    if (dinnerOrder.mainDish.length === 0 && mode === 'create') {
       // 모든 디너에는 mainDish가 무조건 존재하므로 주문 정보가 아예 초기화됐는지 검사하려면 mainDish만 검사해도 됨
       setDinnerDefault(Number(id));
     }
-  }, [setDinnerDefault, id, dinnerOrder]);
+
+    if (mode === 'update') {
+      if (!loadDinnerFromCart(Number(id))) {
+        link.back();
+      }
+    }
+  }, []);
 
   const setStyleHandler = (style: number) => {
     setDinnerOrder((prev) => ({ ...prev, style }));

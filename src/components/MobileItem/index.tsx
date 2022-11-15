@@ -26,7 +26,7 @@ import RadioCheckedIcon from '@/assets/icons/icon-radio-checked.svg';
 interface ItemValue {
   type?: 'button' | 'radio' | 'item';
   id?: string | number;
-  img?: string;
+  img?: string | null;
   title?: string;
   subTitle?: string;
   desc?: string | number;
@@ -75,11 +75,13 @@ const MobileItem = ({
   };
 
   return (
-    <ItemWrapper>
+    <ItemWrapper highlight={type === 'radio' && checked}>
       <ItemContainer onClick={clickItemHandler} isShowOption={optShow}>
-        <ItemImgWrapper>
-          <ItemImg src={img} />
-        </ItemImgWrapper>
+        {img !== null ? (
+          <ItemImgWrapper>
+            <ItemImg src={img} />
+          </ItemImgWrapper>
+        ) : null}
         <ItemInfoContainer>
           <ItemTitle>{title}</ItemTitle>
           <ItemSubTitle>{subTitle}</ItemSubTitle>
@@ -90,13 +92,12 @@ const MobileItem = ({
             <ItemRadioImg src={checked ? RadioCheckedIcon : RadioIcon} />
           </ItemRadioBox>
         ) : null}
-        {onDelete ? (
-          <ItemDeleteBtn onClick={clickDeleteHandler}>
-            <ItemDeleteImg src={DeleteIcon} />
-          </ItemDeleteBtn>
-        ) : null}
       </ItemContainer>
-
+      {onDelete ? (
+        <ItemDeleteBtn onClick={clickDeleteHandler}>
+          <ItemDeleteImg src={DeleteIcon} />
+        </ItemDeleteBtn>
+      ) : null}
       <AnimatePresence>
         {hasOption && optShow ? (
           <ItemOption

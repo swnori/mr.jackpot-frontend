@@ -10,7 +10,7 @@ export interface ModalProps {
   handleConfirm?: (...arg: any[]) => any; // 확인 함수
   handleBackground?: (...arg: any[]) => any; // 배경 클릭 함수(기본값은 취소 함수)
   children?: React.ReactNode; // children 컴포넌트
-  title?: string; // (type === 'bottom'일 경우) 헤더
+  title?: string | React.ReactNode; // (type === 'bottom'일 경우) 헤더
   showBtn?: boolean; // 버튼 보여줄 건지 여부
   readOnly?: boolean; // Modal을 못닫게
 }

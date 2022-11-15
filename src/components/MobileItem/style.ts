@@ -3,18 +3,23 @@ import styled from 'styled-components';
 import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-interface ItemWrapperValue {
+interface ItemContainerValue {
   isShowOption?: boolean;
 }
+interface ItemWrapperValue {
+  highlight?: boolean;
+}
 
-export const ItemWrapper = styled.div`
+export const ItemWrapper = styled.div<ItemWrapperValue>`
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.25);
-  border: 1px solid ${ColorCode.WHITE};
+  border: ${(props) =>
+    props.highlight ? `1px solid ${ColorCode.PRIMARY}` : `1px solid ${ColorCode.WHITE}`};
+
   backdrop-filter: blur(7.5px);
 `;
 
-export const ItemContainer = styled.div<ItemWrapperValue>`
+export const ItemContainer = styled.div<ItemContainerValue>`
   position: relative;
   width: calc(100% - 2rem);
   height: 8rem;
@@ -26,14 +31,15 @@ export const ItemContainer = styled.div<ItemWrapperValue>`
   gap: 1rem;
 
   /* Note: backdrop-filter has minimal browser support */
-
+  border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 15px;
-  border: 1px solid ${ColorCode.WHITE};
+
   ${(props) =>
     props.isShowOption
       ? `
           background: rgba(255, 255, 255, 0.15);
           backdrop-filter: blur(7.5px);
+          border: 1px solid ${ColorCode.WHITE};
         `
       : ''}
 
@@ -107,6 +113,8 @@ export const ItemDeleteBtn = styled.button`
   outline: 0;
   border: none;
   padding: 0;
+
+  z-index: 5;
 `;
 export const ItemDeleteImg = styled.img`
   width: 100%;

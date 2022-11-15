@@ -25,7 +25,7 @@ interface OrderInfo {
 
 export interface Order {
   info: OrderInfo;
-  couponId?: number | null;
+  couponId?: number;
   price: number;
   dinnerList: DinnerOrder[];
 }

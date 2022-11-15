@@ -5,3 +5,4 @@ export { default as ClientMainPage } from './ClientMainPage';
 export { default as ClientDinnerPage } from './ClientDinnerPage';
 export { default as ClientMenuListPage } from './ClientMenuListPage';
 export { default as ClientCartPage } from './ClientCartPage';
+export { default as ClientCouponPage } from './ClientCouponPage';

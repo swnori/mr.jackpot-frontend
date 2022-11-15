@@ -1,5 +1,7 @@
+const { VITE_BASE_URL } = import.meta.env;
+
 export const fetchHelloWorld = () =>
-  fetch('https://mr-jackpot-api.run.goorm.io/helloworld', {
+  fetch(`${VITE_BASE_URL}/helloworld`, {
     method: 'POST',
     credentials: 'include',
     mode: 'cors',
