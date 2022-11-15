@@ -1,8 +1,11 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useState } from 'react';
 
 import {
   CartContainer,
   CartInput,
+  CartInputBtn,
+  CartInputBtnImg,
   CartInputContainer,
   CartInputTitle,
   CartPaymentContainer,
@@ -13,15 +16,16 @@ import {
   CartSectionDesc,
   CartSectionTitle,
   CartSectionTitleImg,
-  CartSelect,
   CartTextArea,
   DinnerListContainer,
 } from './style';
 
 import MobileItem from '@/components/MobileItem';
 import Header from '@/components/Header';
+import DatePicker from '@/components/DatePicker';
 
 import useOrder from '@/hooks/useOrder';
+import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
@@ -34,12 +38,15 @@ import { DinnerOrder, MenuOrder } from '@/types/order';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 import HomeIcon from '@/assets/icons/icon-home.svg';
 import CouponIcon from '@/assets/icons/icon-coupon.svg';
+import ArrowRightIcon from '@/assets/icons/icon-arrow-right.svg';
 
 const ClientCartPage = () => {
   const [order, setOrder] = useRecoilState(orderState);
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
   const { orderPrice, dinnerOrderPrice } = useOrder();
+  const [date, setDate] = useState(new Date());
+  const link = useLink();
   const deleteDinnerHandler = (idx: number) => {
     setOrder((prev) => {
       const nextDinnerList = [...prev.dinnerList.slice(0, idx), ...prev.dinnerList.slice(idx + 1)];
@@ -83,6 +90,7 @@ const ClientCartPage = () => {
 
             return (
               <MobileItem
+                key={idx}
                 type='button'
                 title={info.name}
                 subTitle={dinnerDetail(dinner)}
@@ -104,7 +112,7 @@ const ClientCartPage = () => {
         </CartInputContainer>
         <CartInputContainer>
           <CartInputTitle>예약 시간</CartInputTitle>
-          <CartInput placeholder='예약 시간 입력' />
+          <DatePicker date={date} setDate={setDate} customInput={<CartInput />} />
         </CartInputContainer>
         <CartInputContainer>
           <CartInputTitle>주소</CartInputTitle>
@@ -127,11 +135,10 @@ const ClientCartPage = () => {
         </CartSectionTitle>
         <CartInputContainer>
           <CartInputTitle>할인 쿠폰</CartInputTitle>
-          <CartSelect>
-            <option value='' disabled selected>
-              할인 쿠폰 선택
-            </option>
-          </CartSelect>
+          <CartInputBtn onClick={() => link.to('/client/coupon')}>
+            할인 쿠폰 선택
+            <CartInputBtnImg src={ArrowRightIcon} />
+          </CartInputBtn>
         </CartInputContainer>
         <CartInputContainer>
           <CartInputTitle>결제 금액</CartInputTitle>

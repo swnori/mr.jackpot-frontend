@@ -22,6 +22,7 @@ export const CartSection = styled.section`
 
   padding: 3rem 1.5rem;
   border-radius: 15px;
+  width: calc(100% - 3rem);
 `;
 
 export const CartSectionTitle = styled.span`
@@ -63,6 +64,8 @@ export const CartInputTitle = styled.span`
 `;
 
 export const CartInput = styled.input`
+  width: calc(100% - 3rem);
+
   background: rgba(0, 0, 0, 0.15);
   border: 1px solid ${ColorCode.WHITE};
   border-radius: 10px;
@@ -75,6 +78,27 @@ export const CartInput = styled.input`
   &::placeholder {
     color: ${ColorCode.WHITE};
   }
+`;
+
+export const CartInputBtn = styled.button`
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid ${ColorCode.WHITE};
+  border-radius: 10px;
+
+  padding: 1rem 1.25rem;
+
+  font-size: ${FontSize.L};
+  font-weight: ${FontWeight.REGULAR};
+  color: ${ColorCode.WHITE};
+`;
+
+export const CartInputBtnImg = styled.img`
+  width: 1.5rem;
 `;
 
 export const CartTextArea = styled.textarea`
@@ -94,17 +118,6 @@ export const CartTextArea = styled.textarea`
   &::placeholder {
     color: ${ColorCode.WHITE};
   }
-`;
-
-export const CartSelect = styled.select`
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid ${ColorCode.WHITE};
-  padding: 1rem 1.25rem;
-  border-radius: 10px;
-
-  color: ${ColorCode.WHITE};
-  font-size: ${FontSize.L};
-  font-weight: ${FontWeight.REGULAR};
 `;
 
 export const CartPaymentContainer = styled.div`
