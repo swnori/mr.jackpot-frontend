@@ -46,9 +46,9 @@ const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
     <BackgroundContainer
       id={`scroll-bg-${location.pathname}`}
       src={backgroundSrc}
-      variants={mfVariant}
+      variants={type === 'client' ? mfVariant : {}}
       transition={{
-        type: 'linear',
+        ease: 'easeInOut',
         duration: 0.35,
       }}
       initial={depth === 0 ? 'hiddenLeft' : 'hiddenRight'}
