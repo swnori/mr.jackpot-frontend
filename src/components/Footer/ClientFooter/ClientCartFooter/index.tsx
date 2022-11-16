@@ -1,6 +1,7 @@
 import { BasketBtn, FooterBtnContainer, FooterContainer, FooterIcon } from '../../style';
 
 import useOrder from '@/hooks/useOrder';
+import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
@@ -13,6 +14,10 @@ const motionVariable = {
 
 const ClientCartFooter = () => {
   const { orderPrice } = useOrder();
+  const link = useLink();
+  const paymentHandler = () => {
+    link.replace('/client/main');
+  };
   return (
     <FooterContainer
       variants={motionVariable}
@@ -22,7 +27,7 @@ const ClientCartFooter = () => {
       transition={{ duration: 0.3 }}
     >
       <FooterBtnContainer>{KRWFormat(orderPrice())}</FooterBtnContainer>
-      <BasketBtn>
+      <BasketBtn onClick={() => paymentHandler()}>
         <FooterIcon src={CreditCardIcon} />
         결제하기
       </BasketBtn>
