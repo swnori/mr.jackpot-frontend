@@ -15,7 +15,7 @@ export interface DinnerOrder {
   style: number;
 }
 
-interface OrderInfo {
+export interface OrderInfo {
   reserveName: string;
   reserveDate: Date;
   address: string;

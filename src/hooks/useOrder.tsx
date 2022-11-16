@@ -5,7 +5,7 @@ import { menuInfoState, styleInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 import { couponState } from '@/stores/coupon';
 
-import { MenuOrder } from '@/types/order';
+import { DinnerOrder, MenuOrder } from '@/types/order';
 
 const useOrder = () => {
   const dinnerList = useRecoilValue(dinnerInfoState);
@@ -75,6 +75,10 @@ const useOrder = () => {
     return false;
   };
 
+  const loadDinnerFromId = (id: number, dummy: DinnerOrder) => {
+    setDinnerOrder(dummy);
+  };
+
   const updateDinnerToCart = (id: number) => {
     const nextDinnerList = [
       ...order.dinnerList.slice(0, id),
@@ -138,6 +142,7 @@ const useOrder = () => {
     addDinnerToCart,
     loadDinnerFromCart,
     updateDinnerToCart,
+    loadDinnerFromId,
     menuOrderPrice,
     dinnerOrderPrice,
     orderPrice,

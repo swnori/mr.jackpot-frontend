@@ -31,7 +31,7 @@ const ClientDinnerPage = () => {
   const { mode, id } = useParams();
   const dinnerInfoList = useRecoilValue(dinnerInfoState);
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
-  const { setDinnerDefault, loadDinnerFromCart } = useOrder();
+  const { setDinnerDefault, loadDinnerFromCart, loadDinnerFromId } = useOrder();
   const link = useLink();
 
   const dinnerInfo =
@@ -47,6 +47,17 @@ const ClientDinnerPage = () => {
       if (!loadDinnerFromCart(Number(id))) {
         link.back();
       }
+    }
+
+    if (dinnerOrder.mainDish.length === 0 && mode === 'read') {
+      loadDinnerFromId(Number(id), {
+        id: 24,
+        type: 0,
+        mainDish: [{ menuId: 0, option: [41, 46], count: 1, isDefault: false }],
+        side: [{ menuId: 9, option: [null, null], count: 4, isDefault: false }],
+        drink: [{ menuId: 5, option: [51, null], count: 1, isDefault: false }],
+        style: 1,
+      });
     }
   }, []);
 
@@ -86,18 +97,21 @@ const ClientDinnerPage = () => {
           menuOrderList={dinnerOrder.mainDish}
           setMenuOrderList={setMainDishOrderList}
           menuListPath={`/client/menu/${MenuType.MAIN_DISH}`}
+          readOnly={mode === 'read'}
         />
         <DinnerSection
           title='Side'
           menuOrderList={dinnerOrder.side}
           setMenuOrderList={setSideOrderList}
           menuListPath={`/client/menu/${MenuType.SIDE}`}
+          readOnly={mode === 'read'}
         />
         <DinnerSection
           title='Drink'
           menuOrderList={dinnerOrder.drink}
           setMenuOrderList={setDrinkOrderList}
           menuListPath={`/client/menu/${MenuType.DRINK}`}
+          readOnly={mode === 'read'}
         />
         <StyleSection orderStyle={dinnerOrder.style} setStyleHandler={setStyleHandler} />
       </DinnerDetailContainer>

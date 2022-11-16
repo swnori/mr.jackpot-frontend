@@ -3,6 +3,8 @@ import { OrderHistoryContainer, OrderListContainer } from './style';
 import MobileItem from '@/components/MobileItem';
 import Header from '@/components/Header';
 
+import { useLink } from '@/hooks/useLink';
+
 import { digitFormat, KRWFormat } from '@/utils/format';
 
 const dummyOrderHistory = [
@@ -23,6 +25,8 @@ const dummyOrderHistory = [
 ];
 
 const ClientOrderHistoryPage = () => {
+  const link = useLink();
+
   const createTimeText = (date: Date) => {
     const [year, month, day] = [date.getFullYear() % 100, date.getMonth() + 1, date.getDate()];
     return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)}`;
@@ -53,6 +57,7 @@ const ClientOrderHistoryPage = () => {
             title={order.dinnerName}
             subTitle={reserveTimeText(order.reserveTime)}
             desc={`${KRWFormat(order.price)} 결제(${createTimeText(order.createTime)})`}
+            onClick={() => link.to(`/client/order/${order.id}`)}
           />
         ))}
       </OrderListContainer>
