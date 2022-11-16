@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import {
   CartSection,
@@ -15,7 +15,7 @@ import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
-import { orderState } from '@/stores/order';
+import { dinnerOrderState, orderState } from '@/stores/order';
 import { menuInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
@@ -27,6 +27,7 @@ const DinnerListSection = () => {
   const [order, setOrder] = useRecoilState(orderState);
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
+  const resetDinnerOrder = useResetRecoilState(dinnerOrderState);
   const { dinnerOrderPrice } = useOrder();
   const link = useLink();
   const deleteDinnerHandler = (idx: number) => {
@@ -55,6 +56,7 @@ const DinnerListSection = () => {
     );
   };
   const goUpdateDinnerPage = (id: number) => {
+    resetDinnerOrder();
     link.to(`/client/dinner/update/${id}`);
   };
   return (
