@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import React from 'react';
 
@@ -31,23 +32,30 @@ const selectBackground = (type: string, depth: number) => {
 };
 
 const mfVariant = {
-  hidden: { opacity: 0 },
+  hiddenLeft: { left: '-100%' },
+  hiddenRight: { left: '100%' },
   show: {
-    opacity: 1,
-    transition: {
-      type: 'easeInOut',
-      duration: 0.3,
-    },
+    left: '0%',
   },
 };
 
 const Page = ({ children, type = 'common', depth = 0 }: IPage) => {
   const backgroundSrc = selectBackground(type, depth);
+  const location = useLocation();
   return (
-    <BackgroundContainer id='scroll-bg' src={backgroundSrc}>
-      <ChildrenContainer variants={mfVariant} initial='hidden' animate='show' exit='hidden'>
-        {children}
-      </ChildrenContainer>
+    <BackgroundContainer
+      id={`scroll-bg-${location.pathname}`}
+      src={backgroundSrc}
+      variants={mfVariant}
+      transition={{
+        type: 'linear',
+        duration: 0.35,
+      }}
+      initial={depth === 0 ? 'hiddenLeft' : 'hiddenRight'}
+      animate='show'
+      exit={depth === 0 ? 'hiddenLeft' : 'hiddenRight'}
+    >
+      <ChildrenContainer>{children}</ChildrenContainer>
     </BackgroundContainer>
   );
 };

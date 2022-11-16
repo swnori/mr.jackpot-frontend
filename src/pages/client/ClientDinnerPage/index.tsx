@@ -43,7 +43,7 @@ const ClientDinnerPage = () => {
       setDinnerDefault(Number(id));
     }
 
-    if (mode === 'update') {
+    if (dinnerOrder.mainDish.length === 0 && mode === 'update') {
       if (!loadDinnerFromCart(Number(id))) {
         link.back();
       }

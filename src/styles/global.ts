@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
   button {
     font-family: 'NotoSansKR', sans-serif;
   }
+  body {
+    overscroll-behavior-y: none;
+  }
   a {
     text-decoration: none;
     color: ${ColorCode.BLACK};
