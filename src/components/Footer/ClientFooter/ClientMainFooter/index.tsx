@@ -26,11 +26,14 @@ const motionVariable = {
 const ClientMainFooter = () => {
   const { showModal } = useModal();
   const link = useLink();
-  const handleOpenVoiceRec = () => {
+  const openVoiceRecHandler = () => {
     showModal({
       type: 'none',
       children: <VoiceRec />,
     });
+  };
+  const goOrderHistoryPageHandler = () => {
+    link.to('/client/order');
   };
   const { cartLength } = useOrder();
   return (
@@ -42,10 +45,10 @@ const ClientMainFooter = () => {
       transition={{ duration: 0.3 }}
     >
       <FooterBtnContainer>
-        <FooterBtn>
-          <FooterIcon src={MicIcon} onClick={handleOpenVoiceRec} />
+        <FooterBtn onClick={() => openVoiceRecHandler()}>
+          <FooterIcon src={MicIcon} />
         </FooterBtn>
-        <FooterBtn>
+        <FooterBtn onClick={() => goOrderHistoryPageHandler()}>
           <FooterIcon src={ReceiptIcon} />
         </FooterBtn>
         <FooterBtn>

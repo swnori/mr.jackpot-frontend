@@ -12,7 +12,7 @@ interface FooterValue {
 const footerMap: { [key: string]: JSX.Element | null } =
   {
     main: <ClientMainFooter />,
-    orderlist: <ClientMainFooter />,
+    order: <ClientMainFooter />,
     dinner: <ClientDinnerFooter />,
     cart: <ClientCartFooter />,
     coupon: <ClientCouponFooter />,

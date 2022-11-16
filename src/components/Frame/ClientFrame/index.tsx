@@ -13,7 +13,7 @@ import MobileBackgroundImg1 from '@/assets/images/background-mobile-1.png';
 const depthMap: { [key: string]: number } =
   {
     main: 0,
-    orderlist: 1,
+    order: 1,
     dinner: 1,
     cart: 1,
     coupon: 1,
@@ -27,7 +27,7 @@ const ClientFrame = () => {
   const splitedPath = location.pathname.split('/');
 
   useEffect(() => {
-    const root = document.getElementById('scroll-bg'); // <BackgroundContainer /> of <Page />
+    const root = document.getElementById(`scroll-bg-${location.pathname}`); // <BackgroundContainer /> of <Page />
 
     if (root) {
       const threshold = 0;
@@ -56,7 +56,7 @@ const ClientFrame = () => {
 
       return () => root.removeEventListener('scroll', onScroll);
     }
-  }, [isScrollUp]);
+  }, [isScrollUp, location.pathname]);
 
   return (
     <>
