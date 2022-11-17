@@ -1,11 +1,18 @@
+import React from 'react';
+
 import { SearchBtn, SearchContainer, SearchImg, SearchInput } from './style';
 
 import SearchIcon from '@/assets/icons/icon-search.svg';
 
-const MobileSearch = () => {
+interface MobileSearchValue {
+  value: string;
+  setValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const MobileSearch = ({ value, setValueHandler }: MobileSearchValue) => {
   return (
     <SearchContainer>
-      <SearchInput />
+      <SearchInput value={value} onChange={setValueHandler} />
       <SearchBtn>
         <SearchImg src={SearchIcon} />
       </SearchBtn>

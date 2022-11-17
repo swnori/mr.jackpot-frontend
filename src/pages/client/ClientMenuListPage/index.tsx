@@ -1,5 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import { MenuListContainer, MenuListNoticeWrapper } from './style';
 
@@ -22,7 +23,21 @@ const ClientMenuListPage = () => {
   const link = useLink();
   const menuInfo = useRecoilValue(menuInfoState);
   const setDinnerOrder = useSetRecoilState(dinnerOrderState);
-  const filteredMenuList = menuInfo.filter((menu) => menu.type === type);
+  const filteredTypeMenuList = menuInfo.filter((menu) => menu.type === type);
+  const [filteredWordMenuList, setFilteredWordMenuList] = useState(filteredTypeMenuList);
+
+  const [keyword, setKeyword] = useState('');
+
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const word = e.currentTarget.value;
+    setKeyword(word);
+    if (word === '') {
+      setFilteredWordMenuList(filteredTypeMenuList);
+    } else {
+      setFilteredWordMenuList(filteredTypeMenuList.filter((menu) => menu.name.includes(word)));
+    }
+  };
+
   const addItem = (id: number) => {
     const newItem = menuInfo[id];
     const newOrder = {
@@ -41,10 +56,11 @@ const ClientMenuListPage = () => {
 
     link.back();
   };
+
   return (
     <MenuListContainer>
       <Header type='back' showLogo />
-      <MobileSearch />
+      <MobileSearch value={keyword} setValueHandler={searchHandler} />
       <MenuListNoticeWrapper
         initial={{ opacity: 0, transform: 'translateY(5px)' }}
         animate={{ opacity: 1, transform: 'translateY(0px)' }}
@@ -52,7 +68,7 @@ const ClientMenuListPage = () => {
       >
         메뉴를 클릭하면 자동으로 담아집니다
       </MenuListNoticeWrapper>
-      {filteredMenuList.map((item) => {
+      {filteredWordMenuList.map((item) => {
         const optionText = item.option[0]
           ? `${item.option[0]?.name ?? ''}${
               item.option[1]?.name ? ` | ${item.option[1].name}` : ''
