@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import { FontSize } from '@/constants/font';
+import { FontSize, FontWeight } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
 
-export const FooterContainer = styled(motion.div)`
+interface FooterValue {
+  isStaff?: boolean;
+}
+
+export const FooterContainer = styled(motion.div)<FooterValue>`
   position: fixed;
   bottom: 2rem;
 
-  width: calc(100% - 6rem);
+  width: calc(100% - 4rem);
   height: 6rem;
   padding: 0 1rem;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
@@ -21,7 +26,10 @@ export const FooterContainer = styled(motion.div)`
   backdrop-filter: blur(7.5px);
   /* Note: backdrop-filter has minimal browser support */
 
-  border-radius: 30px;
+  border-radius: 3rem;
+
+  ${(props) =>
+    props.isStaff ? 'box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25); padding: 0 3rem' : ''}
 `;
 
 export const FooterBtnContainer = styled.div`
@@ -31,21 +39,50 @@ export const FooterBtnContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-export const FooterBtn = styled.button`
-  width: 2.25rem;
-  height: 2.25rem;
+interface BtnValue {
+  isActive?: boolean;
+}
 
-  padding: 0;
+export const FooterBtn = styled.button<BtnValue>`
+  min-width: 2.25rem;
+  height: 3rem;
+
+  padding: 1rem 1rem;
 
   outline: none;
   border: none;
-  background: none;
+  background: ${(props) => (props.isActive ? ColorCode.LIGHTGREY : 'none')};
+  border-radius: 1.5rem;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: ${FontSize.L};
+  font-weight: ${FontWeight.REGULAR};
+`;
+
+export const LogOutBtn = styled.button`
+  width: 3rem;
+  height: 3rem;
+
+  outline: none;
+  border: none;
+  background: ${ColorCode.LIGHTGREY};
+  border-radius: 1.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 1.5rem;
+  }
 `;
 
 export const FooterIcon = styled.img`
-  width: 100%;
+  width: 2.25rem;
 `;
 
 export const BasketBtn = styled.button`
