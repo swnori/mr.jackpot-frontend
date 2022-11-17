@@ -1,21 +1,17 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import {
-  CartSection,
-  CartSectionDesc,
-  CartSectionTitle,
-  CartSectionTitleImg,
+  OrderSection,
+  OrderSectionDesc,
+  OrderSectionTitle,
+  OrderSectionTitleImg,
   DinnerListContainer,
 } from '../style';
 
 import MobileItem from '@/components/MobileItem';
 
-import useOrder from '@/hooks/useOrder';
 import { useLink } from '@/hooks/useLink';
 
-import { KRWFormat } from '@/utils/format';
-
-import { dinnerOrderState, orderState } from '@/stores/order';
 import { menuInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
@@ -23,19 +19,15 @@ import { DinnerOrder, MenuOrder } from '@/types/order';
 
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
-const DinnerListSection = () => {
-  const [order, setOrder] = useRecoilState(orderState);
+interface DinnerListValue {
+  dinnerList: DinnerOrder[];
+}
+
+const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
-  const resetDinnerOrder = useResetRecoilState(dinnerOrderState);
-  const { dinnerOrderPrice } = useOrder();
+
   const link = useLink();
-  const deleteDinnerHandler = (idx: number) => {
-    setOrder((prev) => {
-      const nextDinnerList = [...prev.dinnerList.slice(0, idx), ...prev.dinnerList.slice(idx + 1)];
-      return { ...prev, dinnerList: nextDinnerList };
-    });
-  };
   const menuListStr = (list: MenuOrder[]) =>
     list.reduce((pre, menu) => {
       const { name } = menuInfo[menu.menuId];
@@ -56,21 +48,20 @@ const DinnerListSection = () => {
     );
   };
   const goUpdateDinnerPage = (id: number) => {
-    resetDinnerOrder();
-    link.to(`/client/dinner/update/${id}`);
+    link.to(`/client/dinner/read/${id}`);
   };
   return (
-    <CartSection>
-      <CartSectionTitle>
-        <CartSectionTitleImg src={ReceiptIcon} />
+    <OrderSection>
+      <OrderSectionTitle>
+        <OrderSectionTitleImg src={ReceiptIcon} />
         주문 목록
-      </CartSectionTitle>
-      <CartSectionDesc>
+      </OrderSectionTitle>
+      <OrderSectionDesc>
         각 주문 정보를 터치하시면 <br />
         상세 주문 내용을 확인하실 수 있습니다.
-      </CartSectionDesc>
+      </OrderSectionDesc>
       <DinnerListContainer>
-        {order.dinnerList.map((dinner, idx) => {
+        {dinnerList.map((dinner, idx) => {
           const info = dinnerInfo[dinner.type];
 
           return (
@@ -78,16 +69,14 @@ const DinnerListSection = () => {
               key={idx}
               type='button'
               title={info.name}
-              subTitle={dinnerDetail(dinner)}
-              desc={KRWFormat(dinnerOrderPrice(idx))}
+              desc={dinnerDetail(dinner)}
               onClick={() => goUpdateDinnerPage(idx)}
-              onDelete={() => deleteDinnerHandler(idx)}
             />
           );
         })}
       </DinnerListContainer>
-    </CartSection>
+    </OrderSection>
   );
 };
 
-export default DinnerListSection;
+export default OrderDinnerListSection;

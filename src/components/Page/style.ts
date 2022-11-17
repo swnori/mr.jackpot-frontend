@@ -7,7 +7,7 @@ interface BackgroundContainerValue {
   src?: string;
 }
 
-export const BackgroundContainer = styled.div<BackgroundContainerValue>`
+export const BackgroundContainer = styled(motion.div)<BackgroundContainerValue>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,7 +26,7 @@ export const BackgroundContainer = styled.div<BackgroundContainerValue>`
   }
 `;
 
-export const ChildrenContainer = styled(motion.div)`
+export const ChildrenContainer = styled.div`
   width: 100%;
   height: 100%;
 `;

@@ -23,6 +23,7 @@ interface DinnerSectionValue {
   menuListPath: string;
   menuOrderList: MenuOrder[];
   setMenuOrderList: (menuOrderList: MenuOrder[]) => void;
+  readOnly: boolean;
 }
 
 interface AddMenuBtnValue {
@@ -43,6 +44,7 @@ const DinnerSection = ({
   menuListPath,
   menuOrderList,
   setMenuOrderList,
+  readOnly = false,
 }: DinnerSectionValue) => {
   const menu = useRecoilValue(menuInfoState);
   const link = useLink();
@@ -89,20 +91,20 @@ const DinnerSection = ({
         return (
           <MobileItem
             key={idx}
-            type='item'
+            type={readOnly ? 'button' : 'item'}
             title={itemInfo.name}
             subTitle={optionText(itemInfo.option, item.option)}
             desc={`${item.count}개 | ${KRWFormat(price)}`}
-            option={itemInfo.option}
-            select={item.option}
-            setSelect={setSelect}
-            onDelete={item.isDefault ? undefined : onDelete}
+            option={readOnly ? undefined : itemInfo.option}
+            select={readOnly ? undefined : item.option}
+            setSelect={readOnly ? undefined : setSelect}
+            onDelete={readOnly || item.isDefault ? undefined : onDelete}
             count={item.count}
-            setCount={setCount}
+            setCount={readOnly ? undefined : setCount}
           />
         );
       })}
-      <AddMenuBtn onClick={() => link.to(menuListPath)} />
+      {readOnly ? null : <AddMenuBtn onClick={() => link.to(menuListPath)} />}
     </SectionContainer>
   );
 };
