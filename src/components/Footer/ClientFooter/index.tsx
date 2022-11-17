@@ -13,6 +13,7 @@ const footerMap: { [key: string]: JSX.Element | null } =
   {
     main: <ClientMainFooter />,
     order: <ClientMainFooter />,
+    mypage: <ClientMainFooter />,
     dinner: <ClientDinnerFooter />,
     cart: <ClientCartFooter />,
     coupon: <ClientCouponFooter />,

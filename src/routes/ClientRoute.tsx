@@ -16,6 +16,7 @@ import {
   ClientOrderHistoryPage,
   ClientOrderInfoPage,
   ClientSignUpPage,
+  ClientUserInfoPage,
 } from '@/pages';
 
 const ClientRoute = () => {
@@ -35,6 +36,7 @@ const ClientRoute = () => {
             <Route path='/coupon' element={<ClientCouponPage />} />
             <Route path='/order' element={<ClientOrderHistoryPage />} />
             <Route path='/order/:id' element={<ClientOrderInfoPage />} />
+            <Route path='/mypage' element={<ClientUserInfoPage />} />
           </Route>
         </Route>
       </Routes>

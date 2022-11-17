@@ -16,6 +16,7 @@ const depthMap: { [key: string]: number } =
     order: 1,
     dinner: 1,
     cart: 1,
+    mypage: 1,
     coupon: 0,
   } ?? 0;
 

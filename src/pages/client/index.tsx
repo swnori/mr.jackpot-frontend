@@ -8,3 +8,4 @@ export { default as ClientCartPage } from './ClientCartPage';
 export { default as ClientCouponPage } from './ClientCouponPage';
 export { default as ClientOrderHistoryPage } from './ClientOrderHistoryPage';
 export { default as ClientOrderInfoPage } from './ClientOrderInfoPage';
+export { default as ClientUserInfoPage } from './ClientUserInfoPage';

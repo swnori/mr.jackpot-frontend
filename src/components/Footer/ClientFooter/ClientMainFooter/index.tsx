@@ -35,6 +35,9 @@ const ClientMainFooter = () => {
   const goOrderHistoryPageHandler = () => {
     link.to('/client/order');
   };
+  const goMyPageHandler = () => {
+    link.to('/client/mypage');
+  };
   const { cartLength } = useOrder();
   return (
     <FooterContainer
@@ -51,7 +54,7 @@ const ClientMainFooter = () => {
         <FooterBtn onClick={() => goOrderHistoryPageHandler()}>
           <FooterIcon src={ReceiptIcon} />
         </FooterBtn>
-        <FooterBtn>
+        <FooterBtn onClick={() => goMyPageHandler()}>
           <FooterIcon src={UserIcon} />
         </FooterBtn>
       </FooterBtnContainer>
