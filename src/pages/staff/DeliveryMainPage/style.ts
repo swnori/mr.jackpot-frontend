@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
-export const MainContainer = styled.div``;
+import { FontSize, FontWeight } from '@/constants/font';
 
-export const MainTitle = styled.span``;
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
 
-export const OrderListContainer = styled.div``;
+export const MainTitle = styled.span`
+  font-size: calc(${FontSize.XXL} + 0.15rem);
+  font-weight: ${FontWeight.MEDIUM};
+`;
