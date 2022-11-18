@@ -49,3 +49,17 @@ export const ddayFormat = (dday: Date) => {
 
   return 'D-Day';
 };
+
+export const dateFormat = (date: Date) => {
+  const [year, month, day, hour, minute] = [
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+  ];
+  return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)} ${digitFormat(
+    hour,
+    2,
+  )}:${digitFormat(minute, 2)}:00`;
+};
