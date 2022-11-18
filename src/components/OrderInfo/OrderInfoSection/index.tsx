@@ -8,7 +8,7 @@ import {
   OrderTextArea,
 } from '../style';
 
-import { digitFormat } from '@/utils/format';
+import { dateFormat } from '@/utils/format';
 
 import { OrderInfo } from '@/types/order';
 
@@ -19,19 +19,6 @@ interface OrderInfoValue {
 }
 
 const OrderInfoSection = ({ orderInfo }: OrderInfoValue) => {
-  const reserveTimeText = (date: Date) => {
-    const [year, month, day, hour, minute] = [
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-    ];
-    return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)} ${digitFormat(
-      hour,
-      2,
-    )}:${digitFormat(minute, 2)}:00`;
-  };
   return (
     <OrderSection>
       <OrderSectionTitle>
@@ -44,7 +31,7 @@ const OrderInfoSection = ({ orderInfo }: OrderInfoValue) => {
       </OrderInputContainer>
       <OrderInputContainer>
         <OrderInputTitle>예약 시간</OrderInputTitle>
-        <OrderInfoText>{reserveTimeText(orderInfo.reserveDate)}</OrderInfoText>
+        <OrderInfoText>{dateFormat(orderInfo.reserveDate)}</OrderInfoText>
       </OrderInputContainer>
       <OrderInputContainer>
         <OrderInputTitle>주소</OrderInputTitle>
