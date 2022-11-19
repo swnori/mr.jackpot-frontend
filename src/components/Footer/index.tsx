@@ -1,2 +1,2 @@
 export { default as ClientFooter } from './ClientFooter';
-// export { default as StaffFooter } from './StaffFooter';
+export { default as StaffFooter } from './StaffFooter';

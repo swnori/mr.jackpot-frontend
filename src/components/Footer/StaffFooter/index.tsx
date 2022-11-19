@@ -26,7 +26,7 @@ const StaffFooter = ({ pathName }: FooterValue) => {
         <FooterIcon src={CheckListIcon} />
         {!isMain ? 'Tasks' : ''}
       </FooterBtn>
-      <LogOutBtn>
+      <LogOutBtn onClick={() => link.to('/')}>
         <FooterIcon src={LogOutIcon} />
       </LogOutBtn>
     </FooterContainer>

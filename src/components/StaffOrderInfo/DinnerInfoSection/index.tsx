@@ -35,9 +35,10 @@ interface DinnerInfoData {
 
 interface DinnerInfoValue {
   data: DinnerInfoData;
+  showState?: boolean;
 }
 
-const DinnerInfoSection = ({ data }: DinnerInfoValue) => {
+const DinnerInfoSection = ({ data, showState = false }: DinnerInfoValue) => {
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const styleInfo = useRecoilValue(styleInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
@@ -47,12 +48,16 @@ const DinnerInfoSection = ({ data }: DinnerInfoValue) => {
     setShowDinner((prev) => !prev);
   };
 
+  const tableHeaderList = showState
+    ? ['ID', 'Menu', 'Opt.1', 'Opt.2', 'Cnt', 'Status']
+    : ['ID', 'Menu', 'Opt.1', 'Opt.2', 'Cnt'];
+
   return (
     <StaffOrderInfoSectionContainer>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>디너 ID</StaffOrderInfoTitle>
         <StaffOrderInfoDesc>
-          D-{data.dinnerId} <OrderState stateId={data.stateId} />{' '}
+          D-{data.dinnerId} <OrderState stateId={data.stateId} />
         </StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
@@ -74,18 +79,26 @@ const DinnerInfoSection = ({ data }: DinnerInfoValue) => {
         </StaffOrderInfoBtn>
       </StaffOrderInfoWrapper>
       {showDinner ? (
-        <Table headerList={['ID', 'Menu', 'Opt.1', 'Opt.2', 'Cnt']}>
-          {data.menuList.map((menu) => (
-            <TableRow
-              dataList={[
-                menu.id!,
-                menuInfo[menu.menuId].name,
-                menuInfo[menu.menuId].option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
-                menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
-                menu.count,
-              ]}
-            />
-          ))}
+        <Table headerList={tableHeaderList}>
+          {data.menuList.map((menu) => {
+            const dataList = showState
+              ? [
+                  menu.id!,
+                  menuInfo[menu.menuId].name,
+                  menuInfo[menu.menuId].option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
+                  menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
+                  menu.count,
+                  menu.stateId!,
+                ]
+              : [
+                  menu.id!,
+                  menuInfo[menu.menuId].name,
+                  menuInfo[menu.menuId].option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
+                  menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
+                  menu.count,
+                ];
+            return <TableRow key={menu.id} dataList={dataList} lastIsState={showState} />;
+          })}
         </Table>
       ) : null}
     </StaffOrderInfoSectionContainer>
