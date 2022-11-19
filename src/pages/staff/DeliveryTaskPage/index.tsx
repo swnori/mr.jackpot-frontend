@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   DinnerListContainer,
   Margin,
@@ -53,41 +55,43 @@ const dummyData = {
 };
 
 const DeliveryTaskPage = () => {
-  const isOrder = true;
+  const [isOrder, setIsOrder] = useState(true);
+  const [stateId, setStateId] = useState(dummyData.clientInfo.stateId);
   return (
     <TaskContainer>
       <TaskTitle>
         {isOrder ? '주문 정보' : '회수 정보'} <DeliveryState isOrder={isOrder} />
       </TaskTitle>
-      <ClientInfoSection data={dummyData.clientInfo} />
+      <ClientInfoSection data={{ ...dummyData.clientInfo, stateId }} />
 
       <Margin />
 
-      {isOrder && dummyData.clientInfo.stateId < 6 ? (
+      {isOrder && stateId < 6 ? (
         <TaskBtnContainer>
-          <TaskBtn isOrder disabled={dummyData.clientInfo.stateId !== 4}>
+          <TaskBtn isOrder disabled={stateId !== 4} onClick={() => setStateId(5)}>
             배달 출발
           </TaskBtn>
-          <TaskBtn isOrder disabled={dummyData.clientInfo.stateId !== 5}>
+          <TaskBtn isOrder disabled={stateId !== 5} onClick={() => setStateId(6)}>
             배달 도착
           </TaskBtn>
         </TaskBtnContainer>
       ) : null}
 
-      {!isOrder && dummyData.clientInfo.stateId < 8 ? (
+      {!isOrder && stateId < 8 ? (
         <TaskBtnContainer>
-          <TaskBtn isOrder={false} disabled={dummyData.clientInfo.stateId !== 6}>
+          <TaskBtn isOrder={false} disabled={stateId !== 6} onClick={() => setStateId(7)}>
             회수 출발
           </TaskBtn>
-          <TaskBtn isOrder={false} disabled={dummyData.clientInfo.stateId !== 7}>
+          <TaskBtn isOrder={false} disabled={stateId !== 7} onClick={() => setStateId(8)}>
             품질 확인
           </TaskBtn>
         </TaskBtnContainer>
       ) : null}
 
-      {(!isOrder && dummyData.clientInfo.stateId === 8) ||
-      (isOrder && dummyData.clientInfo.stateId === 6) ? (
-        <TaskBtn isNext>다음 주문 받기</TaskBtn>
+      {(!isOrder && stateId === 8) || (isOrder && stateId === 6) ? (
+        <TaskBtn isNext onClick={() => setIsOrder((prev) => !prev)}>
+          다음 주문 받기
+        </TaskBtn>
       ) : null}
 
       <TaskTitle>디너 정보</TaskTitle>
