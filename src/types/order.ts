@@ -4,6 +4,7 @@ export interface MenuOrder {
   option: [number | null, number | null];
   count: number;
   isDefault?: boolean;
+  stateId?: number;
 }
 
 export interface DinnerOrder {
