@@ -2,8 +2,9 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import { CookFrameContainer, DeliveryFrameContainer } from './style';
 
+import { StaffSideBar } from '@/components/SideBar';
 import Page from '@/components/Page';
-import StaffFooter from '@/components/Footer/StaffFooter';
+import { StaffFooter } from '@/components/Footer';
 
 const StaffFrame = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const StaffFrame = () => {
         </DeliveryFrameContainer>
       ) : (
         <CookFrameContainer>
+          <StaffSideBar pathName={splitedPath[3]} />
           <Outlet />
         </CookFrameContainer>
       )}
