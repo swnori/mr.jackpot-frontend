@@ -8,6 +8,7 @@ export const TaskContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  padding-bottom: 10rem;
 `;
 
 export const TaskTitle = styled.span`
@@ -23,6 +24,13 @@ interface TaskBtnValue {
   isOrder?: boolean;
   isNext?: boolean;
 }
+
+export const Margin = styled.div`
+  width: 100%;
+  height: 16rem;
+
+  background: ${ColorCode.DISABLED};
+`;
 
 export const TaskBtn = styled.button<TaskBtnValue>`
   width: 100%;
@@ -48,4 +56,11 @@ export const TaskBtnContainer = styled.div`
   width: 100%;
 
   gap: 2rem;
+`;
+
+export const DinnerListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 4rem;
 `;
