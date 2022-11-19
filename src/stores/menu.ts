@@ -6,7 +6,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 0,
     type: MenuType.MAIN_DISH,
-    name: '스테이크(Steak)',
+    name: '스테이크',
     price: 49000,
     option: [
       {
@@ -36,35 +36,35 @@ const dummyData: MenuInfo[] = [
   {
     id: 1,
     type: MenuType.SIDE,
-    name: '에그 스크램블(Scrambled Egg)',
+    name: '에그 스크램블',
     price: 9000,
     option: [],
   },
   {
     id: 2,
     type: MenuType.SIDE,
-    name: '베이컨(Bacon)',
+    name: '베이컨',
     price: 7000,
     option: [],
   },
   {
     id: 3,
     type: MenuType.SIDE,
-    name: '치즈(Cheese)',
+    name: '치즈',
     price: 5000,
     option: [],
   },
   {
     id: 4,
     type: MenuType.SIDE,
-    name: '샐러드(Salad)',
+    name: '샐러드',
     price: 8000,
     option: [],
   },
   {
     id: 5,
     type: MenuType.DRINK,
-    name: '레드 와인(Bottle of Red Wine)',
+    name: '레드 와인',
     price: 20000,
     option: [
       {
@@ -83,7 +83,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 6,
     type: MenuType.DRINK,
-    name: '레드 와인 한 잔(Cup of Red Wine)',
+    name: '레드 와인 한 잔',
     price: 4500,
     option: [
       {
@@ -102,7 +102,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 7,
     type: MenuType.DRINK,
-    name: '커피 포트(Pot of Coffee)',
+    name: '커피 포트',
     price: 14000,
     option: [
       {
@@ -120,7 +120,7 @@ const dummyData: MenuInfo[] = [
   {
     id: 8,
     type: MenuType.DRINK,
-    name: '커피 한 잔(Cup of Coffee)',
+    name: '커피 한 잔',
     price: 5000,
     option: [
       {
@@ -138,14 +138,14 @@ const dummyData: MenuInfo[] = [
   {
     id: 9,
     type: MenuType.SIDE,
-    name: '바게트 빵(Baguatte)',
+    name: '바게트 빵',
     price: 1500,
     option: [],
   },
   {
     id: 10,
     type: MenuType.SIDE,
-    name: '빵(Bread)',
+    name: '빵',
     price: 1000,
     option: [],
   },
@@ -154,19 +154,19 @@ const dummyData: MenuInfo[] = [
 const styleDummyData = [
   {
     id: 0,
-    name: '심플(Simple)',
+    name: '심플',
     desc: '플라스틱 쟁반 | 상자 접시 | 냅킨',
     price: 5000,
   },
   {
     id: 1,
-    name: '그랜드(Grand)',
+    name: '그랜드',
     desc: '나무 쟁반 | 도자기 접시 | 흰색 면 냅킨',
     price: 9000,
   },
   {
     id: 2,
-    name: '딜럭스(Deluxe)',
+    name: '딜럭스',
     desc: '은 쟁반 | 도자기 접시 | 꽃병 | 린넨 냅킨',
     price: 15000,
   },

@@ -1,7 +1,19 @@
-import { TaskBtn, TaskBtnContainer, TaskContainer, TaskTitle } from './style';
+import { useState } from 'react';
 
+import {
+  DinnerListContainer,
+  Margin,
+  TaskBtn,
+  TaskBtnContainer,
+  TaskContainer,
+  TaskTitle,
+} from './style';
+
+import DinnerInfoSection from '@/components/StaffOrderInfo/DinnerInfoSection';
 import ClientInfoSection from '@/components/StaffOrderInfo/ClientInfoSection';
 import DeliveryState from '@/components/DeliveryState';
+
+import { MenuOrder } from '@/types/order';
 
 const dummyData = {
   clientInfo: {
@@ -19,61 +31,84 @@ const dummyData = {
     {
       id: 24,
       type: 0,
-      mainDish: [{ menuId: 0, option: [41, 46], count: 1, isDefault: false }],
-      side: [{ menuId: 9, option: [null, null], count: 4, isDefault: false }],
-      drink: [{ menuId: 5, option: [51, null], count: 1, isDefault: false }],
+      price: 100000,
+      menuList: [
+        { id: 0, menuId: 0, option: [41, 46], count: 1, isDefault: false },
+        { id: 1, menuId: 9, option: [null, null], count: 4, isDefault: false },
+        { id: 2, menuId: 5, option: [51, null], count: 1, isDefault: false },
+      ] as MenuOrder[],
       style: 1,
     },
     {
       id: 25,
       type: 3,
-      mainDish: [
-        { menuId: 0, option: [44, 47], count: 1, isDefault: false },
-        { menuId: 0, option: [41, 46], count: 1, isDefault: false },
-      ],
-      side: [{ menuId: 9, option: [null, null], count: 4, isDefault: false }],
-      drink: [{ menuId: 1, option: [55, null], count: 1, isDefault: false }],
+      price: 100000,
+      menuList: [
+        { id: 3, menuId: 0, option: [44, 47], count: 1, isDefault: false },
+        { id: 4, menuId: 0, option: [41, 46], count: 1, isDefault: false },
+        { id: 5, menuId: 9, option: [null, null], count: 4, isDefault: false },
+        { id: 6, menuId: 1, option: [55, null], count: 1, isDefault: false },
+      ] as MenuOrder[],
       style: 1,
     },
   ],
 };
 
 const DeliveryTaskPage = () => {
-  const isOrder = true;
+  const [isOrder, setIsOrder] = useState(true);
+  const [stateId, setStateId] = useState(dummyData.clientInfo.stateId);
   return (
     <TaskContainer>
       <TaskTitle>
         {isOrder ? '주문 정보' : '회수 정보'} <DeliveryState isOrder={isOrder} />
       </TaskTitle>
-      <ClientInfoSection data={dummyData.clientInfo} />
-      {isOrder && dummyData.clientInfo.stateId < 6 ? (
+      <ClientInfoSection data={{ ...dummyData.clientInfo, stateId }} />
+
+      <Margin />
+
+      {isOrder && stateId < 6 ? (
         <TaskBtnContainer>
-          <TaskBtn isOrder disabled={dummyData.clientInfo.stateId !== 4}>
+          <TaskBtn isOrder disabled={stateId !== 4} onClick={() => setStateId(5)}>
             배달 출발
           </TaskBtn>
-          <TaskBtn isOrder disabled={dummyData.clientInfo.stateId !== 5}>
+          <TaskBtn isOrder disabled={stateId !== 5} onClick={() => setStateId(6)}>
             배달 도착
           </TaskBtn>
         </TaskBtnContainer>
       ) : null}
 
-      {!isOrder && dummyData.clientInfo.stateId < 8 ? (
+      {!isOrder && stateId < 8 ? (
         <TaskBtnContainer>
-          <TaskBtn isOrder={false} disabled={dummyData.clientInfo.stateId !== 6}>
+          <TaskBtn isOrder={false} disabled={stateId !== 6} onClick={() => setStateId(7)}>
             회수 출발
           </TaskBtn>
-          <TaskBtn isOrder={false} disabled={dummyData.clientInfo.stateId !== 7}>
+          <TaskBtn isOrder={false} disabled={stateId !== 7} onClick={() => setStateId(8)}>
             품질 확인
           </TaskBtn>
         </TaskBtnContainer>
       ) : null}
 
-      {(!isOrder && dummyData.clientInfo.stateId === 8) ||
-      (isOrder && dummyData.clientInfo.stateId === 6) ? (
-        <TaskBtn isNext>다음 주문 받기</TaskBtn>
+      {(!isOrder && stateId === 8) || (isOrder && stateId === 6) ? (
+        <TaskBtn isNext onClick={() => setIsOrder((prev) => !prev)}>
+          다음 주문 받기
+        </TaskBtn>
       ) : null}
 
       <TaskTitle>디너 정보</TaskTitle>
+
+      <DinnerListContainer>
+        {dummyData.dinnerList.map((dinner) => {
+          const data = {
+            dinnerId: dinner.id,
+            type: dinner.type,
+            price: dinner.price,
+            style: dinner.style,
+            menuList: dinner.menuList,
+            stateId: 8,
+          };
+          return <DinnerInfoSection key={dinner.id} data={data} />;
+        })}
+      </DinnerListContainer>
     </TaskContainer>
   );
 };
