@@ -819,6 +819,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-star-rating-component@npm:^1":
+  version: 1.4.1
+  resolution: "@types/react-star-rating-component@npm:1.4.1"
+  dependencies:
+    "@types/react": "*"
+  checksum: 76d5401ec410ce6e6a59663f05449dfddb0d78c2d409f66bed0790097f29f5c505da7ccfbee3363b54ce7e094122cc360e64eb641dab5d932c91c5432b501e11
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.0.17":
   version: 18.0.21
   resolution: "@types/react@npm:18.0.21"
@@ -1546,7 +1555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.6":
+"classnames@npm:^2.2.5, classnames@npm:^2.2.6":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -3598,6 +3607,7 @@ __metadata:
     "@types/react-dom": ^18.0.6
     "@types/react-query": ^1.2.9
     "@types/react-speech-recognition": ^3.9.0
+    "@types/react-star-rating-component": ^1
     "@types/regenerator-runtime": ^0.13.1
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.40.0
@@ -3623,6 +3633,7 @@ __metadata:
     react-query: ^3.39.2
     react-router-dom: ^6.4.2
     react-speech-recognition: ^3.10.0
+    react-star-rating-component: ^1.4.1
     recoil: ^0.7.6
     regenerator-runtime: ^0.13.10
     styled-components: ^5.3.6
@@ -4029,7 +4040,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -4212,6 +4223,18 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 40f3a2561f525d2624b154ccb6da90592a32fe131c33b3258a8892041bcf0c6f8e4527d7310718aeaee119266b1e8a1c383f9842ae984b7c97987ce9d6a5203f
+  languageName: node
+  linkType: hard
+
+"react-star-rating-component@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "react-star-rating-component@npm:1.4.1"
+  dependencies:
+    classnames: ^2.2.5
+    prop-types: ^15.6.1
+  peerDependencies:
+    react: ^16.2.0
+  checksum: d4dcb38993f46834ea3333ed5cf04eceae9a699a6d6bd999caf725170f7e7c85fc9f237f7fed945ae60219c963560f50d337cf8ef9625986d89a462da9e8406b
   languageName: node
   linkType: hard
 

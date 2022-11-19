@@ -64,3 +64,14 @@ export const DinnerListContainer = styled.div`
 
   gap: 4rem;
 `;
+
+export const QCModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 20rem;
+  padding: 1rem 5rem 3rem 5rem;
+
+  font-size: 3rem;
+`;

@@ -1,8 +1,10 @@
+import StarRatingComponent from 'react-star-rating-component';
 import { useState } from 'react';
 
 import {
   DinnerListContainer,
   Margin,
+  QCModalContainer,
   TaskBtn,
   TaskBtnContainer,
   TaskContainer,
@@ -13,7 +15,11 @@ import DinnerInfoSection from '@/components/StaffOrderInfo/DinnerInfoSection';
 import ClientInfoSection from '@/components/StaffOrderInfo/ClientInfoSection';
 import DeliveryState from '@/components/DeliveryState';
 
+import useModal from '@/hooks/useModal';
+
 import { MenuOrder } from '@/types/order';
+
+import QCIcon from '@/assets/icons/icon-inventory.svg';
 
 const dummyData = {
   clientInfo: {
@@ -54,9 +60,33 @@ const dummyData = {
   ],
 };
 
+const QualityCheckModal = () => {
+  const [rate, setRate] = useState(0);
+  return (
+    <QCModalContainer>
+      <StarRatingComponent name='rate1' starCount={5} value={rate} onStarClick={setRate} />
+    </QCModalContainer>
+  );
+};
+
 const DeliveryTaskPage = () => {
   const [isOrder, setIsOrder] = useState(true);
   const [stateId, setStateId] = useState(dummyData.clientInfo.stateId);
+  const { showModal } = useModal();
+
+  const openRatingModalHandler = () => {
+    showModal({
+      type: 'confirm',
+      title: (
+        <>
+          <img src={QCIcon} alt='icon-qc' />
+          품질 확인
+        </>
+      ),
+      children: <QualityCheckModal />,
+      handleConfirm: () => setStateId(8),
+    });
+  };
   return (
     <TaskContainer>
       <TaskTitle>
@@ -82,7 +112,11 @@ const DeliveryTaskPage = () => {
           <TaskBtn isOrder={false} disabled={stateId !== 6} onClick={() => setStateId(7)}>
             회수 출발
           </TaskBtn>
-          <TaskBtn isOrder={false} disabled={stateId !== 7} onClick={() => setStateId(8)}>
+          <TaskBtn
+            isOrder={false}
+            disabled={stateId !== 7}
+            onClick={() => openRatingModalHandler()}
+          >
             품질 확인
           </TaskBtn>
         </TaskBtnContainer>

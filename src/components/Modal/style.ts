@@ -41,8 +41,8 @@ export const ModalTitle = styled.span`
   gap: 0.5rem;
   align-items: center;
 
-  padding: 1rem;
-  font-size: ${FontSize.XL};
+  padding: 2rem 2rem 1rem 2rem;
+  font-size: 1.75rem;
 
   img {
     width: ${FontSize.XL};
