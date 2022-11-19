@@ -5,11 +5,12 @@ import OrderState from '@/components/OrderState';
 interface TableRowValue {
   dataList: (string | number)[];
   lastIsState?: boolean;
+  onClick?: () => void;
 }
 
-const TableRow = ({ dataList, lastIsState = false }: TableRowValue) => {
+const TableRow = ({ dataList, lastIsState = false, onClick }: TableRowValue) => {
   return (
-    <TableRowContainer>
+    <TableRowContainer onClick={onClick}>
       {lastIsState ? (
         <>
           {dataList.slice(0, -1).map((item, idx) => (
