@@ -9,7 +9,7 @@ interface OrderStateValue {
 }
 
 export const OrderStateContainer = styled.span<OrderStateValue>`
-  padding: 0.5rem 2.5rem;
+  padding: 0.5rem 2.25rem;
   font-size: 1.25rem;
   background: ${(props) => StateColorCode[props.stateName] ?? ''};
 
