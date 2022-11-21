@@ -35,6 +35,7 @@ export const MobileCardIconContainer = styled.div`
 
 export const MobileCardTitleIcon = styled.img`
   width: 3em;
+  filter: invert(100%);
 `;
 
 export const MobileCardTitleText = styled.span`

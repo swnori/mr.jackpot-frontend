@@ -37,4 +37,6 @@ export const DesktopCardInputBox = styled.input`
 export const DesktopCardInputIcon = styled.img`
   width: 2em;
   height: 2em;
+
+  filter: invert(100%);
 `;

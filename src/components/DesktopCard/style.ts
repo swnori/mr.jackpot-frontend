@@ -35,6 +35,7 @@ export const DesktopCardTitleContainer = styled.div`
 `;
 
 export const DesktopCardTitleIcon = styled.img`
+  filter: invert(100%);
   width: 3em;
 `;
 
