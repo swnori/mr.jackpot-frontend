@@ -17,6 +17,7 @@ export const MenuType = {
   MAIN_DISH: 'main',
   SIDE: 'side',
   DRINK: 'drink',
+  STYLE: 'style',
 } as const;
 
 export interface MenuInfo {

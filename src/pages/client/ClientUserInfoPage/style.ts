@@ -35,7 +35,6 @@ export const UserInfoSectionTitle = styled.div`
 
 export const UserInfoSectionTitleImg = styled.img`
   width: 2.5rem;
-  filter: invert(100%);
 `;
 
 export const UserInfoInputContainer = styled.div`

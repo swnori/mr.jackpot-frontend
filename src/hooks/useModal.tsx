@@ -11,6 +11,10 @@ const useModal = () => {
     setModal(modalProps);
   };
 
+  const rerenderModal = (modalProps: Partial<ModalProps>) => {
+    setModal((prev) => ({ ...prev, ...modalProps }));
+  };
+
   const hideModal = () => {
     setModal(null);
   };
@@ -20,6 +24,7 @@ const useModal = () => {
     setModal,
     showModal,
     hideModal,
+    rerenderModal,
   };
 };
 

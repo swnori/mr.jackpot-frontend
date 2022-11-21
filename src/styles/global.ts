@@ -6,7 +6,7 @@ import { ColorCode } from '@/constants/color';
 const GlobalStyle = createGlobalStyle`
   ${reset}
   html {
-    font-size: calc(0.35vw + 8.74px);
+    font-size: calc(min(0.35vw, 3.76px) + 8.74px);
   }
   html,
   body,

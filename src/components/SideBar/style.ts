@@ -15,14 +15,22 @@ export const SideBarContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 3rem;
 `;
 
 interface BtnValue {
   isActive?: boolean;
 }
+
+export const SideBarBtnContainer = styled.div`
+  min-height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+`;
 
 export const SideBarBtn = styled.button<BtnValue>`
   width: 5rem;
@@ -56,8 +64,6 @@ export const LogOutBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin-top: 6rem;
 
   img {
     width: 2rem;

@@ -6,7 +6,9 @@ import { TaskContainer, TaskTitle } from './style';
 import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 
-import { menuInfoState } from '@/stores/menu';
+import { useLink } from '@/hooks/useLink';
+
+import { menuInfoState, styleInfoState } from '@/stores/menu';
 
 interface CookData {
   OId: number;
@@ -30,6 +32,13 @@ const dummyData = [
   { OId: 1, DId: 1, MId: 1, menuId: 0, option: [42, 46], count: 1, dish: '종이', stateId: 8 },
 ] as CookData[];
 
+const styleDummyData = [
+  { OId: 1, DId: 4, dinnerName: '샴페인 축제 디너', style: 1, stateId: 0 },
+  { OId: 1, DId: 3, dinnerName: '발렌타인 디너', style: 1, stateId: 3 },
+  { OId: 1, DId: 2, dinnerName: '잉글리시 디너', style: 0, stateId: 3 },
+  { OId: 1, DId: 1, dinnerName: '발렌타인 디너', style: 0, stateId: 8 },
+] as CookData[];
+
 const nextState = {
   0: 3,
   3: 8,
@@ -37,9 +46,11 @@ const nextState = {
 };
 
 const CookTaskPage = () => {
+  const isStyle = true;
+  const link = useLink();
   const menuInfo = useRecoilValue(menuInfoState);
-  const [taskList, setTaskList] = useState(dummyData);
-  const isStyle = false;
+  const styleInfo = useRecoilValue(styleInfoState);
+  const [taskList, setTaskList] = useState(isStyle ? styleDummyData : dummyData);
   const headerList = isStyle
     ? ['D-ID', 'O-ID', 'Dinner', 'Style', 'Status']
     : ['M-ID', 'D-ID', 'O-ID', 'Menu', 'Opt.1', 'Opt.2', 'Dish', 'Count', 'Status'];
@@ -49,7 +60,7 @@ const CookTaskPage = () => {
       <Table headerList={headerList}>
         {taskList.map((item, idx) => {
           const dataList = isStyle
-            ? [item.DId, item.OId, item.dinnerName!, item.style!, item.stateId]
+            ? [item.DId, item.OId, item.dinnerName!, styleInfo[item.style!].name, item.stateId]
             : [
                 item.MId!,
                 item.DId,
@@ -61,15 +72,15 @@ const CookTaskPage = () => {
                 item.count!,
                 item.stateId,
               ];
-          const changeStateHandler = () => {
-            if (!isStyle) {
+          const onClickHandler = () => {
+            if (isStyle) {
+              link.to(`/staff/cook/task/${item.DId}`);
+            } else {
               const nextTask = { ...item, stateId: nextState[item.stateId as 0 | 3 | 8] };
               setTaskList((prev) => [...prev.slice(0, idx), nextTask, ...prev.slice(idx + 1)]);
             }
           };
-          return (
-            <TableRow key={idx} onClick={changeStateHandler} dataList={dataList} lastIsState />
-          );
+          return <TableRow key={idx} onClick={onClickHandler} dataList={dataList} lastIsState />;
         })}
       </Table>
     </TaskContainer>
