@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { isMobile } from 'react-device-detect';
 
 import { FontSize } from '@/constants/font';
 import { ColorCode } from '@/constants/color';
@@ -51,22 +50,31 @@ export const ModalTitle = styled.span`
 
 export const ModalBtnContainer = styled.div`
   display: flex;
-  ${isMobile
-    ? ``
-    : `padding: 1rem;
-      gap: 1rem;
-      justify-content: flex-end;`}
+  @media screen and (min-width: 768px) {
+    padding: 1rem;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
 `;
 
 const ModalBtn = styled.button`
   border: none;
-  ${isMobile
-    ? `width: 100%;
-      padding: 1.25rem;
-      font-size: ${FontSize.L};`
-    : `font-size: ${FontSize.L};
-      padding: 0.5rem 2rem;
-      border-radius: calc((${FontSize.L} + 1rem) / 2);`}
+
+  @media screen and (min-width: 768px) {
+    width: 7rem;
+    height: 2.5rem;
+
+    padding: 0;
+    margin: 0;
+    border-radius: 1.25rem;
+
+    font-size: ${FontSize.L};
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 1.25rem;
+    font-size: ${FontSize.L};
+  }
 `;
 
 export const ModalConfirmBtn = styled(ModalBtn)`
