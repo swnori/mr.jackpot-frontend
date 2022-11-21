@@ -1,4 +1,10 @@
-import { LogOutBtn, SideBarBtn, SideBarContainer, SideBarIcon } from '../style';
+import {
+  LogOutBtn,
+  SideBarBtn,
+  SideBarBtnContainer,
+  SideBarContainer,
+  SideBarIcon,
+} from '../style';
 
 import { useLink } from '@/hooks/useLink';
 
@@ -25,26 +31,28 @@ const CEOSideBar = ({ pathName }: SideBarValue) => {
   const isSetting = pathName === 'setting';
   return (
     <SideBarContainer>
-      <SideBarBtn onClick={() => link.to('/ceo/order')} isActive={isMain}>
-        <SideBarIcon src={BellIcon} />
-        {isMain ? 'Orders' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/ceo/task')} isActive={isTask}>
-        <SideBarIcon src={CheckListIcon} />
-        {isTask ? 'Tasks' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/ceo/stock')} isActive={isStock}>
-        <SideBarIcon src={StockIcon} />
-        {isStock ? 'Stock' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/ceo/statistic')} isActive={isStatistic}>
-        <SideBarIcon src={StatisticIcon} />
-        {isStatistic ? 'Statistic' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/ceo/setting')} isActive={isSetting}>
-        <SideBarIcon src={SettingIcon} />
-        {isSetting ? 'Setting' : ''}
-      </SideBarBtn>
+      <SideBarBtnContainer>
+        <SideBarBtn onClick={() => link.to('/ceo/order')} isActive={isMain}>
+          <SideBarIcon src={BellIcon} />
+          {isMain ? 'Orders' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/ceo/task')} isActive={isTask}>
+          <SideBarIcon src={CheckListIcon} />
+          {isTask ? 'Tasks' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/ceo/stock')} isActive={isStock}>
+          <SideBarIcon src={StockIcon} />
+          {isStock ? 'Stock' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/ceo/statistic')} isActive={isStatistic}>
+          <SideBarIcon src={StatisticIcon} />
+          {isStatistic ? 'Statistic' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/ceo/setting')} isActive={isSetting}>
+          <SideBarIcon src={SettingIcon} />
+          {isSetting ? 'Setting' : ''}
+        </SideBarBtn>
+      </SideBarBtnContainer>
       <LogOutBtn onClick={() => link.to('/')}>
         <SideBarIcon src={LogOutIcon} />
       </LogOutBtn>

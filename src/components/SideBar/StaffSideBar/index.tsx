@@ -1,4 +1,10 @@
-import { LogOutBtn, SideBarBtn, SideBarContainer, SideBarIcon } from '../style';
+import {
+  LogOutBtn,
+  SideBarBtn,
+  SideBarBtnContainer,
+  SideBarContainer,
+  SideBarIcon,
+} from '../style';
 
 import { useLink } from '@/hooks/useLink';
 
@@ -21,18 +27,20 @@ const StaffSideBar = ({ pathName }: SideBarValue) => {
   const isStock = pathName === 'stock';
   return (
     <SideBarContainer>
-      <SideBarBtn onClick={() => link.to('/staff/cook/order')} isActive={isMain}>
-        <SideBarIcon src={BellIcon} />
-        {isMain ? 'Orders' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/staff/cook/task')} isActive={isTask}>
-        <SideBarIcon src={CheckListIcon} />
-        {isTask ? 'Tasks' : ''}
-      </SideBarBtn>
-      <SideBarBtn onClick={() => link.to('/staff/cook/stock')} isActive={isStock}>
-        <SideBarIcon src={StockIcon} />
-        {isStock ? 'Stock' : ''}
-      </SideBarBtn>
+      <SideBarBtnContainer>
+        <SideBarBtn onClick={() => link.to('/staff/cook/order')} isActive={isMain}>
+          <SideBarIcon src={BellIcon} />
+          {isMain ? 'Orders' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/staff/cook/task')} isActive={isTask}>
+          <SideBarIcon src={CheckListIcon} />
+          {isTask ? 'Tasks' : ''}
+        </SideBarBtn>
+        <SideBarBtn onClick={() => link.to('/staff/cook/stock')} isActive={isStock}>
+          <SideBarIcon src={StockIcon} />
+          {isStock ? 'Stock' : ''}
+        </SideBarBtn>
+      </SideBarBtnContainer>
       <LogOutBtn onClick={() => link.to('/')}>
         <SideBarIcon src={LogOutIcon} />
       </LogOutBtn>
