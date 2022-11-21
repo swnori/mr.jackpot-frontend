@@ -149,6 +149,41 @@ const dummyData: MenuInfo[] = [
     price: 1000,
     option: [],
   },
+  {
+    id: 11,
+    type: MenuType.STYLE,
+    name: '흰색 면 냅킨',
+    price: 0,
+    option: [],
+  },
+  {
+    id: 12,
+    type: MenuType.STYLE,
+    name: '린넨 냅킨',
+    price: 0,
+    option: [],
+  },
+  {
+    id: 13,
+    type: MenuType.STYLE,
+    name: '나무 쟁반',
+    price: 0,
+    option: [],
+  },
+  {
+    id: 14,
+    type: MenuType.STYLE,
+    name: '은 쟁반',
+    price: 0,
+    option: [],
+  },
+  {
+    id: 15,
+    type: MenuType.STYLE,
+    name: '작은 꽃병',
+    price: 0,
+    option: [],
+  },
 ];
 
 const styleDummyData = [

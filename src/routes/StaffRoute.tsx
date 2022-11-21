@@ -6,6 +6,7 @@ import {
   CookMainPage,
   CookOrderInfoPage,
   CookStockPage,
+  CookStyleDetailPage,
   CookTaskPage,
   DeliveryMainPage,
   DeliveryTaskPage,
@@ -27,6 +28,7 @@ const CookRoute = () => {
       <Route path='/order' element={<CookMainPage />} />
       <Route path='/order/:id' element={<CookOrderInfoPage />} />
       <Route path='/task' element={<CookTaskPage />} />
+      <Route path='/task/:id' element={<CookStyleDetailPage />} />
       <Route path='/stock' element={<CookStockPage />} />
     </Routes>
   );

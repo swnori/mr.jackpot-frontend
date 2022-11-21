@@ -14,12 +14,14 @@ import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 import OrderState from '@/components/OrderState';
 
+import { ValueOf } from '@/utils/type';
 import { KRWFormat } from '@/utils/format';
 
 import { menuInfoState, styleInfoState } from '@/stores/menu';
 import { dinnerInfoState } from '@/stores/dinner';
 
 import { MenuOrder } from '@/types/order';
+import { MenuType } from '@/types/menu';
 
 import TopIcon from '@/assets/icons/icon-arrow-top.svg';
 import BottomIcon from '@/assets/icons/icon-arrow-bottom.svg';
@@ -36,9 +38,10 @@ interface DinnerInfoData {
 interface DinnerInfoValue {
   data: DinnerInfoData;
   showState?: boolean;
+  onClick?: (idx: number, type?: ValueOf<typeof MenuType>) => void;
 }
 
-const DinnerInfoSection = ({ data, showState = false }: DinnerInfoValue) => {
+const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue) => {
   const dinnerInfo = useRecoilValue(dinnerInfoState);
   const styleInfo = useRecoilValue(styleInfoState);
   const menuInfo = useRecoilValue(menuInfoState);
@@ -80,7 +83,7 @@ const DinnerInfoSection = ({ data, showState = false }: DinnerInfoValue) => {
       </StaffOrderInfoWrapper>
       {showDinner ? (
         <Table headerList={tableHeaderList}>
-          {data.menuList.map((menu) => {
+          {data.menuList.map((menu, idx) => {
             const dataList = showState
               ? [
                   menu.id!,
@@ -97,7 +100,19 @@ const DinnerInfoSection = ({ data, showState = false }: DinnerInfoValue) => {
                   menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
                   menu.count,
                 ];
-            return <TableRow key={menu.id} dataList={dataList} lastIsState={showState} />;
+            const onClickHandler = () => {
+              if (onClick) {
+                onClick(idx, menuInfo[menu.menuId].type);
+              }
+            };
+            return (
+              <TableRow
+                key={menu.id}
+                dataList={dataList}
+                onClick={onClickHandler}
+                lastIsState={showState}
+              />
+            );
           })}
         </Table>
       ) : null}
