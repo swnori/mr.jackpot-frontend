@@ -29,4 +29,11 @@ export interface Member {
   order: number;
   pay: number;
   rating: number;
+  orderList?: {
+    id: number;
+    dinnerName: string;
+    time: Date;
+    price: number;
+    stateId: number;
+  }[];
 }
