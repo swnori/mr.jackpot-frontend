@@ -50,16 +50,22 @@ export const ddayFormat = (dday: Date) => {
   return 'D-Day';
 };
 
-export const dateFormat = (date: Date) => {
-  const [year, month, day, hour, minute] = [
+export const dateFormat = (date: Date, showTime: boolean = true) => {
+  const [year, month, day, hour, minute, second] = [
     date.getFullYear(),
     date.getMonth() + 1,
     date.getDate(),
     date.getHours(),
     date.getMinutes(),
+    date.getSeconds(),
   ];
-  return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)} ${digitFormat(
-    hour,
-    2,
-  )}:${digitFormat(minute, 2)}:00`;
+
+  if (showTime) {
+    return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)} ${digitFormat(
+      hour,
+      2,
+    )}:${digitFormat(minute, 2)}:${digitFormat(second, 2)}`;
+  }
+
+  return `${year}.${digitFormat(month, 2)}.${digitFormat(day, 2)}`;
 };
