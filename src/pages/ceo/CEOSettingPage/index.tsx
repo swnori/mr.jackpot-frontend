@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -14,6 +15,7 @@ import Table from '@/components/Table';
 import DesktopSearch from '@/components/DesktopSearch';
 
 import useSetting from '@/hooks/useSetting';
+import { useLink } from '@/hooks/useLink';
 
 import { dateFormat } from '@/utils/format';
 
@@ -23,11 +25,13 @@ import PlusIcon from '@/assets/icons/icon-round-add.svg';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
 const CEOSettingPage = () => {
-  const [mode, setMode] = useState<'employee' | 'member'>('employee');
   const [keyword, setKeyword] = useState('');
 
-  const isEmployee = mode === 'employee';
-  const isMember = mode === 'member';
+  const location = useLocation();
+  const link = useLink();
+
+  const isEmployee = !location.hash || location.hash === '#employee';
+  const isMember = location.hash === '#member';
 
   const {
     itemList,
@@ -40,13 +44,13 @@ const CEOSettingPage = () => {
   } = useSetting();
 
   const changeEmployeeHandler = () => {
-    setMode('employee');
     setEmployeeList();
+    link.to('/ceo/setting#employee');
   };
 
   const changeMemberHandler = () => {
-    setMode('member');
     setMemberList();
+    link.to('/ceo/setting#member');
   };
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +72,12 @@ const CEOSettingPage = () => {
   };
 
   useEffect(() => {
-    setEmployeeList();
+    if (isEmployee) {
+      setEmployeeList();
+    }
+    if (isMember) {
+      setMemberList();
+    }
   }, []);
   return (
     <SettingContainer>
@@ -133,6 +142,7 @@ const CEOSettingPage = () => {
                   user.rating!,
                 ]}
                 onDelete={() => removeMember(user.id!)}
+                onClick={() => link.to(`/ceo/setting/${user.id}`)}
               />
             ))}
         </Table>
