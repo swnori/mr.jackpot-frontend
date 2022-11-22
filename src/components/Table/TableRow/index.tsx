@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TableRowContainer, TableRowItem, TableRowItemBtn, TableRowItemBtnImg } from './style';
 
 import OrderState from '@/components/OrderState';
@@ -20,6 +22,18 @@ const TableRow = ({
   onUpdate,
   onDelete,
 }: TableRowValue) => {
+  const updateHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    if (onUpdate) {
+      onUpdate();
+    }
+  };
+  const deleteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete();
+    }
+  };
   return (
     <TableRowContainer onClick={onClick}>
       {lastIsState ? (
@@ -36,14 +50,14 @@ const TableRow = ({
       )}
       {onUpdate ? (
         <TableRowItem width='4rem'>
-          <TableRowItemBtn onClick={onUpdate} isUpdate>
+          <TableRowItemBtn onClick={updateHandler} isUpdate>
             <TableRowItemBtnImg src={PencilIcon} />
           </TableRowItemBtn>
         </TableRowItem>
       ) : null}
       {onDelete ? (
         <TableRowItem>
-          <TableRowItemBtn onClick={onDelete} isDelete>
+          <TableRowItemBtn onClick={deleteHandler} isDelete>
             <TableRowItemBtnImg src={DeleteIcon} />
           </TableRowItemBtn>
         </TableRowItem>
