@@ -7,6 +7,7 @@ import CEOFrame from '@/components/Frame/CEOFrame';
 import {
   CEOLoginPage,
   CEOMainPage,
+  CEOMemberInfoPage,
   CEOOrderInfoPage,
   CEOSettingPage,
   CEOStatisticPage,
@@ -28,6 +29,7 @@ const CEORoute = () => {
           <Route path='/stock' element={<CEOStockPage />} />
           <Route path='/statistic' element={<CEOStatisticPage />} />
           <Route path='/setting' element={<CEOSettingPage />} />
+          <Route path='/setting/:id' element={<CEOMemberInfoPage />} />
         </Route>
       </Route>
     </Routes>

@@ -27,4 +27,6 @@ export const AddMenuBtnContainer = styled.button`
 
 export const AddMenuImg = styled.img`
   width: 1.5rem;
+
+  filter: invert(100%);
 `;

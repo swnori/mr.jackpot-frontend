@@ -39,6 +39,4 @@ export const AddItemBtn = styled.button`
 
 export const AddItemBtnImg = styled.img`
   width: 1.5rem;
-
-  filter: invert(100%);
 `;
