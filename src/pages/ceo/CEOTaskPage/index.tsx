@@ -63,7 +63,7 @@ const CEOTaskPage = () => {
   const link = useLink();
   return (
     <TaskContainer>
-      <TaskTitle>주문 처리 현황</TaskTitle>
+      <TaskTitle>접수된 예약 목록</TaskTitle>
       <Table headerList={['ID', 'Order', 'Time', 'Price', 'Status']}>
         {dummyData.map((order) => (
           <TableRow
