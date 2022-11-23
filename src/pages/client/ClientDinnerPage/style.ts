@@ -60,13 +60,12 @@ export const DinnerDetailDesc = styled.span`
 
 export const DinnerImgWrapper = styled.div`
   position: absolute;
-  top: -7.5rem;
-  width: 15rem;
-  height: 15rem;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid #ffffff;
-  backdrop-filter: blur(3px);
+  top: -8.5rem;
+  width: 17rem;
+  height: 17rem;
   /* Note: backdrop-filter has minimal browser support */
 `;
 
-export const DinnerImg = styled.img``;
+export const DinnerImg = styled.img`
+  width: 100%;
+`;

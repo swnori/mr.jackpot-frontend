@@ -17,6 +17,7 @@ import { dinnerInfoState } from '@/stores/dinner';
 
 import { DinnerOrder, MenuOrder } from '@/types/order';
 
+import SteakWineImg from '@/assets/images/dinner.png';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
 interface DinnerListValue {
@@ -67,6 +68,7 @@ const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
           return (
             <MobileItem
               key={idx}
+              img={SteakWineImg}
               type='button'
               title={info.name}
               desc={dinnerDetail(dinner)}

@@ -14,6 +14,8 @@ import { KRWFormat } from '@/utils/format';
 
 import { dinnerInfoState } from '@/stores/dinner';
 
+import DinnerImg from '@/assets/images/dinner.png';
+
 const ClientMainPage = () => {
   const link = useLink();
   const dinnerList = useRecoilValue(dinnerInfoState);
@@ -54,6 +56,7 @@ const ClientMainPage = () => {
             key={item.id}
             type='button'
             id={item.id}
+            img={DinnerImg}
             title={item.name}
             subTitle={item.desc}
             desc={KRWFormat(item.price)}
