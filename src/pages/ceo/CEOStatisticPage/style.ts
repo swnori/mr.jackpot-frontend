@@ -15,3 +15,10 @@ export const StatisticTitle = styled.span`
   font-size: calc(${FontSize.XXL} + 0.15rem);
   font-weight: ${FontWeight.MEDIUM};
 `;
+
+export const CardListContainer = styled.section`
+  display: flex;
+  justify-content: space-between;
+
+  width: calc(750px + 4rem);
+`;
