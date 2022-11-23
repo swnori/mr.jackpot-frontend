@@ -15,7 +15,9 @@ export const DesktopCardContainer = styled(motion.div)`
 
   border-radius: 30px;
   width: 20rem;
+  min-width: 15em;
   height: 40rem;
+  min-height: 28em;
   padding: 1.5rem;
 
   flex-direction: column;
@@ -33,12 +35,13 @@ export const DesktopCardTitleContainer = styled.div`
   align-items: center;
   position: absolute;
   top: 5rem;
-  gap: 1.5rem;
+  gap: 3rem;
 `;
 
 export const DesktopCardTitleIcon = styled.img`
   filter: invert(100%);
   width: 3.5rem;
+  min-width: 2.5em;
 `;
 
 export const DesktopCardTitleText = styled.span`
