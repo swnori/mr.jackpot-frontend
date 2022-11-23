@@ -46,17 +46,24 @@ export const ItemContainer = styled.div<ItemContainerValue>`
   z-index: 2;
 `;
 
-export const ItemImgWrapper = styled.div`
+interface ItemImgWrapperValue {
+  isError: boolean;
+}
+
+export const ItemImgWrapper = styled.div<ItemImgWrapperValue>`
   width: 6rem;
   height: 6rem;
   padding: 0;
 
-  flex-shrink: 0;
+  ${(props) =>
+    props.isError
+      ? `
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid ${ColorCode.WHITE};
+          backdrop-filter: blur(7.5px);`
+      : ''}
 
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid ${ColorCode.WHITE};
-  backdrop-filter: blur(7.5px);
-  /* Note: backdrop-filter has minimal browser support */
+  flex-shrink: 0;
 `;
 export const ItemImg = styled.img`
   width: 100%;

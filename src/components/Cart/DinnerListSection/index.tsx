@@ -21,6 +21,7 @@ import { dinnerInfoState } from '@/stores/dinner';
 
 import { DinnerOrder, MenuOrder } from '@/types/order';
 
+import SteakWineImg from '@/assets/images/dinner.png';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
 const DinnerListSection = () => {
@@ -77,6 +78,7 @@ const DinnerListSection = () => {
             <MobileItem
               key={idx}
               type='button'
+              img={SteakWineImg}
               title={info.name}
               subTitle={dinnerDetail(dinner)}
               desc={KRWFormat(dinnerOrderPrice(idx))}

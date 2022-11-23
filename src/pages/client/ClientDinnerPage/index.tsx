@@ -27,6 +27,8 @@ import { dinnerInfoState } from '@/stores/dinner';
 import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
 
+import SteakWineImg from '@/assets/images/dinner.png';
+
 const ClientDinnerPage = () => {
   const { mode, id } = useParams();
   const dinnerInfoList = useRecoilValue(dinnerInfoState);
@@ -86,7 +88,7 @@ const ClientDinnerPage = () => {
       </TitleContainer>
       <DinnerDetailContainer>
         <DinnerImgWrapper>
-          <DinnerImg />
+          <DinnerImg src={SteakWineImg} />
         </DinnerImgWrapper>
         <DinnerDetailDesc>
           각 상세 메뉴를 터치하시면 <br />

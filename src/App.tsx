@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil';
 import React from 'react';
 
 import ModalRoot from './components/Modal/ModalRoot';
+import Loading from './components/Loading';
 
 import GlobalStyle from '@/styles/global';
 import Router from '@/routes';
@@ -13,7 +14,7 @@ const App = () => {
   return (
     <>
       <RecoilRoot>
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<Loading />}>
           <Router />
           <ModalRoot />
         </React.Suspense>

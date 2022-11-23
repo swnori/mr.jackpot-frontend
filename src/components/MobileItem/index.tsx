@@ -78,7 +78,7 @@ const MobileItem = ({
     <ItemWrapper highlight={type === 'radio' && checked}>
       <ItemContainer onClick={clickItemHandler} isShowOption={optShow}>
         {img !== null ? (
-          <ItemImgWrapper>
+          <ItemImgWrapper isError={!img}>
             <ItemImg src={img} />
           </ItemImgWrapper>
         ) : null}
