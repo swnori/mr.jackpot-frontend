@@ -5,6 +5,7 @@ import { DesktopGuard } from './guards';
 import CEOFrame from '@/components/Frame/CEOFrame';
 
 import {
+  CEOCouponPage,
   CEOLoginPage,
   CEOMainPage,
   CEOMemberInfoPage,
@@ -29,6 +30,7 @@ const CEORoute = () => {
           <Route path='/stock' element={<CEOStockPage />} />
           <Route path='/statistic' element={<CEOStatisticPage />} />
           <Route path='/setting' element={<CEOSettingPage />} />
+          <Route path='/setting/coupon' element={<CEOCouponPage />} />
           <Route path='/setting/:id' element={<CEOMemberInfoPage />} />
         </Route>
       </Route>

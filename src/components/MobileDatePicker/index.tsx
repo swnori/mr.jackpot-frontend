@@ -11,7 +11,7 @@ interface DatePickerValue {
   customInput: React.ReactNode;
 }
 
-const DatePicker = ({ date, setDate, customInput }: DatePickerValue) => {
+const MobileDatePicker = ({ date, setDate, customInput }: DatePickerValue) => {
   const today = new Date();
 
   const filterPassedTime = (time: Date) => {
@@ -46,4 +46,4 @@ const DatePicker = ({ date, setDate, customInput }: DatePickerValue) => {
   );
 };
 
-export default DatePicker;
+export default MobileDatePicker;

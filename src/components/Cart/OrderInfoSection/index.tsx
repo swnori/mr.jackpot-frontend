@@ -10,7 +10,7 @@ import {
   CartTextArea,
 } from '../style';
 
-import DatePicker from '@/components/DatePicker';
+import MobileDatePicker from '@/components/MobileDatePicker';
 
 import HomeIcon from '@/assets/icons/icon-home.svg';
 
@@ -28,7 +28,7 @@ const OrderInfoSection = () => {
       </CartInputContainer>
       <CartInputContainer>
         <CartInputTitle>예약 시간</CartInputTitle>
-        <DatePicker date={date} setDate={setDate} customInput={<CartInput />} />
+        <MobileDatePicker date={date} setDate={setDate} customInput={<CartInput />} />
       </CartInputContainer>
       <CartInputContainer>
         <CartInputTitle>주소</CartInputTitle>
