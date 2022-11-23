@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import StaffRoute from './StaffRoute';
-import ClientRoute from './ClientRoute';
-import CEORoute from './CEORoute';
-
 import { IntroPage } from '@/pages';
+
+const StaffRoute = React.lazy(() => import('./StaffRoute'));
+const ClientRoute = React.lazy(() => import('./ClientRoute'));
+const CEORoute = React.lazy(() => import('./CEORoute'));
 
 const Router = () => {
   return (
