@@ -22,7 +22,7 @@ export const DatePickerWrapper = styled.div`
 
   .react-datepicker {
     font-size: ${FontSize.XL};
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid ${ColorCode.WHITE};
     border-radius: 10px;
 
@@ -47,6 +47,10 @@ export const DatePickerWrapper = styled.div`
 
     .react-datepicker__day--selected {
       background-color: ${ColorCode.PRIMARY};
+    }
+
+    .react-datepicker__day--outside-month {
+      color: ${ColorCode.GREY};
     }
 
     .react-datepicker__time-container .react-datepicker__time {
