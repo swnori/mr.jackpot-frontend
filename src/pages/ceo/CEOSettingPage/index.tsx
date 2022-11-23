@@ -97,7 +97,7 @@ const CEOSettingPage = () => {
         </AddItemBtn>
       ) : null}
       {isMember ? (
-        <AddItemBtn isMember>
+        <AddItemBtn onClick={() => link.to('/ceo/setting/coupon')} isMember>
           <AddItemBtnImg src={ReceiptIcon} />
           쿠폰 목록
         </AddItemBtn>

@@ -7,3 +7,4 @@ export { default as CEOSettingPage } from './CEOSettingPage';
 export { default as CEOOrderInfoPage } from './CEOOrderInfoPage';
 export { default as CEOTaskDetailPage } from './CEOTaskDetailPage';
 export { default as CEOMemberInfoPage } from './CEOMemberInfoPage';
+export { default as CEOCouponPage } from './CEOCouponPage';
