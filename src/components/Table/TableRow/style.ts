@@ -6,6 +6,10 @@ import { ColorCode } from '@/constants/color';
 export const TableRowContainer = styled.tr`
   height: 6rem;
   border-bottom: 1px solid ${ColorCode.GREY};
+
+  &:hover {
+    background-color: ${ColorCode.LIGHTGREY};
+  }
 `;
 
 interface ItemValue {
@@ -40,6 +44,14 @@ export const TableRowItemBtn = styled.button<BtnValue>`
 
   border:none;
   border-radius: 1.25rem;
+
+  transition: filter 0.2s ease-in-out;
+
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1) saturate(1.1);
+  }
 `;
 
 export const TableRowItemBtnImg = styled.img`

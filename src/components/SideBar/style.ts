@@ -50,6 +50,11 @@ export const SideBarBtn = styled.button<BtnValue>`
 
   font-size: ${FontSize.L};
   font-weight: ${FontWeight.REGULAR};
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => (props.isActive ? ColorCode.LIGHTGREY : ColorCode.OFFWHITE)};
+  }
 `;
 
 export const LogOutBtn = styled.button`
@@ -68,6 +73,15 @@ export const LogOutBtn = styled.button`
   img {
     width: 2rem;
   }
+
+  &:hover {
+    background: ${ColorCode.GREY};
+    img {
+      filter: invert(100%);
+    }
+  }
+
+  cursor: pointer;
 `;
 
 export const SideBarIcon = styled.img`
