@@ -23,13 +23,14 @@ export const UserInfoSection = styled.div`
   padding: 3rem 1.5rem;
   border-radius: 15px;
   width: calc(100% - 3rem);
+  font-size: ${FontSize.L};
 `;
 
 export const UserInfoSectionTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: ${FontSize.XXL};
+  font-size: ${FontSize.XL};
   font-weight: ${FontWeight.MEDIUM};
 `;
 
@@ -45,7 +46,7 @@ export const UserInfoInputContainer = styled.div`
 `;
 
 export const UserInfoInputTitle = styled.span`
-  font-size: ${FontSize.L};
+  font-size: ${FontSize.M};
   font-weight: ${FontWeight.MEDIUM};
 `;
 
@@ -58,7 +59,7 @@ export const UserInfoInput = styled.input`
 
   padding: 1rem 1.25rem;
 
-  font-size: ${FontSize.L};
+  font-size: ${FontSize.M};
   font-weight: ${FontWeight.REGULAR};
 
   &::placeholder {
@@ -72,7 +73,7 @@ export const UserInfoInput = styled.input`
   transition: background 0.15s ease-in-out;
 `;
 
-export const SignOutBtn = styled.button`
+const UserInfoBtn = styled.button`
   width: calc(100% - 2.5rem);
 
   background: rgba(255, 255, 255, 0.15);
@@ -83,9 +84,16 @@ export const SignOutBtn = styled.button`
 
   font-size: ${FontSize.L};
   font-weight: ${FontWeight.REGULAR};
-  color: ${ColorCode.PRIMARY};
 
   box-sizing: content-box;
+`;
+
+export const SignOutBtn = styled(UserInfoBtn)`
+  color: ${ColorCode.PRIMARY};
+`;
+
+export const LogInBtn = styled(UserInfoBtn)`
+  color: ${ColorCode.BLACK};
 `;
 
 export const UpdateBtnContainer = styled.button`
@@ -97,7 +105,7 @@ export const UpdateBtnContainer = styled.button`
   border-radius: 30px;
 
   color: ${ColorCode.WHITE};
-  font-size: ${FontSize.M};
+  font-size: ${FontSize.S};
   font-weight: ${FontWeight.REGULAR};
 
   align-self: flex-end;
