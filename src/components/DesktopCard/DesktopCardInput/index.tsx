@@ -1,16 +1,31 @@
+import React from 'react';
+
 import { DesktopCardInputBox, DesktopCardInputContainer, DesktopCardInputIcon } from './style';
 
 interface DesktopCardInputValue {
-  onChange: () => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
   placeholder?: string;
   img?: string;
 }
 
-const DesktopCardInput = ({ onChange, placeholder, img }: DesktopCardInputValue) => {
+const DesktopCardInput = ({
+  value,
+  onChange,
+  type = 'text',
+  placeholder,
+  img,
+}: DesktopCardInputValue) => {
   return (
     <DesktopCardInputContainer>
       {img && <DesktopCardInputIcon src={img} />}
-      <DesktopCardInputBox onChange={onChange} placeholder={placeholder ?? ''} />
+      <DesktopCardInputBox
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder ?? ''}
+        type={type}
+      />
     </DesktopCardInputContainer>
   );
 };

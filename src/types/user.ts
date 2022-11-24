@@ -1,8 +1,5 @@
-export interface User {
-  token: string;
-}
-
-export interface Client extends User {
+export interface Client {
+  isMember: boolean;
   name: string;
   contact: string;
   address: string;

@@ -69,6 +69,14 @@ const ModalBtn = styled.button`
     border-radius: 1.25rem;
 
     font-size: ${FontSize.L};
+
+    transition: filter 0.3s ease-in-out;
+
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1) saturate(1.1);
+    }
   }
   @media screen and (max-width: 768px) {
     width: 100%;

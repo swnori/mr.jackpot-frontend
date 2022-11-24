@@ -35,6 +35,14 @@ export const AddItemBtn = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+
+  transition: filter 0.2s ease-in-out;
+
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1) saturate(1.1);
+  }
 `;
 
 export const AddItemBtnImg = styled.img`

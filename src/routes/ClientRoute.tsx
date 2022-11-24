@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-import { MobileGuard } from './guards';
+import { LogInGuard, MobileGuard } from './guards';
 
 import ClientFrame from '@/components/Frame/ClientFrame';
 
@@ -28,15 +28,17 @@ const ClientRoute = () => {
           <Route path='/' element={<ClientIntroPage />} />
           <Route path='/login' element={<ClientLoginPage />} />
           <Route path='/signup' element={<ClientSignUpPage />} />
-          <Route element={<ClientFrame />}>
-            <Route path='/main' element={<ClientMainPage />} />
-            <Route path='/dinner/:mode/:id' element={<ClientDinnerPage />} />
-            <Route path='/menu/:type' element={<ClientMenuListPage />} />
-            <Route path='/cart' element={<ClientCartPage />} />
-            <Route path='/coupon' element={<ClientCouponPage />} />
-            <Route path='/order' element={<ClientOrderHistoryPage />} />
-            <Route path='/order/:id' element={<ClientOrderInfoPage />} />
-            <Route path='/mypage' element={<ClientUserInfoPage />} />
+          <Route element={<LogInGuard />}>
+            <Route element={<ClientFrame />}>
+              <Route path='/main' element={<ClientMainPage />} />
+              <Route path='/dinner/:mode/:id' element={<ClientDinnerPage />} />
+              <Route path='/menu/:type' element={<ClientMenuListPage />} />
+              <Route path='/cart' element={<ClientCartPage />} />
+              <Route path='/coupon' element={<ClientCouponPage />} />
+              <Route path='/order' element={<ClientOrderHistoryPage />} />
+              <Route path='/order/:id' element={<ClientOrderInfoPage />} />
+              <Route path='/mypage' element={<ClientUserInfoPage />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

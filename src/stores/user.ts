@@ -5,7 +5,7 @@ import { Client } from '@/types/user';
 export const clientState = atom<Client>({
   key: 'clientState',
   default: {
-    token: '',
+    isMember: false,
     name: '',
     contact: '',
     address: '',

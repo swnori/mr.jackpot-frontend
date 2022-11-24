@@ -21,6 +21,12 @@ export const CEOTaskDetailBackBtn = styled.button`
   border-radius: 10px;
 
   margin-left: 1.5rem;
+
+  cursor: pointer;
+
+  &:hover {
+    background: ${ColorCode.LIGHTGREY};
+  }
 `;
 
 export const CEOTaskDetailBackBtnImg = styled.img`
@@ -63,7 +69,13 @@ export const CEOTaskDetailBtn = styled.button`
     color: ${ColorCode.BLACK};
   }
 
-  transition: background 0.3s ease-in-out;
+  transition: background, filter 0.3s ease-in-out;
+
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1) saturate(1.1);
+  }
 `;
 
 export const CEOTaskDetailBtnImg = styled.img`

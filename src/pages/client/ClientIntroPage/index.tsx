@@ -5,12 +5,20 @@ import { LoginCardDesc } from '@/components/Login/Card/style';
 import LoginCard from '@/components/Login/Card';
 import { DesktopCardBtn } from '@/components/DesktopCard';
 
+import useLogIn from '@/hooks/useLogIn';
 import { useLink } from '@/hooks/useLink';
 
 import ClientIcon from '@/assets/icons/icon-dining.svg';
 
 const ClientIntroPage = () => {
   const link = useLink();
+
+  const { nonMemberLoginMutation } = useLogIn();
+
+  const nonMemberLoginHandler = () => {
+    nonMemberLoginMutation.mutate();
+  };
+
   return (
     <Page type='common'>
       <IntroContainer>
@@ -23,7 +31,7 @@ const ClientIntroPage = () => {
             <DesktopCardBtn onClick={() => link.to('/client/login')}>
               로그인 & 회원가입
             </DesktopCardBtn>
-            <DesktopCardBtn onClick={() => link.to('/client/main')}>비회원으로 접속</DesktopCardBtn>
+            <DesktopCardBtn onClick={nonMemberLoginHandler}>비회원으로 접속</DesktopCardBtn>
           </IntroBtnContainer>
         </LoginCard>
       </IntroContainer>

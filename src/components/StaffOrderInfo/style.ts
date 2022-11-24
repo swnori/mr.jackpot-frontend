@@ -36,6 +36,8 @@ export const StaffOrderInfoBtn = styled.button`
   background: none;
   border: none;
   width: 3.5rem;
+
+  cursor: pointer;
 `;
 
 export const StaffOrderInfoBtnImg = styled.img`

@@ -1,4 +1,5 @@
 import { useRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
 import React from 'react';
 
 import useModal from './useModal';
@@ -241,6 +242,7 @@ const useSetting = () => {
           ...prev,
           itemList: [...itemList.slice(0, idx), ...itemList.slice(idx + 1)],
         }));
+        toast.success('직원 삭제 완료!');
       },
     });
   };
