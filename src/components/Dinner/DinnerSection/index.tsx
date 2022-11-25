@@ -48,7 +48,9 @@ const DinnerSection = ({
   const { menuOrderPrice } = useOrder();
 
   const optionText = (option: [Option?, Option?], select: [number | null, number | null]) => {
-    const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
+    const opt1 = option[0]
+      ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}`
+      : '옵션 없음';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
 
     return opt1 + opt2;
