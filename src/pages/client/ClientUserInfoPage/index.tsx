@@ -1,4 +1,6 @@
 import { useRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
+import { useMutation } from 'react-query';
 import { ChangeEvent, useState } from 'react';
 
 import {
@@ -25,6 +27,7 @@ import { clientState } from '@/stores/user';
 import PencilIcon from '@/assets/icons/icon-pencil.svg';
 import IDCardIcon from '@/assets/icons/icon-id-card.svg';
 import CheckIcon from '@/assets/icons/icon-check.svg';
+import { fetchUpdateMyInfo } from '@/apis/client';
 
 const ClientUserInfoPage = () => {
   const [me, setMe] = useRecoilState(clientState);
@@ -36,9 +39,22 @@ const ClientUserInfoPage = () => {
   const { clientLogOut } = useLogOut();
   const link = useLink();
 
+  const updateMutation = useMutation('updateMyInfo', fetchUpdateMyInfo, {
+    onSuccess: () => {
+      toast.success('정보 변경 성공', { position: 'top-center' });
+      setMe((prev) => ({ ...prev, name, contact, address }));
+    },
+    onError: () => {
+      setName(me.name);
+      setContact(me.contact);
+      setAddress(me.address);
+      toast.error('에러!', { position: 'top-center' });
+    },
+  });
+
   const updateModeHandler = () => {
     if (!isRead) {
-      setMe((prev) => ({ ...prev, name, contact, address }));
+      updateMutation.mutate({ name, address, contact });
     }
     setIsRead((prev) => !prev);
   };
