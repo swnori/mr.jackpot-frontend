@@ -14,10 +14,10 @@ export interface Option {
 }
 
 export const MenuType = {
-  MAIN_DISH: 'main',
-  SIDE: 'side',
-  DRINK: 'drink',
-  STYLE: 'style',
+  MAIN_DISH: 'Main Dish',
+  SIDE: 'Side',
+  DRINK: 'Drink',
+  STYLE: 'Style',
 } as const;
 
 export interface MenuInfo {
@@ -27,4 +27,11 @@ export interface MenuInfo {
   img?: string;
   price: number;
   option: [Option?, Option?];
+}
+
+export interface StyleInfo {
+  id: number;
+  name: string;
+  desc: string;
+  price: number;
 }

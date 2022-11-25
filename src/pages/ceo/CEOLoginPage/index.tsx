@@ -17,7 +17,12 @@ const CEOLoginPage = () => {
       <LoginContainer>
         <LoginCard title='환영합니다!' img={CEOIcon}>
           <LoginCardDesc>관리자코드를 입력하세요.</LoginCardDesc>
-          <DesktopCardInput onChange={() => {}} placeholder='관리자코드 입력' img={IDCardIcon} />
+          <DesktopCardInput
+            value=''
+            onChange={() => {}}
+            placeholder='관리자코드 입력'
+            img={IDCardIcon}
+          />
           <DesktopCardBtn
             onClick={() => {
               link.to('/ceo/order');

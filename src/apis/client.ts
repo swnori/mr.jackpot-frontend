@@ -34,4 +34,17 @@ export const fetchSignUp = ({
     address: '',
   });
 
-export const getMyInfo = () => fetchApi.get('');
+export const fetchUpdateMyInfo = ({
+  name,
+  address,
+  contact,
+}: {
+  name: string;
+  address: string;
+  contact: string;
+}) => fetchApi.post('/customer/personalinfo', { name, address, phone: contact });
+
+export const fetchVui = ({ seqStack, message }: { seqStack: number[]; message: string }) =>
+  fetchApi.post('/customer/orderinfo/vuistep', { seqStack, message });
+
+export const fetchMyInfo = () => fetchApi.get('');

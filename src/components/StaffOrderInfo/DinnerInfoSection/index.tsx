@@ -1,4 +1,3 @@
-import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 
 import {
@@ -14,11 +13,10 @@ import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 import OrderState from '@/components/OrderState';
 
+import useMenu from '@/hooks/useMenu';
+
 import { ValueOf } from '@/utils/type';
 import { KRWFormat } from '@/utils/format';
-
-import { menuInfoState, styleInfoState } from '@/stores/menu';
-import { dinnerInfoState } from '@/stores/dinner';
 
 import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
@@ -42,10 +40,9 @@ interface DinnerInfoValue {
 }
 
 const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue) => {
-  const dinnerInfo = useRecoilValue(dinnerInfoState);
-  const styleInfo = useRecoilValue(styleInfoState);
-  const menuInfo = useRecoilValue(menuInfoState);
   const [showDinner, setShowDinner] = useState(false);
+
+  const { getMenuById, getDinnerById, getStyleById } = useMenu();
 
   const showDinnerHandler = () => {
     setShowDinner((prev) => !prev);
@@ -65,7 +62,7 @@ const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>디너 이름</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>{dinnerInfo[data.type].name}</StaffOrderInfoDesc>
+        <StaffOrderInfoDesc>{getDinnerById(data.type)!.name}</StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>가격</StaffOrderInfoTitle>
@@ -73,7 +70,7 @@ const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>스타일</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>{styleInfo[data.style].name}</StaffOrderInfoDesc>
+        <StaffOrderInfoDesc>{getStyleById(data.style)!.name}</StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>디너 구성</StaffOrderInfoTitle>
@@ -84,25 +81,26 @@ const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue
       {showDinner ? (
         <Table headerList={tableHeaderList}>
           {data.menuList.map((menu, idx) => {
+            const menuInfo = getMenuById(menu.menuId)!;
             const dataList = showState
               ? [
                   menu.id!,
-                  menuInfo[menu.menuId].name,
-                  menuInfo[menu.menuId].option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
-                  menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
+                  menuInfo.name,
+                  menuInfo.option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
+                  menuInfo.option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
                   menu.count,
                   menu.stateId!,
                 ]
               : [
                   menu.id!,
-                  menuInfo[menu.menuId].name,
-                  menuInfo[menu.menuId].option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
-                  menuInfo[menu.menuId].option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
+                  menuInfo.name,
+                  menuInfo.option[0]?.list[menu.option[0] ?? 0]?.name ?? '-',
+                  menuInfo.option[1]?.list[menu.option[1] ?? 0]?.name ?? '-',
                   menu.count,
                 ];
             const onClickHandler = () => {
               if (onClick) {
-                onClick(idx, menuInfo[menu.menuId].type);
+                onClick(idx, menuInfo.type);
               }
             };
             return (

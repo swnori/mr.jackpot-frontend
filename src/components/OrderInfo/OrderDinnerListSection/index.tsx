@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-
 import {
   OrderSection,
   OrderSectionDesc,
@@ -10,10 +8,8 @@ import {
 
 import MobileItem from '@/components/MobileItem';
 
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
-
-import { menuInfoState } from '@/stores/menu';
-import { dinnerInfoState } from '@/stores/dinner';
 
 import { DinnerOrder, MenuOrder } from '@/types/order';
 
@@ -25,13 +21,12 @@ interface DinnerListValue {
 }
 
 const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
-  const dinnerInfo = useRecoilValue(dinnerInfoState);
-  const menuInfo = useRecoilValue(menuInfoState);
-
   const link = useLink();
+  const { getDinnerById, getMenuById } = useMenu();
+
   const menuListStr = (list: MenuOrder[]) =>
     list.reduce((pre, menu) => {
-      const { name } = menuInfo[menu.menuId];
+      const { name } = getMenuById(menu.menuId)!;
       if (pre === '') {
         return name;
       }
@@ -63,7 +58,7 @@ const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
       </OrderSectionDesc>
       <DinnerListContainer>
         {dinnerList.map((dinner, idx) => {
-          const info = dinnerInfo[dinner.type];
+          const info = getDinnerById(dinner.type)!;
 
           return (
             <MobileItem

@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 import React, { useState } from 'react';
 
@@ -8,12 +8,12 @@ import MobileSearch from '@/components/MobileSearch';
 import MobileItem from '@/components/MobileItem';
 import Header from '@/components/Header';
 
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
 import { dinnerOrderState } from '@/stores/order';
-import { menuInfoState } from '@/stores/menu';
 
 import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
@@ -21,9 +21,10 @@ import { MenuType } from '@/types/menu';
 const ClientMenuListPage = () => {
   const { type } = useParams();
   const link = useLink();
-  const menuInfo = useRecoilValue(menuInfoState);
+  const { getMenuById, menuList } = useMenu();
+
   const setDinnerOrder = useSetRecoilState(dinnerOrderState);
-  const filteredTypeMenuList = menuInfo.filter((menu) => menu.type === type);
+  const filteredTypeMenuList = menuList.filter((menu) => menu.type === type);
   const [filteredWordMenuList, setFilteredWordMenuList] = useState(filteredTypeMenuList);
 
   const [keyword, setKeyword] = useState('');
@@ -39,7 +40,7 @@ const ClientMenuListPage = () => {
   };
 
   const addItem = (id: number) => {
-    const newItem = menuInfo[id];
+    const newItem = getMenuById(id)!;
     const newOrder = {
       menuId: newItem.id,
       option: [newItem.option[0]?.default, newItem.option[1]?.default],

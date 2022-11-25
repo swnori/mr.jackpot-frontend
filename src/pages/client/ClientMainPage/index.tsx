@@ -1,4 +1,3 @@
-import { useRecoilValue } from 'recoil';
 import React, { useState } from 'react';
 
 import { DinnerListContainer, MainContainer, MainNoticeWrapper } from './style';
@@ -8,18 +7,18 @@ import MobileItem from '@/components/MobileItem';
 import Header from '@/components/Header';
 
 import useOrder from '@/hooks/useOrder';
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
-
-import { dinnerInfoState } from '@/stores/dinner';
 
 import DinnerImg from '@/assets/images/dinner.png';
 
 const ClientMainPage = () => {
   const link = useLink();
-  const dinnerList = useRecoilValue(dinnerInfoState);
   const { setDinnerDefault } = useOrder();
+  const { dinnerList } = useMenu();
+
   const [filteredDinnerList, setFilteredDinnerList] = useState(dinnerList);
   const [keyword, setKeyword] = useState('');
 

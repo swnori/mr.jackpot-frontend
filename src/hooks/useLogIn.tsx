@@ -17,7 +17,8 @@ const useLogIn = () => {
   const memberLoginMutation = useMutation('memberLogin', fetchMemberLogin, {
     onSuccess: (data) => {
       window.sessionStorage.setItem('access-token', data['access-token']);
-      setClient((prev) => ({ ...prev, isMember: true }));
+      const { name, address, phone } = data.personalInfo;
+      setClient({ name, address, contact: phone, isMember: true });
       link.to('/client/main');
     },
     onError: (err: FetchError) => {

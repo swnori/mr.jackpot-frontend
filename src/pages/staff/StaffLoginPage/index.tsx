@@ -26,7 +26,12 @@ const StaffLoginPage = () => {
       <LoginContainer>
         <LoginCard title='환영합니다!' img={StaffIcon}>
           <LoginCardDesc>직원코드를 입력하세요.</LoginCardDesc>
-          <DesktopCardInput onChange={() => {}} placeholder='직원코드 입력' img={IDCardIcon} />
+          <DesktopCardInput
+            value=''
+            onChange={() => {}}
+            placeholder='직원코드 입력'
+            img={IDCardIcon}
+          />
           <DesktopCardBtn onClick={loginHandler}>로그인</DesktopCardBtn>
         </LoginCard>
       </LoginContainer>
