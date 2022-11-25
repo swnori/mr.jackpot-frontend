@@ -1,4 +1,3 @@
-import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 
 import { TaskContainer, TaskTitle } from './style';
@@ -6,9 +5,8 @@ import { TaskContainer, TaskTitle } from './style';
 import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
-
-import { menuInfoState, styleInfoState } from '@/stores/menu';
 
 interface CookData {
   OId: number;
@@ -48,8 +46,7 @@ const nextState = {
 const CookTaskPage = () => {
   const isStyle = true;
   const link = useLink();
-  const menuInfo = useRecoilValue(menuInfoState);
-  const styleInfo = useRecoilValue(styleInfoState);
+  const { getMenuById, getStyleById } = useMenu();
   const [taskList, setTaskList] = useState(isStyle ? styleDummyData : dummyData);
   const headerList = isStyle
     ? ['D-ID', 'O-ID', 'Dinner', 'Style', 'Status']
@@ -59,15 +56,17 @@ const CookTaskPage = () => {
       <TaskTitle>할 일 목록</TaskTitle>
       <Table headerList={headerList}>
         {taskList.map((item, idx) => {
+          const menu = getMenuById(item.menuId!)!;
+          const style = getStyleById(item.style!)!;
           const dataList = isStyle
-            ? [item.DId, item.OId, item.dinnerName!, styleInfo[item.style!].name, item.stateId]
+            ? [item.DId, item.OId, item.dinnerName!, style.name, item.stateId]
             : [
                 item.MId!,
                 item.DId,
                 item.OId,
-                menuInfo[item.menuId!].name,
-                menuInfo[item.menuId!].option[0]?.list[item?.option![0] ?? 0].name ?? '-',
-                menuInfo[item.menuId!].option[1]?.list[item?.option![1] ?? 0].name ?? '-',
+                menu.name,
+                menu.option[0]?.list[item?.option![0] ?? 0].name ?? '-',
+                menu.option[1]?.list[item?.option![1] ?? 0].name ?? '-',
                 item.dish!,
                 item.count!,
                 item.stateId,

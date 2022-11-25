@@ -1,7 +1,12 @@
 import { selector } from 'recoil';
 
-import { MenuInfo, MenuType } from '@/types/menu';
+import { boardState } from './board';
 
+import { arrayToObject } from '@/utils/array';
+
+import { MenuInfo, StyleInfo } from '@/types/menu';
+
+/*
 const dummyData: MenuInfo[] = [
   {
     id: 0,
@@ -206,17 +211,47 @@ const styleDummyData = [
     price: 15000,
   },
 ];
+*/
 
-export const styleInfoState = selector({
+export const styleInfoState = selector<StyleInfo[]>({
   key: 'styleInfoState',
-  get: () => {
-    return styleDummyData;
+  get: ({ get }) => {
+    const { styleList } = get(boardState);
+    return styleList;
   },
 });
 
-export const menuInfoState = selector({
+export const menuInfoState = selector<MenuInfo[]>({
   key: 'menuInfoState',
-  get: () => {
-    return dummyData;
+  get: ({ get }) => {
+    const { menuList } = get(boardState);
+    const arr = menuList.reduce((pre: MenuInfo[], cur: any) => {
+      if (!cur.id && cur.id !== 0) {
+        return pre;
+      }
+      const next = { ...cur };
+      const { option } = next;
+      const nextOption = [];
+      if (option.length > 0) {
+        const nextOpt0 = { ...option[0] };
+        nextOpt0.default = option[0].OptionList[0].id;
+        nextOpt0.list = arrayToObject(option[0].OptionList);
+
+        delete nextOpt0.OptionList;
+        nextOption.push(nextOpt0);
+      }
+      if (option.length > 1) {
+        const nextOpt1 = { ...option[1] };
+        nextOpt1.default = option[1].OptionList[0].id;
+        nextOpt1.list = arrayToObject(option[1].OptionList);
+
+        delete nextOpt1.OptionList;
+        nextOption.push(nextOpt1);
+      }
+      next.option = nextOption;
+      pre.push(next);
+      return pre;
+    }, [] as MenuInfo[]);
+    return arr;
   },
 });

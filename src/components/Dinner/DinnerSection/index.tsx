@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-
 import { SectionContainer, SectionTitle } from '../style';
 
 import { AddMenuBtnContainer, AddMenuImg } from './style';
@@ -7,11 +5,10 @@ import { AddMenuBtnContainer, AddMenuImg } from './style';
 import MobileItem from '@/components/MobileItem';
 
 import useOrder from '@/hooks/useOrder';
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
-
-import { menuInfoState } from '@/stores/menu';
 
 import { MenuOrder } from '@/types/order';
 import { Option } from '@/types/menu';
@@ -46,9 +43,10 @@ const DinnerSection = ({
   setMenuOrderList,
   readOnly = false,
 }: DinnerSectionValue) => {
-  const menu = useRecoilValue(menuInfoState);
   const link = useLink();
+  const { getMenuById } = useMenu();
   const { menuOrderPrice } = useOrder();
+
   const optionText = (option: [Option?, Option?], select: [number | null, number | null]) => {
     const opt1 = option[0] ? `${option[0]?.name}: ${option[0]?.list[select[0]!].name}` : '';
     const opt2 = option[1] ? ` | ${option[1]?.name}: ${option[1]?.list[select[1]!].name}` : '';
@@ -60,7 +58,7 @@ const DinnerSection = ({
     <SectionContainer>
       <SectionTitle>{title}</SectionTitle>
       {menuOrderList.map((item, idx) => {
-        const itemInfo = menu[item.menuId];
+        const itemInfo = getMenuById(item.menuId)!;
         const price = menuOrderPrice(item);
         const setSelect = (opt1: number | null, opt2: number | null) => {
           const nextOrder = { ...item, option: [opt1, opt2] };

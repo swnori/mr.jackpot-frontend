@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import {
   CartSection,
@@ -11,13 +11,12 @@ import {
 import MobileItem from '@/components/MobileItem';
 
 import useOrder from '@/hooks/useOrder';
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { KRWFormat } from '@/utils/format';
 
 import { dinnerOrderState, orderState } from '@/stores/order';
-import { menuInfoState } from '@/stores/menu';
-import { dinnerInfoState } from '@/stores/dinner';
 
 import { DinnerOrder, MenuOrder } from '@/types/order';
 
@@ -26,11 +25,12 @@ import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
 const DinnerListSection = () => {
   const [order, setOrder] = useRecoilState(orderState);
-  const dinnerInfo = useRecoilValue(dinnerInfoState);
-  const menuInfo = useRecoilValue(menuInfoState);
   const resetDinnerOrder = useResetRecoilState(dinnerOrderState);
-  const { dinnerOrderPrice } = useOrder();
+
   const link = useLink();
+  const { dinnerOrderPrice } = useOrder();
+  const { getMenuById, getDinnerById } = useMenu();
+
   const deleteDinnerHandler = (idx: number) => {
     setOrder((prev) => {
       const nextDinnerList = [...prev.dinnerList.slice(0, idx), ...prev.dinnerList.slice(idx + 1)];
@@ -39,7 +39,7 @@ const DinnerListSection = () => {
   };
   const menuListStr = (list: MenuOrder[]) =>
     list.reduce((pre, menu) => {
-      const { name } = menuInfo[menu.menuId];
+      const { name } = getMenuById(menu.menuId)!;
       if (pre === '') {
         return name;
       }
@@ -72,7 +72,7 @@ const DinnerListSection = () => {
       </CartSectionDesc>
       <DinnerListContainer>
         {order.dinnerList.map((dinner, idx) => {
-          const info = dinnerInfo[dinner.type];
+          const info = getDinnerById(dinner.type)!;
 
           return (
             <MobileItem

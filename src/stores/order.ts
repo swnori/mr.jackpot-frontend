@@ -6,11 +6,11 @@ export const dinnerOrderState = atom<DinnerOrder>({
   key: 'dinnerOrderState',
   default: {
     id: 0,
-    type: 0,
+    type: 1,
     mainDish: [],
     side: [],
     drink: [],
-    style: 0,
+    style: 1,
   },
 });
 

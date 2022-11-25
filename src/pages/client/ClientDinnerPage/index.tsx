@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
 import {
   DinnerContainer,
@@ -19,10 +19,10 @@ import StyleSection from '@/components/Dinner/StyleSection';
 import DinnerSection from '@/components/Dinner/DinnerSection';
 
 import useOrder from '@/hooks/useOrder';
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { dinnerOrderState } from '@/stores/order';
-import { dinnerInfoState } from '@/stores/dinner';
 
 import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
@@ -31,15 +31,15 @@ import SteakWineImg from '@/assets/images/dinner.png';
 
 const ClientDinnerPage = () => {
   const { mode, id } = useParams();
-  const dinnerInfoList = useRecoilValue(dinnerInfoState);
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
   const { setDinnerDefault, loadDinnerFromCart, loadDinnerFromId } = useOrder();
+  const { getDinnerById } = useMenu();
   const link = useLink();
 
   const dinnerInfo =
-    mode === 'create' ? dinnerInfoList[Number(id)] : dinnerInfoList[dinnerOrder.type];
+    mode === 'create' ? getDinnerById(Number(id))! : getDinnerById(dinnerOrder.type)!;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (dinnerOrder.mainDish.length === 0 && mode === 'create') {
       // 모든 디너에는 mainDish가 무조건 존재하므로 주문 정보가 아예 초기화됐는지 검사하려면 mainDish만 검사해도 됨
       setDinnerDefault(Number(id));
@@ -115,7 +115,11 @@ const ClientDinnerPage = () => {
           menuListPath={`/client/menu/${MenuType.DRINK}`}
           readOnly={mode === 'read'}
         />
-        <StyleSection orderStyle={dinnerOrder.style} setStyleHandler={setStyleHandler} />
+        <StyleSection
+          dinnerName={dinnerInfo.name}
+          orderStyle={dinnerOrder.style}
+          setStyleHandler={setStyleHandler}
+        />
       </DinnerDetailContainer>
     </DinnerContainer>
   );

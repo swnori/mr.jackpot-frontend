@@ -1,5 +1,12 @@
 import { selector } from 'recoil';
 
+import { menuInfoState } from './menu';
+import { boardState } from './board';
+
+import { MenuOrder } from '@/types/order';
+import { MenuType } from '@/types/menu';
+import { DinnerInfo } from '@/types/dinner';
+/*
 import { DinnerInfo } from '@/types/dinner';
 
 const dummyData: DinnerInfo[] = [
@@ -57,11 +64,48 @@ const dummyData: DinnerInfo[] = [
     style: 1,
     price: 122000,
   },
-];
+]; */
 
 export const dinnerInfoState = selector<DinnerInfo[]>({
   key: 'dinnerInfoState',
-  get: () => {
-    return dummyData;
+  get: ({ get }) => {
+    const { dinnerList } = get(boardState);
+    const menuInfo = get(menuInfoState);
+    const filteredData = [...dinnerList].map((data) => {
+      const { id, name, price } = data;
+      const dishes = data.mainDish;
+      const [mainDish, side, drink] = dishes.reduce(
+        (pre: MenuOrder[][], cur: any) => {
+          const menu = menuInfo.find((item) => item.id === cur.menuId);
+          if (!menu) return pre;
+
+          const nextItem = { ...cur };
+          nextItem.isDefault = true;
+          nextItem.option = [menu?.option[0]?.default ?? null, menu?.option[1]?.default ?? null];
+
+          if (menu.type === MenuType.MAIN_DISH) {
+            pre[0].push(nextItem);
+          }
+          if (menu.type === MenuType.SIDE) {
+            pre[1].push(nextItem);
+          }
+          if (menu.type === MenuType.DRINK) {
+            pre[2].push(nextItem);
+          }
+
+          return pre;
+        },
+        [[], [], []],
+      );
+
+      const desc = dishes.reduce((pre: string, cur: any) => {
+        if (pre === '') {
+          return menuInfo.find((menu) => menu.id === cur.menuId)?.name;
+        }
+        return `${pre}, ${menuInfo.find((menu) => menu.id === cur.menuId)?.name}`;
+      }, '');
+      return { id, img: '', name, desc, mainDish, side, drink, style: 1, price };
+    });
+    return filteredData;
   },
 });
