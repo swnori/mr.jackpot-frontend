@@ -1,4 +1,6 @@
 import { useRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
+import { useMutation } from 'react-query';
 import React from 'react';
 
 import useModal from './useModal';
@@ -8,35 +10,67 @@ import StockAddModal from '@/components/Stock/AddModal';
 
 import { stockState } from '@/stores/stock';
 
+import { StockItem } from '@/types/stock';
+
 import InventoryIcon from '@/assets/icons/icon-inventory.svg';
+import { fetchAddItem, fetchDeleteItem, fetchUpdateItem } from '@/apis/staff';
 
 const useStock = () => {
   const [stock, setStock] = useRecoilState(stockState);
   const { itemList, newItemName, newUnitName, newAmount, updateMode } = stock;
   const { showModal, rerenderModal } = useModal();
 
-  const addItem = (name: string, unit: string, amount: number = 0) => {
-    const nextItem = { id: itemList[0].id + 1, name, unit, amount };
-    setStock((prev) => ({ ...prev, itemList: [nextItem, ...itemList] }));
+  const getItemById = (id: number) => itemList.find((item) => item.id === id);
+
+  const setItemList = (items: StockItem[]) => {
+    setStock((prev) => ({ ...prev, itemList: items }));
   };
 
-  const removeItem = (idx: number) => {
-    const nextItemList = [...itemList.slice(0, idx), ...itemList.slice(idx + 1)];
-    setStock((prev) => ({ ...prev, itemList: nextItemList }));
+  const addItemMutation = useMutation('stockAddItem', fetchAddItem, {
+    onSuccess: () => {
+      toast.success('재고 추가 성공!');
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const addItem = (name: string, unit: string) => {
+    addItemMutation.mutate({ name, unit });
   };
 
-  const updateItem = (idx: number, amount: number) => {
-    const nextItem = { ...itemList[idx] };
+  const removeItemMutation = useMutation('stockRemoveItem', fetchDeleteItem, {
+    onSuccess: () => {
+      toast.success('재고 삭제 완료!');
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const removeItem = (id: number) => {
+    removeItemMutation.mutate({ id });
+  };
+
+  const updateItemMutation = useMutation('stockUpdateItem', fetchUpdateItem, {
+    onSuccess: () => {
+      toast.success('재고 수정 완료!');
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const updateItem = (id: number, amount: number) => {
+    let nextAmount = getItemById(id)!.amount;
     if (updateMode === 'in') {
-      nextItem.amount += amount;
-    } else if (updateMode === 'out' && nextItem.amount >= amount) {
-      nextItem.amount -= amount;
+      nextAmount += amount;
+    } else if (updateMode === 'out' && nextAmount >= amount) {
+      nextAmount -= amount;
     } else if (updateMode === 'set') {
-      nextItem.amount = amount;
+      nextAmount = amount;
     }
-
-    const nextItemList = [...itemList.slice(0, idx), nextItem, ...itemList.slice(idx + 1)];
-    setStock((prev) => ({ ...prev, itemList: nextItemList }));
+    updateItemMutation.mutate({ id, count: nextAmount });
   };
 
   const changeUpdateMode = (mode: 'in' | 'out' | 'set') => {
@@ -63,12 +97,12 @@ const useStock = () => {
     });
   };
 
-  const inputAmountHandler = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+  const inputAmountHandler = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const text = e.currentTarget.value;
     setStock((prev) => ({ ...prev, newAmount: Number(text) }));
     rerenderModal({
       handleConfirm: () => {
-        updateItem(idx, Number(text));
+        updateItem(id, Number(text));
       },
     });
   };
@@ -87,7 +121,7 @@ const useStock = () => {
     });
   };
 
-  const openUpdateItemModal = (idx: number) => {
+  const openUpdateItemModal = (id: number) => {
     setStock((prev) => ({ ...prev, newAmount: null }));
     showModal({
       type: 'confirm',
@@ -97,7 +131,7 @@ const useStock = () => {
           수량 조정
         </>
       ),
-      children: <StockUpdateModal idx={idx} />,
+      children: <StockUpdateModal id={id} />,
     });
   };
 
@@ -107,6 +141,8 @@ const useStock = () => {
     newUnitName,
     newAmount,
     updateMode,
+    setItemList,
+    getItemById,
     addItem,
     removeItem,
     openAddItemModal,

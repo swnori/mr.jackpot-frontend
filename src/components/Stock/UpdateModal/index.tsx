@@ -13,12 +13,12 @@ import {
 import useStock from '@/hooks/useStock';
 
 interface StockUpdateModalValue {
-  idx: number;
+  id: number;
 }
 
-const StockUpdateModal = ({ idx }: StockUpdateModalValue) => {
-  const { itemList, updateMode, newAmount, inputAmountHandler, changeUpdateMode } = useStock();
-  const { name, unit, amount } = itemList[idx];
+const StockUpdateModal = ({ id }: StockUpdateModalValue) => {
+  const { updateMode, newAmount, getItemById, inputAmountHandler, changeUpdateMode } = useStock();
+  const { name, unit, amount } = getItemById(id)!;
   return (
     <StockModalContainer>
       <StockModalInfoContainer>
@@ -54,7 +54,7 @@ const StockUpdateModal = ({ idx }: StockUpdateModalValue) => {
         type='number'
         pattern='\d*'
         value={newAmount ?? ''}
-        onChange={(e) => inputAmountHandler(e, idx)}
+        onChange={(e) => inputAmountHandler(e, id)}
         placeholder='숫자 입력'
       />
     </StockModalContainer>
