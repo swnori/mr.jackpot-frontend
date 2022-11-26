@@ -23,6 +23,13 @@ const useMenu = () => {
     return style;
   };
 
+  const getMenuByOptId = (id: number) => {
+    const menu = menuList.find((item) =>
+      item.option.some((optType) => Object.keys(optType?.list!).some((opt) => Number(opt) === id)),
+    );
+    return menu;
+  };
+
   return {
     dinnerList,
     menuList,
@@ -30,6 +37,7 @@ const useMenu = () => {
     getDinnerById,
     getMenuById,
     getStyleById,
+    getMenuByOptId,
   };
 };
 
