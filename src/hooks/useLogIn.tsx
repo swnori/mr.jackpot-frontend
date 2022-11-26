@@ -9,6 +9,7 @@ import { clientState } from '@/stores/user';
 import { FetchError } from '@/types/fetch';
 
 import { fetchMemberLogin, fetchNonMemberLogin } from '@/apis/client';
+import { fetchCEOLogin } from '@/apis/ceo';
 
 const useLogIn = () => {
   const link = useLink();
@@ -33,7 +34,8 @@ const useLogIn = () => {
   const nonMemberLoginMutation = useMutation('nonMemberLogin', fetchNonMemberLogin, {
     onSuccess: (data) => {
       window.sessionStorage.setItem('access-token', data['access-token']);
-      setClient((prev) => ({ ...prev, isMember: false }));
+
+      setClient({ name: '', address: '', contact: '', isMember: false });
       link.to('/client/main');
     },
     onError: () => {
@@ -41,9 +43,20 @@ const useLogIn = () => {
     },
   });
 
+  const ceoLoginMutation = useMutation('ceoLogin', fetchCEOLogin, {
+    onSuccess: (data) => {
+      window.sessionStorage.setItem('access-token', data['access-token']);
+      link.to('/ceo/order');
+    },
+    onError: () => {
+      toast.error('잘못된 코드입니다!');
+    },
+  });
+
   return {
     memberLoginMutation,
     nonMemberLoginMutation,
+    ceoLoginMutation,
   };
 };
 
