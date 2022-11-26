@@ -32,7 +32,7 @@ const VoiceRec = () => {
     useSpeechRecognition();
   const { hideModal } = useModal();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { startSpeak, stopSpeak } = useVoice();
+  const { startSpeak, stopSpeak, voiceOrder } = useVoice();
   const [seqStack, setSeqStack] = useState<number[]>([]);
 
   if (!browserSupportsSpeechRecognition) {
@@ -41,6 +41,7 @@ const VoiceRec = () => {
 
   const vuiMutation = useMutation('vui', fetchVui, {
     onSuccess: (data) => {
+      voiceOrder(data.seqStack.length === 0 ? 'end' : data.entityType, data.entityId);
       setSeqStack(data.seqStack);
       setMsgList((prev) => {
         const nextMsg = [...prev];
