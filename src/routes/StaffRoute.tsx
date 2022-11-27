@@ -1,5 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
+import { LogInGuard } from './guards';
+
 import StaffFrame from '@/components/Frame/StaffFrame';
 
 import {
@@ -38,9 +40,11 @@ const StaffRoute = () => {
   return (
     <Routes>
       <Route path='/' element={<StaffLoginPage />} />
-      <Route element={<StaffFrame />}>
-        <Route path='/delivery/*' element={<DeliveryRoute />} />
-        <Route path='/cook/*' element={<CookRoute />} />
+      <Route element={<LogInGuard />}>
+        <Route element={<StaffFrame />}>
+          <Route path='/delivery/*' element={<DeliveryRoute />} />
+          <Route path='/cook/*' element={<CookRoute />} />
+        </Route>
       </Route>
     </Routes>
   );
