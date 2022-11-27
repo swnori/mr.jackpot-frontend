@@ -14,6 +14,13 @@ export const fetchCEOLogin = ({ code }: { code: string }) =>
 export const fetchGetCouponList = () => fetchApi.get('/ceo/coupon/list');
 
 /**
+ * 쿠폰 삭제
+ * @param { id }
+ */
+export const fetchDeleteCoupon = ({ id }: { id: number }) =>
+  fetchApi.post('/ceo/coupon/delete', { id });
+
+/**
  * 쿠폰 발행
  * @param { name, desc, price, date }
  */

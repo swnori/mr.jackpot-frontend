@@ -1,4 +1,6 @@
 import { useRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
+import { useMutation } from 'react-query';
 import React from 'react';
 
 import useModal from './useModal';
@@ -6,13 +8,16 @@ import useModal from './useModal';
 import NoticeModal from '@/components/Setting/NoticeModal';
 import AddCouponModal from '@/components/Coupon/AddCouponModal';
 
-import { CEOCouponState } from '@/stores/coupon';
+import { CEOCouponState, CEOIssueCouponState } from '@/stores/coupon';
 
 import CouponIcon from '@/assets/icons/icon-coupon.svg';
+import { fetchDeleteCoupon, fetchIssueCoupon } from '@/apis/ceo';
 
 const useCoupon = () => {
   const [coupon, setCoupon] = useRecoilState(CEOCouponState);
-  const { itemList, newName, newDesc, newPrice, newDate } = coupon;
+  const [issueCoupon, setIssueCoupon] = useRecoilState(CEOIssueCouponState);
+  const { itemList } = coupon;
+  const { newName, newDesc, newPrice, newDate } = issueCoupon;
   const { showModal, rerenderModal } = useModal();
 
   const getItem = (id: number) => {
@@ -22,37 +27,56 @@ const useCoupon = () => {
     return { idx, ...item };
   };
 
+  const issueCouponMutation = useMutation('issueCoupon', fetchIssueCoupon, {
+    onSuccess: (data) => {
+      showModal({
+        type: 'alert',
+        title: (
+          <>
+            <img src={CouponIcon} alt='icon-coupon' />
+            쿠폰 발행
+          </>
+        ),
+        children: (
+          <NoticeModal>
+            쿠폰이 생성되었습니다. <br />
+            <br />
+            생성된 쿠폰 번호는 <br />
+            <br />
+            <b>{data.Code}</b> <br />
+            <br />
+            입니다.
+          </NoticeModal>
+        ),
+      });
+      const newCoupon = {
+        id: data.id,
+        code: data.code,
+        name: data.title,
+        desc: data.message,
+        price: data.amount,
+        startDate: new Date(data.createdAt),
+        endDate: new Date(data.expiresAt),
+      };
+      setCoupon((prev) => ({ ...prev, itemList: [...itemList, newCoupon] }));
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
   const addCoupon = (name: string, desc: string, price: number | null, date: Date) => {
-    showModal({
-      type: 'alert',
-      title: (
-        <>
-          <img src={CouponIcon} alt='icon-coupon' />
-          쿠폰 발행
-        </>
-      ),
-      children: (
-        <NoticeModal>
-          쿠폰이 생성되었습니다. <br />
-          <br />
-          생성된 쿠폰 번호는 <br />
-          <br />
-          <b>-</b> <br />
-          <br />
-          입니다.
-        </NoticeModal>
-      ),
-    });
-    const newCoupon = {
-      id: itemList[0].id! + 1,
-      name,
-      desc,
-      price: price!,
-      startDate: new Date(),
-      endDate: date,
-    };
-    setCoupon((prev) => ({ ...prev, itemList: [newCoupon, ...itemList] }));
+    issueCouponMutation.mutate({ name, desc, date, price: price ?? 0 });
   };
+
+  const deleteCouponMutation = useMutation('deleteCoupon', fetchDeleteCoupon, {
+    onSuccess: () => {
+      toast.success('삭제 성공!');
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
 
   const removeCoupon = (id: number) => {
     const { idx, ...item } = getItem(id);
@@ -64,6 +88,7 @@ const useCoupon = () => {
         </NoticeModal>
       ),
       handleConfirm: () => {
+        deleteCouponMutation.mutate({ id });
         setCoupon((prev) => ({
           ...prev,
           itemList: [...itemList.slice(0, idx), ...itemList.slice(idx + 1)],
@@ -73,13 +98,12 @@ const useCoupon = () => {
   };
 
   const openAddCouponModal = () => {
-    setCoupon((prev) => ({
-      ...prev,
+    setIssueCoupon({
       newName: '',
       newDesc: '',
       newPrice: null,
       newDate: new Date(),
-    }));
+    });
     showModal({
       type: 'confirm',
       title: (
@@ -94,7 +118,7 @@ const useCoupon = () => {
 
   const inputCouponNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
-    setCoupon((prev) => ({ ...prev, newName: text }));
+    setIssueCoupon((prev) => ({ ...prev, newName: text }));
     rerenderModal({
       handleConfirm: () => {
         addCoupon(text, newDesc, newPrice, newDate);
@@ -104,7 +128,7 @@ const useCoupon = () => {
 
   const inputCouponDescHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
-    setCoupon((prev) => ({ ...prev, newDesc: text }));
+    setIssueCoupon((prev) => ({ ...prev, newDesc: text }));
     rerenderModal({
       handleConfirm: () => {
         addCoupon(newName, text, newPrice, newDate);
@@ -114,7 +138,7 @@ const useCoupon = () => {
 
   const inputCouponPriceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
-    setCoupon((prev) => ({ ...prev, newPrice: Number(text) }));
+    setIssueCoupon((prev) => ({ ...prev, newPrice: Number(text) }));
     rerenderModal({
       handleConfirm: () => {
         addCoupon(newName, newDesc, Number(text), newDate);
@@ -123,7 +147,7 @@ const useCoupon = () => {
   };
 
   const inputCouponDateHandler = (date: Date) => {
-    setCoupon((prev) => ({ ...prev, newDate: date }));
+    setIssueCoupon((prev) => ({ ...prev, newDate: date }));
     rerenderModal({
       handleConfirm: () => {
         addCoupon(newName, newDesc, newPrice, date);
