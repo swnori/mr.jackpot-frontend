@@ -1,4 +1,4 @@
-import { isMobile } from 'react-device-detect';
+import React, { useState } from 'react';
 
 import { LoginContainer } from './style';
 
@@ -7,19 +7,21 @@ import { LoginCardDesc } from '@/components/Login/Card/style';
 import LoginCard from '@/components/Login/Card';
 import { DesktopCardBtn, DesktopCardInput } from '@/components/DesktopCard';
 
-import { useLink } from '@/hooks/useLink';
+import useLogIn from '@/hooks/useLogIn';
 
 import IDCardIcon from '@/assets/icons/icon-id-card.svg';
 import StaffIcon from '@/assets/icons/icon-chef.svg';
 
 const StaffLoginPage = () => {
-  const link = useLink();
-  const loginHandler = () => {
-    if (isMobile) {
-      link.to('/staff/delivery/main');
-    } else {
-      link.to('/staff/cook/order');
-    }
+  const [code, setCode] = useState('');
+  const { staffLoginMutation } = useLogIn();
+
+  const inputCodeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCode(e.currentTarget.value);
+  };
+
+  const staffLoginHandler = () => {
+    staffLoginMutation.mutate({ code });
   };
   return (
     <Page type='common'>
@@ -27,12 +29,12 @@ const StaffLoginPage = () => {
         <LoginCard title='환영합니다!' img={StaffIcon}>
           <LoginCardDesc>직원코드를 입력하세요.</LoginCardDesc>
           <DesktopCardInput
-            value=''
-            onChange={() => {}}
+            value={code}
+            onChange={inputCodeHandler}
             placeholder='직원코드 입력'
             img={IDCardIcon}
           />
-          <DesktopCardBtn onClick={loginHandler}>로그인</DesktopCardBtn>
+          <DesktopCardBtn onClick={staffLoginHandler}>로그인</DesktopCardBtn>
         </LoginCard>
       </LoginContainer>
     </Page>

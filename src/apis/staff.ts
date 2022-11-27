@@ -1,6 +1,13 @@
 import fetchApi from '@/utils/fetch';
 
 /**
+ * Staff 로그인
+ * @param { code }
+ */
+export const fetchStaffLogin = ({ code }: { code: string }) =>
+  fetchApi.post('/auth/staff/signin', { Code: code });
+
+/**
  * 재고 목록 조회
  */
 export const fetchGetStockList = () => fetchApi.get('/staff/stock/itemlist');
