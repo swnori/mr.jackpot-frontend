@@ -28,7 +28,7 @@ const ClientInfoSection = ({ data }: ClientInfoValue) => {
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>주문 ID</StaffOrderInfoTitle>
         <StaffOrderInfoDesc>
-          O-{data.orderId} <OrderState stateId={data.stateId} />{' '}
+          O-{data.orderId} <OrderState stateId={data.stateId} />
         </StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
@@ -57,7 +57,9 @@ const ClientInfoSection = ({ data }: ClientInfoValue) => {
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>요청사항</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>{data.requestDetail}</StaffOrderInfoDesc>
+        <StaffOrderInfoDesc>
+          {data.requestDetail !== '' ? data.requestDetail : '요청 사항 없음'}
+        </StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
     </StaffOrderInfoSectionContainer>
   );

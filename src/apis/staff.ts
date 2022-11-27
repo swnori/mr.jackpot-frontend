@@ -37,3 +37,9 @@ export const fetchDeleteItem = ({ id }: { id: number }) =>
  * 주문 목록 조회
  */
 export const fetchGetOrderList = () => fetchApi.get('/staff/order/list');
+
+/**
+ * 주문 상세 조회
+ */
+export const fetchGetOrderDetail = ({ id }: { id: number }) =>
+  fetchApi.get(`/staff/order/info?orderid=${id}`);

@@ -13,8 +13,11 @@ export enum ColorCode {
 
 export const StateColorCode = {
   대기: '#F5EFE6',
+  종료: '#F5EFE6',
   접수: '#FAF4B7',
   취소: '#FFB3B3',
+  거절: '#FFB3B3',
+  시작: '#FFDBA4',
   요리: '#FFDBA4',
   포장: '#C1EFFF',
   배달: '#CDF0EA',

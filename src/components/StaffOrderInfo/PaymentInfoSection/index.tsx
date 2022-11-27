@@ -30,11 +30,15 @@ const PaymentInfoSection = ({ data }: PaymentInfoValue) => {
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>쿠폰</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>{data.couponName}</StaffOrderInfoDesc>
+        <StaffOrderInfoDesc>
+          {data.couponName !== '' ? data.couponName : '선택 안함'}
+        </StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>쿠폰 금액</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>(-) {KRWFormat(data.couponPrice)}</StaffOrderInfoDesc>
+        <StaffOrderInfoDesc>
+          {data.couponPrice > 0 ? `(-) ${KRWFormat(data.couponPrice)}` : ''}
+        </StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>합계</StaffOrderInfoTitle>

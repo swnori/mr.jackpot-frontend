@@ -13,6 +13,9 @@ export interface DinnerOrder {
   mainDish: MenuOrder[];
   side: MenuOrder[];
   drink: MenuOrder[];
+  menuList?: MenuOrder[];
+  stateId?: number;
+  price?: number;
   style: number;
 }
 

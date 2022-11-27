@@ -50,7 +50,14 @@ export const DinnerListContainer = styled.div`
   gap: 4rem;
 `;
 
-export const CEOOrderInfoBtn = styled.button`
+export const CEOOrderInfoBtnContainer = styled.div`
+  display: flex;
+  align-self: flex-end;
+
+  gap: 2rem;
+`;
+
+const Btn = styled.button`
   align-self: flex-end;
 
   display: flex;
@@ -76,6 +83,14 @@ export const CEOOrderInfoBtn = styled.button`
   &:hover {
     filter: brightness(1.1) saturate(1.1);
   }
+`;
+
+export const CEOOrderInfoAcceptBtn = styled(Btn)`
+  background: ${StateColorCode.접수};
+`;
+
+export const CEOOrderInfoRejectBtn = styled(Btn)`
+  background: ${StateColorCode.거절};
 `;
 
 export const CEOOrderInfoBtnImg = styled.img`

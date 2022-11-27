@@ -13,10 +13,12 @@ import OrderDinnerListSection from '@/components/OrderInfo/OrderDinnerListSectio
 import Header from '@/components/Header';
 
 import useMenu from '@/hooks/useMenu';
+import { useLink } from '@/hooks/useLink';
 
 import { MenuOrder, DinnerOrder, Order } from '@/types/order';
 import { MenuType } from '@/types/menu';
 
+import { UX_DELAY } from '@/constants/timer';
 import { fetchGetMyOrderInfo } from '@/apis/client';
 
 const dummyOrderInfo = {
@@ -44,10 +46,18 @@ interface OrderInfoValue extends Order {
 const ClientOrderInfoPage = () => {
   const { id } = useParams();
   const { getMenuById } = useMenu();
+  const link = useLink();
   const [orderInfo, setOrderInfo] = useState<OrderInfoValue>(dummyOrderInfo);
   const orderInfoMutation = useMutation('orderInfo', fetchGetMyOrderInfo, {
     onSuccess: async (res) => {
       const data = await res.json();
+
+      if (res.status === 422) {
+        toast.error('최근 주문한 기록이 없습니다!');
+        link.back();
+        return;
+      }
+
       const dinnerList = data.order.dinnerList.map((dinner: any) => {
         const [mainDish, side, drink] = dinner.menuList.reduce(
           (pre: MenuOrder[][], cur: any) => {
@@ -103,17 +113,28 @@ const ClientOrderInfoPage = () => {
     },
   });
 
-  useLayoutEffect(() => {
-    if (id === '0') {
-      orderInfoMutation.mutate({});
+  const getOrderInfo = () => {
+    if (orderInfo.state < 15) {
+      if (id === '0') {
+        orderInfoMutation.mutate({});
+      } else {
+        orderInfoMutation.mutate({ id: Number(id) });
+      }
     }
-    orderInfoMutation.mutate({ id: Number(id) });
+  };
+
+  useLayoutEffect(() => {
+    getOrderInfo();
+    const interval = setInterval(() => getOrderInfo(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <OrderInfoContainer>
       <Header type='back' title='주문 정보' />
-      <OrderStateSection stateName='도착' reserveDate={orderInfo.info.reserveDate} />
+      <OrderStateSection stateId={orderInfo.state} reserveDate={orderInfo.info.reserveDate} />
       <OrderDinnerListSection dinnerList={orderInfo.dinnerList as DinnerOrder[]} />
       <OrderInfoSection orderInfo={orderInfo.info} />
       <OrderPaymentSection
