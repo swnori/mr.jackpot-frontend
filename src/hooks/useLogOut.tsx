@@ -10,8 +10,22 @@ const useLogOut = () => {
     link.to('/client/login');
   };
 
+  const ceoLogOut = () => {
+    window.sessionStorage.removeItem('access-token');
+    toast.success('로그아웃 성공!');
+    link.to('/ceo');
+  };
+
+  const staffLogOut = () => {
+    window.sessionStorage.removeItem('access-token');
+    toast.success('로그아웃 성공!');
+    link.to('/staff');
+  };
+
   return {
     clientLogOut,
+    ceoLogOut,
+    staffLogOut,
   };
 };
 

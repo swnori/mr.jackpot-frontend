@@ -8,6 +8,7 @@ import { clientState } from '@/stores/user';
 
 import { FetchError } from '@/types/fetch';
 
+import { fetchStaffLogin } from '@/apis/staff';
 import { fetchMemberLogin, fetchNonMemberLogin } from '@/apis/client';
 import { fetchCEOLogin } from '@/apis/ceo';
 
@@ -53,10 +54,25 @@ const useLogIn = () => {
     },
   });
 
+  const staffLoginMutation = useMutation('staffLogin', fetchStaffLogin, {
+    onSuccess: (data) => {
+      window.sessionStorage.setItem('access-token', data['access-token']);
+      if (data.role === 'delivery') {
+        link.to('/staff/delivery/order');
+      } else {
+        link.to('/staff/cook/order');
+      }
+    },
+    onError: () => {
+      toast.error('잘못된 코드입니다!');
+    },
+  });
+
   return {
     memberLoginMutation,
     nonMemberLoginMutation,
     ceoLoginMutation,
+    staffLoginMutation,
   };
 };
 
