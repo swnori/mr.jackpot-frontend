@@ -1,24 +1,33 @@
 import { selector } from 'recoil';
 
-const dummyData = [
-  { id: 0, name: '대기' },
-  { id: 1, name: '접수' },
-  { id: 2, name: '취소' },
-  { id: 3, name: '요리' },
-  { id: 4, name: '포장' },
-  { id: 5, name: '배달' },
-  { id: 6, name: '도착' },
-  { id: 7, name: '회수' },
-  { id: 8, name: '완료' },
-];
+import { KeyOf } from '@/utils/type';
+
+import { fetchState } from '@/apis/common';
+
+const stateDic =
+  {
+    created: '대기',
+    rejected: '취소',
+    accepted: '접수',
+    started: '접수',
+    cooking: '요리',
+    prepared: '포장',
+    delivering: '배달',
+    delivered: '도착',
+    requested: '회수',
+    collected: '회수',
+    finished: '완료',
+  } ?? '';
 
 export const stateState = selector({
   key: 'stateState',
-  get: () => {
-    const dict = dummyData.reduce((pre, cur) => {
-      const { id, name } = cur;
+  get: async () => {
+    const res = await fetchState();
+    const data = await res.json();
+    const dict = data.reduce((pre: any, cur: any) => {
+      const { id, state } = cur;
       const next = { ...pre };
-      next[id] = { id, name };
+      next[id] = { id, name: stateDic[state as KeyOf<typeof stateDic>] };
       return next;
     }, {} as { [key: number]: { id: number; name: string } });
 
