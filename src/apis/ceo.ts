@@ -65,3 +65,12 @@ export const fetchRegisterStaff = ({ name, type }: { name: string; type: number 
  */
 export const fetchUpdateStaff = ({ id, name, type }: { id: number; name: string; type: number }) =>
   fetchApi.post('/ceo/staff/update', { id, name, roleId: type });
+
+export const fetchAcceptOrder = ({ id }: { id: number }) =>
+  fetchApi.post('/ceo/order/accept', { orderId: id });
+
+export const fetchRejectOrder = ({ id }: { id: number }) =>
+  fetchApi.post('/ceo/order/reject', { orderId: id });
+
+export const fetchStartOrder = ({ id }: { id: number }) =>
+  fetchApi.post('/ceo/order/start', { orderId: id });
