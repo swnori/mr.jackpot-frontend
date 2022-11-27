@@ -1,5 +1,6 @@
 import { FooterBtn, FooterContainer, FooterIcon, LogOutBtn } from '../style';
 
+import useLogOut from '@/hooks/useLogOut';
 import { useLink } from '@/hooks/useLink';
 
 import LogOutIcon from '@/assets/icons/icon-log-out.svg';
@@ -15,7 +16,13 @@ interface FooterValue {
  */
 const StaffFooter = ({ pathName }: FooterValue) => {
   const link = useLink();
+  const { staffLogOut } = useLogOut();
+
   const isMain = pathName === 'main';
+
+  const logOutHandler = () => {
+    staffLogOut();
+  };
   return (
     <FooterContainer isStaff>
       <FooterBtn onClick={() => link.to('/staff/delivery/main')} isActive={isMain}>
@@ -26,7 +33,7 @@ const StaffFooter = ({ pathName }: FooterValue) => {
         <FooterIcon src={CheckListIcon} />
         {!isMain ? 'Tasks' : ''}
       </FooterBtn>
-      <LogOutBtn onClick={() => link.to('/')}>
+      <LogOutBtn onClick={logOutHandler}>
         <FooterIcon src={LogOutIcon} />
       </LogOutBtn>
     </FooterContainer>

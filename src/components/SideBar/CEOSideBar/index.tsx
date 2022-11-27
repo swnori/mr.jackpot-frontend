@@ -6,6 +6,7 @@ import {
   SideBarIcon,
 } from '../style';
 
+import useLogOut from '@/hooks/useLogOut';
 import { useLink } from '@/hooks/useLink';
 
 import StockIcon from '@/assets/icons/icon-stock.svg';
@@ -24,11 +25,17 @@ interface SideBarValue {
  */
 const CEOSideBar = ({ pathName }: SideBarValue) => {
   const link = useLink();
+  const { ceoLogOut } = useLogOut();
+
   const isMain = pathName === 'order';
   const isTask = pathName === 'task';
   const isStock = pathName === 'stock';
   const isStatistic = pathName === 'statistic';
   const isSetting = pathName === 'setting';
+
+  const logOutHandler = () => {
+    ceoLogOut();
+  };
   return (
     <SideBarContainer>
       <SideBarBtnContainer>
@@ -53,7 +60,7 @@ const CEOSideBar = ({ pathName }: SideBarValue) => {
           {isSetting ? 'Setting' : ''}
         </SideBarBtn>
       </SideBarBtnContainer>
-      <LogOutBtn onClick={() => link.to('/')}>
+      <LogOutBtn onClick={logOutHandler}>
         <SideBarIcon src={LogOutIcon} />
       </LogOutBtn>
     </SideBarContainer>
