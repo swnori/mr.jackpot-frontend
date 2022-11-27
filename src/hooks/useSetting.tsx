@@ -86,17 +86,8 @@ const useSetting = () => {
   };
 
   const addEmplyeeMutation = useMutation('registerStaff', fetchRegisterStaff, {
-    onSuccess: async (res) => {
-      const data = await res.json();
-      const newEmployee = {
-        id: data.id,
-        code: data.code,
-        name: data.name,
-        type: data.role,
-        join: new Date(data.createdAt),
-        score: data.score,
-      };
-      setSetting((prev) => ({ ...prev, itemList: [newEmployee, ...itemList] }));
+    onSuccess: async (data) => {
+      setEmployeeList();
       showModal({
         type: 'alert',
         title: (

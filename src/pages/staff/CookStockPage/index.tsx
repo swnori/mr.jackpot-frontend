@@ -34,6 +34,7 @@ const CookStockPage = () => {
       <Table headerList={['ID', 'Name', 'Unit', 'Amount']}>
         {itemList
           .filter((item) => keyword === '' || item.name.includes(keyword))
+          .sort((a, b) => b.id - a.id)
           .map((item, idx) => (
             <TableRow
               key={idx}

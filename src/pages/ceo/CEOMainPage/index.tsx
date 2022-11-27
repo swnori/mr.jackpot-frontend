@@ -61,20 +61,22 @@ const CEOMainPage = () => {
     <MainContainer>
       <MainTitle>주문 처리 현황</MainTitle>
       <Table headerList={['ID', 'Order', 'Time', 'Price', 'Status']}>
-        {orderList.map((order) => (
-          <TableRow
-            key={order.id}
-            dataList={[
-              order.id,
-              order.dinnerName,
-              dateFormat(order.time),
-              KRWFormat(order.price),
-              order.stateId,
-            ]}
-            onClick={() => link.to(`/ceo/order/${order.id}`)}
-            lastIsState
-          />
-        ))}
+        {orderList
+          .sort((a, b) => b.id - a.id)
+          .map((order) => (
+            <TableRow
+              key={order.id}
+              dataList={[
+                order.id,
+                order.dinnerName,
+                dateFormat(order.time),
+                KRWFormat(order.price),
+                order.stateId,
+              ]}
+              onClick={() => link.to(`/ceo/order/${order.id}`)}
+              lastIsState
+            />
+          ))}
       </Table>
     </MainContainer>
   );
