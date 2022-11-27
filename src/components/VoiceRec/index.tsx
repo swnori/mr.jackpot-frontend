@@ -41,7 +41,7 @@ const VoiceRec = () => {
 
   const vuiMutation = useMutation('vui', fetchVui, {
     onSuccess: (data) => {
-      voiceOrder(data.seqStack.length === 0 ? 'end' : data.entityType, data.entityId);
+      voiceOrder(data.entityType, data.entityId);
       setSeqStack(data.seqStack);
       setMsgList((prev) => {
         const nextMsg = [...prev];

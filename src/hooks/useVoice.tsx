@@ -26,15 +26,12 @@ const useVoice = () => {
   const [ptr, setPtr] = useState<Pointer>({ main: 0, side: 0, drink: 0, opt: 0 });
 
   const voiceOrder = (entityType: string, entityId: number) => {
-    if (entityType === 'end') {
+    if (entityType === 'message' && (entityId === 2 || entityId === 3)) {
       if (dinnerOrder.mainDish.length > 0) {
         addDinnerToCart();
       }
     }
     if (entityType === 'dinner') {
-      if (dinnerOrder.mainDish.length > 0) {
-        addDinnerToCart();
-      }
       setDinnerDefault(entityId);
       setPtr({ main: 0, side: 0, drink: 0, opt: 0 });
     }
