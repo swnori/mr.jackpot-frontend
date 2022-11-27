@@ -30,7 +30,7 @@ const CEOStockPage = () => {
     return data;
   };
 
-  const data = usePeriodicAPICall<StockItem[]>(itemList, getStockList, 2000);
+  const data = usePeriodicAPICall<StockItem[]>(itemList, getStockList, 700);
   useEffect(() => {
     if (data?.length) {
       setItemList(data);
@@ -55,7 +55,7 @@ const CEOStockPage = () => {
           .map((item, idx) => (
             <TableRow
               key={idx}
-              dataList={[item.id, item.name, item.unit, item.amount]}
+              dataList={[item.id, item.name, item.unit, item.count]}
               onDelete={() => removeItem(item.id)}
               onUpdate={() => openUpdateItemModal(item.id)}
             />

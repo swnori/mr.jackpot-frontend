@@ -10,7 +10,7 @@ export const fetchGetStockList = () => fetchApi.get('/staff/stock/itemlist');
  * @param { name, unit }
  */
 export const fetchAddItem = ({ name, unit }: { name: string; unit: string }) =>
-  fetchApi.post('/staff/stock/add', { Name: name, Unit: unit });
+  fetchApi.post('/staff/stock/add', { name, unit });
 
 /**
  * 재고 수정

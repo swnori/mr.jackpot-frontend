@@ -18,7 +18,7 @@ interface StockUpdateModalValue {
 
 const StockUpdateModal = ({ id }: StockUpdateModalValue) => {
   const { updateMode, newAmount, getItemById, inputAmountHandler, changeUpdateMode } = useStock();
-  const { name, unit, amount } = getItemById(id)!;
+  const { name, unit, count } = getItemById(id)!;
   return (
     <StockModalContainer>
       <StockModalInfoContainer>
@@ -29,7 +29,7 @@ const StockUpdateModal = ({ id }: StockUpdateModalValue) => {
       </StockModalInfoContainer>
       <StockModalInfoContainer>
         <StockModalInfoTitle>재고</StockModalInfoTitle>
-        <StockModalInfoText>{amount}</StockModalInfoText>
+        <StockModalInfoText>{count}</StockModalInfoText>
       </StockModalInfoContainer>
       <StockModalBtnContainer>
         <StockModalBtn

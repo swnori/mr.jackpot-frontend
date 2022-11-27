@@ -2,7 +2,7 @@ export interface StockItem {
   id: number;
   name: string;
   unit: string;
-  amount: number;
+  count: number;
 }
 
 export interface Stock {
