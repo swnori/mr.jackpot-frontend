@@ -163,6 +163,7 @@ const CEOOrderInfoPage = () => {
   };
 
   useLayoutEffect(() => {
+    getOrderInfo();
     const interval = setInterval(() => getOrderInfo(), UX_DELAY);
     return () => {
       clearInterval(interval);
@@ -198,10 +199,10 @@ const CEOOrderInfoPage = () => {
         })}
       </DinnerListContainer>
       <CEOOrderInfoBtnContainer>
-        <CEOOrderInfoRejectBtn onClick={rejectOrder} disabled={orderInfo.clientInfo.stateId !== 0}>
+        <CEOOrderInfoRejectBtn onClick={rejectOrder} disabled={orderInfo.clientInfo.stateId !== 4}>
           예약 거절 <CEOOrderInfoBtnImg src={CheckIcon} />
         </CEOOrderInfoRejectBtn>
-        <CEOOrderInfoAcceptBtn onClick={acceptOrder} disabled={orderInfo.clientInfo.stateId !== 0}>
+        <CEOOrderInfoAcceptBtn onClick={acceptOrder} disabled={orderInfo.clientInfo.stateId !== 4}>
           예약 접수 <CEOOrderInfoBtnImg src={CheckIcon} />
         </CEOOrderInfoAcceptBtn>
       </CEOOrderInfoBtnContainer>
