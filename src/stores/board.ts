@@ -1,11 +1,11 @@
 import { selector } from 'recoil';
 
-import fetchApi from '@/utils/fetch';
+import { fetchOrderBoard } from '@/apis/common';
 
 export const boardState = selector({
   key: 'boardState',
   get: async () => {
-    const res = await fetchApi.get('/customer/orderinfo/orderboard');
+    const res = await fetchOrderBoard();
     const data = await res.json();
     return data;
   },

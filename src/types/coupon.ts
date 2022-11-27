@@ -8,8 +8,15 @@ export interface Coupon {
   code?: string;
 }
 
+export interface ClientGainCoupon {
+  code: string;
+}
+
 export interface CEOCoupon {
   itemList: Coupon[];
+}
+
+export interface CEOIssueCoupon {
   newName: string;
   newDesc: string;
   newPrice: number | null;
