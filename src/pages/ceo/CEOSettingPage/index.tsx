@@ -19,8 +19,6 @@ import { useLink } from '@/hooks/useLink';
 
 import { dateFormat } from '@/utils/format';
 
-import { CookPart } from '@/types/user';
-
 import PlusIcon from '@/assets/icons/icon-round-add.svg';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 
@@ -58,19 +56,6 @@ const CEOSettingPage = () => {
     setKeyword(word);
   };
 
-  const partWrapper = (partList: CookPart[] | null) => {
-    if (!partList) {
-      return '-';
-    }
-
-    return partList.reduce((pre, cur) => {
-      if (pre === '') {
-        return cur;
-      }
-      return `${pre}, ${cur}`;
-    }, '');
-  };
-
   useEffect(() => {
     if (isEmployee) {
       setEmployeeList();
@@ -103,7 +88,7 @@ const CEOSettingPage = () => {
         </AddItemBtn>
       ) : null}
       {isEmployee ? (
-        <Table headerList={['ID', 'Code', 'Name', 'Type', 'Part', 'Join', 'Score']}>
+        <Table headerList={['ID', 'Code', 'Name', 'Type', 'Join', 'Score']}>
           {itemList
             .filter((item) => keyword === '' || item.name!.includes(keyword))
             .map((user) => (
@@ -114,7 +99,6 @@ const CEOSettingPage = () => {
                   user.code!,
                   user.name!,
                   user.type!,
-                  partWrapper(user.part!),
                   dateFormat(user.join!, false),
                   user.score!,
                 ]}

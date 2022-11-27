@@ -94,7 +94,7 @@ const ClientOrderInfoPage = () => {
           reserveDate: new Date(data.orderinfo.reserveDate),
           address: data.orderinfo.address,
           contact: data.orderinfo.contact,
-          requestDetail: '문 앞에 두고 가주세요',
+          requestDetail: data.orderinfo.requestDetail,
         },
       });
     },
@@ -104,6 +104,9 @@ const ClientOrderInfoPage = () => {
   });
 
   useLayoutEffect(() => {
+    if (id === '0') {
+      orderInfoMutation.mutate({});
+    }
     orderInfoMutation.mutate({ id: Number(id) });
   }, []);
 

@@ -1,7 +1,4 @@
 import {
-  SettingModalCheckBox,
-  SettingModalCheckBoxContainer,
-  SettingModalCheckBoxWrapper,
   SettingModalContainer,
   SettingModalInput,
   SettingModalInputContainer,
@@ -11,15 +8,10 @@ import {
 
 import useSetting from '@/hooks/useSetting';
 
+import { EmployeeTypeArr } from '@/types/setting';
+
 const AddEmployeeModal = () => {
-  const {
-    newName,
-    newType,
-    newPart,
-    inputEmployeeNameHandler,
-    selectEmployeeTypeHandler,
-    checkEmployeePartHandler,
-  } = useSetting();
+  const { newName, newType, inputEmployeeNameHandler, selectEmployeeTypeHandler } = useSetting();
   return (
     <SettingModalContainer>
       <SettingModalInputContainer>
@@ -32,60 +24,14 @@ const AddEmployeeModal = () => {
       </SettingModalInputContainer>
       <SettingModalInputContainer>
         <SettingModalInputTitle>분류</SettingModalInputTitle>
-        <SettingModalSelect onChange={selectEmployeeTypeHandler} value={newType}>
+        <SettingModalSelect
+          onChange={selectEmployeeTypeHandler}
+          value={EmployeeTypeArr[newType as 1 | 2 | 3]}
+        >
           <option>요리</option>
           <option>배달</option>
+          <option>스타일</option>
         </SettingModalSelect>
-      </SettingModalInputContainer>
-      <SettingModalInputContainer>
-        <SettingModalInputTitle>직무</SettingModalInputTitle>
-        <SettingModalCheckBoxContainer>
-          <SettingModalCheckBoxWrapper>
-            <SettingModalCheckBox
-              type='checkbox'
-              checked={newPart[0]}
-              onChange={(e) => checkEmployeePartHandler(e, 0)}
-              disabled={newType === '배달'}
-            />
-            그릴
-          </SettingModalCheckBoxWrapper>
-          <SettingModalCheckBoxWrapper>
-            <SettingModalCheckBox
-              type='checkbox'
-              checked={newPart[1]}
-              onChange={(e) => checkEmployeePartHandler(e, 1)}
-              disabled={newType === '배달'}
-            />
-            오븐
-          </SettingModalCheckBoxWrapper>
-          <SettingModalCheckBoxWrapper>
-            <SettingModalCheckBox
-              type='checkbox'
-              checked={newPart[2]}
-              onChange={(e) => checkEmployeePartHandler(e, 2)}
-              disabled={newType === '배달'}
-            />
-            팬
-          </SettingModalCheckBoxWrapper>
-          <SettingModalCheckBoxWrapper>
-            <SettingModalCheckBox
-              type='checkbox'
-              checked={newPart[3]}
-              onChange={(e) => checkEmployeePartHandler(e, 3)}
-              disabled={newType === '배달'}
-            />
-            콜드
-          </SettingModalCheckBoxWrapper>
-          <SettingModalCheckBoxWrapper>
-            <SettingModalCheckBox
-              type='checkbox'
-              checked={newPart[4]}
-              onChange={(e) => checkEmployeePartHandler(e, 4)}
-              disabled={newType === '배달'}
-            />
-            스타일
-          </SettingModalCheckBoxWrapper>
-        </SettingModalCheckBoxContainer>
       </SettingModalInputContainer>
     </SettingModalContainer>
   );

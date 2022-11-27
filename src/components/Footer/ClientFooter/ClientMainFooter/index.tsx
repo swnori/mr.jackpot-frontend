@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+
 import {
   BasketBtn,
   BasketCount,
@@ -13,6 +15,8 @@ import useOrder from '@/hooks/useOrder';
 import useModal from '@/hooks/useModal';
 import { useLink } from '@/hooks/useLink';
 
+import { clientState } from '@/stores/user';
+
 import UserIcon from '@/assets/icons/icon-user.svg';
 import ReceiptIcon from '@/assets/icons/icon-receipt.svg';
 import MicIcon from '@/assets/icons/icon-mic.svg';
@@ -25,6 +29,7 @@ const motionVariable = {
 
 const ClientMainFooter = () => {
   const { showModal } = useModal();
+  const me = useRecoilValue(clientState);
   const link = useLink();
   const openVoiceRecHandler = () => {
     showModal({
@@ -33,7 +38,11 @@ const ClientMainFooter = () => {
     });
   };
   const goOrderHistoryPageHandler = () => {
-    link.to('/client/order');
+    if (me.isMember) {
+      link.to('/client/order');
+    } else {
+      link.to('/client/order/0');
+    }
   };
   const goMyPageHandler = () => {
     link.to('/client/mypage');

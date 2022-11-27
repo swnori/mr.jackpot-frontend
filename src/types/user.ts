@@ -5,14 +5,11 @@ export interface Client {
   address: string;
 }
 
-export type CookPart = '그릴' | '팬' | '오븐' | '콜드' | '스타일';
-
 export interface Employee {
   id: number;
   code: string;
   name: string;
-  type: '요리' | '배달';
-  part: CookPart[] | null;
+  type: number;
   join: Date;
   score: number;
 }

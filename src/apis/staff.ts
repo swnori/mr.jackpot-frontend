@@ -25,3 +25,8 @@ export const fetchUpdateItem = ({ id, count }: { id: number; count: number }) =>
  */
 export const fetchDeleteItem = ({ id }: { id: number }) =>
   fetchApi.post('/staff/stock/delete', { Id: id });
+
+/**
+ * 주문 목록 조회
+ */
+export const fetchGetOrderList = () => fetchApi.get('/staff/order/list');
