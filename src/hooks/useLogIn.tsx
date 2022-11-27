@@ -49,8 +49,12 @@ const useLogIn = () => {
       window.sessionStorage.setItem('access-token', data['access-token']);
       link.to('/ceo/order');
     },
-    onError: () => {
-      toast.error('잘못된 코드입니다!');
+    onError: (err: FetchError) => {
+      if (err.res.status === 401) {
+        toast.error('잘못된 코드입니다!');
+      } else {
+        toast.error('에러!');
+      }
     },
   });
 
@@ -63,8 +67,12 @@ const useLogIn = () => {
         link.to('/staff/cook/order');
       }
     },
-    onError: () => {
-      toast.error('잘못된 코드입니다!');
+    onError: (err: FetchError) => {
+      if (err.res.status === 401) {
+        toast.error('잘못된 코드입니다!');
+      } else {
+        toast.error('에러!');
+      }
     },
   });
 
