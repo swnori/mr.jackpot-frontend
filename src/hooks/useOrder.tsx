@@ -1,14 +1,15 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import useMenu from './useMenu';
 import useClientCoupon from './useClientCoupon';
 
-import { dinnerOrderState, orderState } from '@/stores/order';
+import { dinnerOrderReadOnlyState, dinnerOrderState, orderState } from '@/stores/order';
 
-import { DinnerOrder, MenuOrder } from '@/types/order';
+import { MenuOrder } from '@/types/order';
 
 const useOrder = () => {
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
+  const readOnlyDinnerOrder = useRecoilValue(dinnerOrderReadOnlyState);
   const [order, setOrder] = useRecoilState(orderState);
 
   const { getDinnerById, getMenuById, getStyleById } = useMenu();
@@ -74,8 +75,8 @@ const useOrder = () => {
     return false;
   };
 
-  const loadDinnerFromId = (id: number, dummy: DinnerOrder) => {
-    setDinnerOrder(dummy);
+  const loadReadOnlyDinner = () => {
+    setDinnerOrder(readOnlyDinnerOrder);
   };
 
   const updateDinnerToCart = (id: number) => {
@@ -143,7 +144,7 @@ const useOrder = () => {
     addDinnerToCart,
     loadDinnerFromCart,
     updateDinnerToCart,
-    loadDinnerFromId,
+    loadReadOnlyDinner,
     menuOrderPrice,
     dinnerOrderPrice,
     orderPrice,

@@ -1,3 +1,5 @@
+import { useSetRecoilState } from 'recoil';
+
 import {
   OrderSection,
   OrderSectionDesc,
@@ -11,6 +13,8 @@ import MobileItem from '@/components/MobileItem';
 import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
+import { dinnerOrderReadOnlyState } from '@/stores/order';
+
 import { DinnerOrder, MenuOrder } from '@/types/order';
 
 import SteakWineImg from '@/assets/images/dinner.png';
@@ -22,6 +26,7 @@ interface DinnerListValue {
 
 const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
   const link = useLink();
+  const setReadOnlyDinnerOrder = useSetRecoilState(dinnerOrderReadOnlyState);
   const { getDinnerById, getMenuById } = useMenu();
 
   const menuListStr = (list: MenuOrder[]) =>
@@ -43,8 +48,9 @@ const OrderDinnerListSection = ({ dinnerList }: DinnerListValue) => {
       ((mainDishes !== '' || sides !== '') && drinks !== '' ? `, ${drinks}` : drinks)
     );
   };
-  const goUpdateDinnerPage = (id: number) => {
-    link.to(`/client/dinner/read/${id}`);
+  const goUpdateDinnerPage = (idx: number) => {
+    setReadOnlyDinnerOrder(dinnerList[idx]);
+    link.to(`/client/dinner/read/${idx}`);
   };
   return (
     <OrderSection>

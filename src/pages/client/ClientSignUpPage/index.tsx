@@ -48,6 +48,8 @@ const ClientSignUpPage = () => {
     onError: (err: FetchError) => {
       if (err.res.status === 401) {
         toast.error('계정 정보가 틀렸습니다.', { position: 'top-center' });
+      } else {
+        toast.error('에러!', { position: 'top-center' });
       }
     },
   });

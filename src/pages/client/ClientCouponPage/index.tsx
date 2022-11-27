@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilValue } from 'recoil';
 import { useLayoutEffect } from 'react';
 
@@ -40,7 +41,7 @@ const ClientCouponPage = () => {
 
   useLayoutEffect(() => {
     selectCoupon(order.couponId ?? 0);
-  }, [selectCoupon, order.couponId]);
+  }, []);
 
   return (
     <CouponContainer>

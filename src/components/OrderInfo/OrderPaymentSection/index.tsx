@@ -28,7 +28,7 @@ const OrderPaymentSection = ({ price, couponName, couponPrice }: PaymentValue) =
       </OrderSectionTitle>
       <OrderInputContainer>
         <OrderInputTitle>할인 쿠폰</OrderInputTitle>
-        <OrderInfoText>{couponName}</OrderInfoText>
+        <OrderInfoText>{couponName !== '' ? couponName : '쿠폰 선택 안함'}</OrderInfoText>
       </OrderInputContainer>
       <OrderInputContainer>
         <OrderInputTitle>결제 금액</OrderInputTitle>

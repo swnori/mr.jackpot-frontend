@@ -2,6 +2,18 @@ import { atom } from 'recoil';
 
 import { DinnerOrder, Order } from '@/types/order';
 
+export const dinnerOrderReadOnlyState = atom<DinnerOrder>({
+  key: 'dinnerOrderReadOnlyState',
+  default: {
+    id: 0,
+    type: 1,
+    mainDish: [],
+    side: [],
+    drink: [],
+    style: 1,
+  },
+});
+
 export const dinnerOrderState = atom<DinnerOrder>({
   key: 'dinnerOrderState',
   default: {

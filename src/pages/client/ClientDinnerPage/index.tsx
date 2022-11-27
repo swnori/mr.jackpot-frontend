@@ -32,7 +32,7 @@ import SteakWineImg from '@/assets/images/dinner.png';
 const ClientDinnerPage = () => {
   const { mode, id } = useParams();
   const [dinnerOrder, setDinnerOrder] = useRecoilState(dinnerOrderState);
-  const { setDinnerDefault, loadDinnerFromCart, loadDinnerFromId } = useOrder();
+  const { setDinnerDefault, loadDinnerFromCart, loadReadOnlyDinner } = useOrder();
   const { getDinnerById } = useMenu();
   const link = useLink();
 
@@ -52,31 +52,32 @@ const ClientDinnerPage = () => {
     }
 
     if (dinnerOrder.mainDish.length === 0 && mode === 'read') {
-      loadDinnerFromId(Number(id), {
-        id: 24,
-        type: 0,
-        mainDish: [{ menuId: 0, option: [41, 46], count: 1, isDefault: false }],
-        side: [{ menuId: 9, option: [null, null], count: 4, isDefault: false }],
-        drink: [{ menuId: 5, option: [51, null], count: 1, isDefault: false }],
-        style: 1,
-      });
+      loadReadOnlyDinner();
     }
   }, []);
 
   const setStyleHandler = (style: number) => {
-    setDinnerOrder((prev) => ({ ...prev, style }));
+    if (mode !== 'read') {
+      setDinnerOrder((prev) => ({ ...prev, style }));
+    }
   };
 
   const setMainDishOrderList = (menuOrderList: MenuOrder[]) => {
-    setDinnerOrder((prev) => ({ ...prev, mainDish: menuOrderList }));
+    if (mode !== 'read') {
+      setDinnerOrder((prev) => ({ ...prev, mainDish: menuOrderList }));
+    }
   };
 
   const setSideOrderList = (menuOrderList: MenuOrder[]) => {
-    setDinnerOrder((prev) => ({ ...prev, side: menuOrderList }));
+    if (mode !== 'read') {
+      setDinnerOrder((prev) => ({ ...prev, side: menuOrderList }));
+    }
   };
 
   const setDrinkOrderList = (menuOrderList: MenuOrder[]) => {
-    setDinnerOrder((prev) => ({ ...prev, drink: menuOrderList }));
+    if (mode !== 'read') {
+      setDinnerOrder((prev) => ({ ...prev, drink: menuOrderList }));
+    }
   };
 
   return (
