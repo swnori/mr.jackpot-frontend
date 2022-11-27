@@ -12,6 +12,7 @@ import { useLink } from '@/hooks/useLink';
 
 import { dateFormat, KRWFormat } from '@/utils/format';
 
+import { UX_DELAY } from '@/constants/timer';
 import { fetchGetOrderList } from '@/apis/staff';
 
 interface OrderValue {
@@ -50,6 +51,10 @@ const CEOMainPage = () => {
 
   useLayoutEffect(() => {
     getOrderListMutation.mutate();
+    const interval = setInterval(() => getOrderListMutation.mutate(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (

@@ -1,3 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { useLayoutEffect, useState } from 'react';
+
 import {
   CookOrderInfoBackBtn,
   CookOrderInfoBackBtnImg,
@@ -13,58 +19,119 @@ import ClientInfoSection from '@/components/StaffOrderInfo/ClientInfoSection';
 
 import { useLink } from '@/hooks/useLink';
 
-import { MenuOrder } from '@/types/order';
+import { DinnerOrder } from '@/types/order';
 
+import { UX_DELAY } from '@/constants/timer';
 import BackIcon from '@/assets/icons/icon-arrow-back.svg';
+import { fetchGetOrderDetail } from '@/apis/staff';
 
-const dummyData = {
+const dummyOrderInfo = {
   clientInfo: {
     orderId: 1,
     isMember: false,
-    reserveName: '김고객',
-    reserveDate: new Date('2022-11-28T19:30:00'),
-    address: '서울시 동대문구 서울시립대로 163',
-    contact: '01012345678',
-    requestDetail: '문 앞에 놓고 가주세요 냄새나는 치즈는 빼주시구요',
-    orderDate: new Date('2022-11-14T15:31:46'),
-    stateId: 4,
+    reserveName: '',
+    reserveDate: new Date(),
+    address: '',
+    contact: '',
+    requestDetail: '',
+    orderDate: new Date(),
+    stateId: 0,
   },
   paymentInfo: {
-    price: 270000,
-    couponName: '1주년 감사 쿠폰',
-    couponPrice: 30000,
+    price: 0,
+    couponName: '',
+    couponPrice: 0,
   },
-  dinnerList: [
-    {
-      id: 24,
-      type: 0,
-      price: 100000,
-      menuList: [
-        { id: 0, menuId: 0, option: [41, 46], count: 1, isDefault: false, stateId: 8 },
-        { id: 1, menuId: 9, option: [null, null], count: 4, isDefault: false, stateId: 3 },
-        { id: 2, menuId: 5, option: [51, null], count: 1, isDefault: false, stateId: 3 },
-      ] as MenuOrder[],
-      style: 1,
-      stateId: 3,
-    },
-    {
-      id: 25,
-      type: 3,
-      price: 100000,
-      menuList: [
-        { id: 3, menuId: 0, option: [44, 47], count: 1, isDefault: false, stateId: 8 },
-        { id: 4, menuId: 0, option: [41, 46], count: 1, isDefault: false, stateId: 8 },
-        { id: 5, menuId: 9, option: [null, null], count: 4, isDefault: false, stateId: 8 },
-        { id: 6, menuId: 1, option: [55, null], count: 1, isDefault: false, stateId: 8 },
-      ] as MenuOrder[],
-      style: 1,
-      stateId: 4,
-    },
-  ],
+  dinnerList: [],
 };
+
+interface OrderInfoValue {
+  clientInfo: {
+    orderId: number;
+    isMember: boolean;
+    reserveName: string;
+    reserveDate: Date;
+    address: string;
+    contact: string;
+    requestDetail: string;
+    orderDate: Date;
+    stateId: number;
+  };
+  paymentInfo: {
+    price: number;
+    couponName: string;
+    couponPrice: number;
+  };
+  dinnerList: DinnerOrder[];
+}
 
 const CookOrderInfoPage = () => {
   const link = useLink();
+  const { id } = useParams();
+
+  const [orderInfo, setOrderInfo] = useState<OrderInfoValue>(dummyOrderInfo);
+
+  const orderInfoMutation = useMutation('staffOrderDetail', fetchGetOrderDetail, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      const dinnerList = data.order.dinnerList.map((dinner: any) => {
+        return {
+          id: dinner.id,
+          type: dinner.dinnerId,
+          style: dinner.styleId,
+          stateId: dinner.stateId,
+          menuList: dinner.menuList,
+          price: 0,
+        };
+      });
+
+      const {
+        couponName,
+        couponPrice,
+        price,
+        orderId,
+        stateId,
+        reserveName,
+        reserveDate,
+        createTime,
+        contact,
+        address,
+        requestDetail,
+      } = data.orderinfo;
+
+      setOrderInfo({
+        clientInfo: {
+          orderId,
+          isMember: false,
+          reserveName,
+          reserveDate: new Date(reserveDate),
+          address,
+          contact,
+          requestDetail,
+          orderDate: new Date(createTime),
+          stateId,
+        },
+        paymentInfo: {
+          couponName,
+          couponPrice,
+          price,
+        },
+        dinnerList,
+      });
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  useLayoutEffect(() => {
+    orderInfoMutation.mutate({ id: Number(id) });
+    const interval = setInterval(() => orderInfoMutation.mutate({ id: Number(id) }), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <CookOrderInfoContainer>
       <CookOrderInfoTitle>
@@ -74,21 +141,21 @@ const CookOrderInfoPage = () => {
         </CookOrderInfoBackBtn>
       </CookOrderInfoTitle>
       <CookOrderInfoSectionTitle>주문 정보</CookOrderInfoSectionTitle>
-      <ClientInfoSection data={dummyData.clientInfo} />
+      <ClientInfoSection data={orderInfo.clientInfo} />
 
       <CookOrderInfoSectionTitle>결제 정보</CookOrderInfoSectionTitle>
-      <PaymentInfoSection data={dummyData.paymentInfo} />
+      <PaymentInfoSection data={orderInfo.paymentInfo} />
 
       <CookOrderInfoSectionTitle>디너 정보 및 진행 현황</CookOrderInfoSectionTitle>
       <DinnerListContainer>
-        {dummyData.dinnerList.map((dinner) => {
+        {orderInfo.dinnerList.map((dinner) => {
           const data = {
-            dinnerId: dinner.id,
+            dinnerId: dinner.id!,
             type: dinner.type,
-            price: dinner.price,
+            price: dinner.price!,
             style: dinner.style,
-            menuList: dinner.menuList,
-            stateId: dinner.stateId,
+            menuList: dinner.menuList!,
+            stateId: dinner.stateId!,
           };
           return <DinnerInfoSection key={dinner.id} data={data} showState />;
         })}

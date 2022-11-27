@@ -12,6 +12,7 @@ import usePeriodicAPICall from '@/hooks/usePeriodicAPICall';
 
 import { StockItem } from '@/types/stock';
 
+import { UX_DELAY } from '@/constants/timer';
 import AddItemIcon from '@/assets/icons/icon-round-add.svg';
 import { fetchGetStockList } from '@/apis/staff';
 
@@ -30,7 +31,7 @@ const CEOStockPage = () => {
     return data;
   };
 
-  const data = usePeriodicAPICall<StockItem[]>(itemList, getStockList, 700);
+  const data = usePeriodicAPICall<StockItem[]>(itemList, getStockList, UX_DELAY);
   useEffect(() => {
     if (data?.length) {
       setItemList(data);

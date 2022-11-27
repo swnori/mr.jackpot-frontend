@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+
 import {
   OrderDDayContainer,
   OrderInfoBtn,
@@ -8,6 +10,8 @@ import {
 } from '../style';
 
 import { ddayFormat } from '@/utils/format';
+
+import { stateState } from '@/stores/state';
 
 import ClockIcon from '@/assets/icons/icon-clock.svg';
 
@@ -25,11 +29,13 @@ const stateMap: { [key: string]: string } =
   } ?? '';
 
 interface OrderStateValue {
-  stateName: string;
+  stateId: number;
   reserveDate: Date;
 }
 
-const OrderStateSection = ({ stateName, reserveDate }: OrderStateValue) => {
+const OrderStateSection = ({ stateId, reserveDate }: OrderStateValue) => {
+  const orderState = useRecoilValue(stateState);
+  const stateName = orderState[stateId]?.name ?? '대기';
   return (
     <OrderSection>
       <OrderSectionTitle>
