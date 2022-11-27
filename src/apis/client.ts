@@ -107,7 +107,17 @@ export const fetchOrder = ({
   });
 };
 
-export const fetchGetOrderInfo = () => fetchApi.get('/customer/order/info');
+/**
+ * 주문 내역 조회
+ */
+export const fetchGetMyOrderHistory = () => fetchApi.get('/customer/orderinfo/history');
+
+/**
+ * 주문 정보 조회
+ * @param { id }
+ */
+export const fetchGetMyOrderInfo = ({ id }: { id: number }) =>
+  fetchApi.get(`/customer/order/info?orderid=${id}`);
 
 /**
  * 내가 갖고 있는 쿠폰 목록 조회

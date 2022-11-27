@@ -1,31 +1,49 @@
+import { useQuery } from 'react-query';
+import { useState } from 'react';
+
 import { OrderHistoryContainer, OrderListContainer } from './style';
 
 import MobileItem from '@/components/MobileItem';
+import Loading from '@/components/Loading';
 import Header from '@/components/Header';
 
 import { useLink } from '@/hooks/useLink';
 
 import { digitFormat, KRWFormat } from '@/utils/format';
 
-const dummyOrderHistory = [
-  {
-    id: 2,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    createTime: new Date('2022-11-16T15:31:46'),
-    reserveTime: new Date('2022-11-28T20:00:00'),
-    price: 307000,
-  },
-  {
-    id: 6,
-    dinnerName: '샴페인 축제 디너',
-    createTime: new Date('2022-11-14T15:31:46'),
-    reserveTime: new Date('2022-11-28T19:30:00'),
-    price: 207000,
-  },
-];
+import { fetchGetMyOrderHistory } from '@/apis/client';
+
+interface OrderHistory {
+  id: number;
+  dinnerName: string;
+  createTime: Date;
+  reserveTime: Date;
+  price: number;
+}
 
 const ClientOrderHistoryPage = () => {
   const link = useLink();
+  const [orderList, setOrderList] = useState<OrderHistory[]>([]);
+  const { isLoading } = useQuery('orderHistory', fetchGetMyOrderHistory, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        setOrderList(
+          data.map((item: any) => ({
+            id: item.orderId,
+            dinnerName:
+              item?.dinnerList?.reduce((pre: string, cur: string) => {
+                if (pre === '') return cur;
+                return `${pre}, ${cur}`;
+              }, '') ?? '',
+            price: item.price,
+            createTime: new Date(item.createdAt),
+            reserveTime: new Date(item.reserveAt),
+          })),
+        );
+      }
+    },
+  });
 
   const createTimeText = (date: Date) => {
     const [year, month, day] = [date.getFullYear() % 100, date.getMonth() + 1, date.getDate()];
@@ -45,22 +63,27 @@ const ClientOrderHistoryPage = () => {
       2,
     )}:${digitFormat(minute, 2)}:00`;
   };
+
   return (
     <OrderHistoryContainer>
       <Header type='back' title='주문 이력' />
-      <OrderListContainer>
-        {dummyOrderHistory.map((order) => (
-          <MobileItem
-            key={order.id}
-            type='button'
-            img={null}
-            title={order.dinnerName}
-            subTitle={reserveTimeText(order.reserveTime)}
-            desc={`${KRWFormat(order.price)} 결제(${createTimeText(order.createTime)})`}
-            onClick={() => link.to(`/client/order/${order.id}`)}
-          />
-        ))}
-      </OrderListContainer>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <OrderListContainer>
+          {orderList.map((order) => (
+            <MobileItem
+              key={order.id}
+              type='button'
+              img={null}
+              title={order.dinnerName}
+              subTitle={reserveTimeText(order.reserveTime)}
+              desc={`${KRWFormat(order.price)} 결제(${createTimeText(order.createTime)})`}
+              onClick={() => link.to(`/client/order/${order.id}`)}
+            />
+          ))}
+        </OrderListContainer>
+      )}
     </OrderHistoryContainer>
   );
 };

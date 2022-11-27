@@ -28,21 +28,24 @@ export const clientCouponState = selector<Coupon[]>({
   key: 'clientCouponState',
   get: async ({ get }) => {
     const atomData = get(clientCouponAtom);
-    if (atomData !== null) {
+    if (atomData.length > 1) {
       return atomData;
     }
     const res = await fetchGetMyCouponList();
     if (res.status === 200) {
       const data = await res.json();
-      return data.map((item: any) => ({
-        id: item.id,
-        code: item.code,
-        name: item.title,
-        price: item.amount,
-        desc: item.message,
-        startDate: new Date(item.createdAt),
-        endDate: new Date(item.expiresAt),
-      }));
+      return [
+        ...atomData,
+        ...data.map((item: any) => ({
+          id: item.id,
+          code: item.code,
+          name: item.title,
+          price: item.amount,
+          desc: item.message,
+          startDate: new Date(item.createdAt),
+          endDate: new Date(item.expiresAt),
+        })),
+      ];
     }
     return [];
   },

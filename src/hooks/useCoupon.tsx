@@ -43,7 +43,7 @@ const useCoupon = () => {
             <br />
             생성된 쿠폰 번호는 <br />
             <br />
-            <b>{data.Code}</b> <br />
+            <b>{data.code}</b> <br />
             <br />
             입니다.
           </NoticeModal>

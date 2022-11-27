@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import React from 'react';
@@ -9,12 +9,13 @@ import AddClientCouponModal from '@/components/Coupon/AddClientCouponModal';
 
 import { clientCouponState, clientInputCouponState, selectedCouponState } from '@/stores/coupon';
 
+import { FetchError } from '@/types/fetch';
+
 import CouponIcon from '@/assets/icons/icon-coupon.svg';
 import { fetchInputCoupon } from '@/apis/client';
 
 const useClientCoupon = () => {
-  const couponList = useRecoilValue(clientCouponState);
-  const resetCouponList = useResetRecoilState(clientCouponState);
+  const [couponList, setCouponList] = useRecoilState(clientCouponState);
   const [couponCode, setCouponCode] = useRecoilState(clientInputCouponState);
   const [selectedCouponId, setSelectedCouponId] = useRecoilState(selectedCouponState);
 
@@ -25,11 +26,27 @@ const useClientCoupon = () => {
   };
 
   const gainCouponMutation = useMutation('gainCoupon', fetchInputCoupon, {
-    onSuccess: () => {
-      resetCouponList();
+    onSuccess: (data) => {
+      setCouponList((prev) => [
+        ...prev,
+        {
+          id: data.id,
+          name: data.title,
+          desc: data.message,
+          price: data.amount,
+          startDate: new Date(data.createdAt),
+          endDate: new Date(data.expiresAt),
+        },
+      ]);
     },
-    onError: () => {
-      toast.error('에러!', { position: 'top-center' });
+    onError: (err: FetchError) => {
+      if (err.res.status === 400) {
+        toast.error('이미 발급 받은 쿠폰입니다!', { position: 'top-center' });
+      } else if (err.res.status === 401) {
+        toast.error('존재하지 않는 쿠폰입니다!', { position: 'top-center' });
+      } else {
+        toast.error('에러!', { position: 'top-center' });
+      }
     },
   });
 
