@@ -7,8 +7,7 @@ export const settingState = atom<Setting>({
   default: {
     itemList: [],
     newName: '',
-    newType: '요리',
-    newPart: [false, false, false, false, false],
+    newType: 1,
     updateUserId: -1,
   },
 });

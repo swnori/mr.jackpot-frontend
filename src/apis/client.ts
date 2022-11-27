@@ -116,8 +116,8 @@ export const fetchGetMyOrderHistory = () => fetchApi.get('/customer/orderinfo/hi
  * 주문 정보 조회
  * @param { id }
  */
-export const fetchGetMyOrderInfo = ({ id }: { id: number }) =>
-  fetchApi.get(`/customer/order/info?orderid=${id}`);
+export const fetchGetMyOrderInfo = ({ id }: { id?: number }) =>
+  id ? fetchApi.get(`/customer/order/info?orderid=${id}`) : fetchApi.get(`/customer/order/info`);
 
 /**
  * 내가 갖고 있는 쿠폰 목록 조회

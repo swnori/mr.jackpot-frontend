@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRecoilState } from 'recoil';
 import { toast } from 'react-toastify';
+import { useMutation } from 'react-query';
 import React from 'react';
 
 import useModal from './useModal';
@@ -9,162 +11,71 @@ import AddEmployeeModal from '@/components/Setting/AddEmployeeModal';
 
 import { settingState } from '@/stores/setting';
 
-import { CookPart, Employee, Member } from '@/types/user';
+import { EmployeeTypeDic } from '@/types/setting';
 
 import UserIcon from '@/assets/icons/icon-user.svg';
 import AddUserIcon from '@/assets/icons/icon-user-add.svg';
-
-const empDummyData = [
-  {
-    id: 7,
-    code: 'C-1134114134',
-    name: '김요리',
-    type: '요리',
-    part: ['그릴'],
-    join: new Date('2022-10-14'),
-    score: 50,
-  },
-  {
-    id: 6,
-    code: 'D-3454321234',
-    name: '강배달',
-    type: '배달',
-    part: null,
-    join: new Date('2022-09-05'),
-    score: 50,
-  },
-  {
-    id: 5,
-    code: 'D-1234143234',
-    name: '최직원',
-    type: '배달',
-    part: null,
-    join: new Date('2022-09-01'),
-    score: 50,
-  },
-  {
-    id: 4,
-    code: 'C-8563229123',
-    name: '박재고',
-    type: '요리',
-    part: ['팬', '콜드'],
-    join: new Date('2022-07-25'),
-    score: 50,
-  },
-  {
-    id: 3,
-    code: 'D-6346123454',
-    name: '장회수',
-    type: '배달',
-    part: null,
-    join: new Date('2022-06-18'),
-    score: 68,
-  },
-  {
-    id: 2,
-    code: 'C-6230491824',
-    name: '정디너',
-    type: '요리',
-    part: ['오븐'],
-    join: new Date('2022-02-20'),
-    score: 57,
-  },
-  {
-    id: 1,
-    code: 'C-1192391234',
-    name: '유주문',
-    type: '요리',
-    part: ['스타일'],
-    join: new Date('2022-01-01'),
-    score: 50,
-  },
-] as Employee[];
-
-const mbDummyData = [
-  {
-    id: 7,
-    name: '김손님',
-    contact: '01012345678',
-    address: '서울시 동작구',
-    join: new Date('2022-10-14'),
-    order: 30,
-    pay: 123456789,
-    rating: 4.3,
-  },
-  {
-    id: 6,
-    name: '이손님',
-    contact: '01023456789',
-    address: '서울시 중랑구',
-    join: new Date('2022-09-05'),
-    order: 90,
-    pay: 123456789,
-    rating: 3.8,
-  },
-  {
-    id: 5,
-    name: '박손님',
-    contact: '01034567890',
-    address: '서울시 송파구',
-    join: new Date('2022-09-01'),
-    order: 39,
-    pay: 123456789,
-    rating: 3.9,
-  },
-  {
-    id: 4,
-    name: '최손님',
-    contact: '01045678901',
-    address: '서울시 동대문구',
-    join: new Date('2022-07-25'),
-    order: 37,
-    pay: 123456789,
-    rating: 3.5,
-  },
-  {
-    id: 3,
-    name: '배손님',
-    contact: '01056789012',
-    address: '서울시 동대문구',
-    join: new Date('2022-06-18'),
-    order: 68,
-    pay: 123456789,
-    rating: 4.5,
-  },
-  {
-    id: 2,
-    name: '오손님',
-    contact: '01067890123',
-    address: '서울시 광진구',
-    join: new Date('2022-02-20'),
-    order: 57,
-    pay: 123456789,
-    rating: 4.5,
-  },
-  {
-    id: 1,
-    name: '강손님',
-    contact: '01078901234',
-    address: '서울시 종로구',
-    join: new Date('2022-01-01'),
-    order: 50,
-    pay: 123456789,
-    rating: 3.2,
-  },
-] as Member[];
+import {
+  fetchGetMemberList,
+  fetchGetStaffList,
+  fetchRegisterStaff,
+  fetchUpdateStaff,
+} from '@/apis/ceo';
 
 const useSetting = () => {
   const [setting, setSetting] = useRecoilState(settingState);
 
-  const { itemList, newName, newType, newPart, updateUserId } = setting;
+  const { itemList, newName, newType, updateUserId } = setting;
   const { showModal, rerenderModal } = useModal();
 
+  const setEmployeeListMutation = useMutation('getStaffList', fetchGetStaffList, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      setSetting((prev) => ({
+        ...prev,
+        itemList: data.map((item: any) => ({
+          id: item.id,
+          code: item.code,
+          name: item.name,
+          type: item.role,
+          join: new Date(item.createdAt),
+          score: item.score,
+        })),
+      }));
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
   const setEmployeeList = () => {
-    setSetting((prev) => ({ ...prev, itemList: empDummyData }));
+    setEmployeeListMutation.mutate();
   };
 
+  const setMemberListMutation = useMutation('getMemberList', fetchGetMemberList, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      setSetting((prev) => ({
+        ...prev,
+        itemList: data.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          contact: item.phone,
+          address: item.address,
+          join: new Date(item.registeredAt),
+          order: item.orders,
+          pay: item.paid,
+          rating: item.rating,
+        })),
+      }));
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
   const setMemberList = () => {
-    setSetting((prev) => ({ ...prev, itemList: mbDummyData }));
+    setMemberListMutation.mutate();
   };
 
   const getItem = (id: number) => {
@@ -174,58 +85,73 @@ const useSetting = () => {
     return { idx, ...item };
   };
 
-  const getPartList = (part: boolean[]) => {
-    if (part.every((item) => !item)) {
-      return [];
-    }
-    return ['그릴', '오븐', '팬', '콜드', '스타일'].filter((_, idx) => part[idx]) as CookPart[];
+  const addEmplyeeMutation = useMutation('registerStaff', fetchRegisterStaff, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      const newEmployee = {
+        id: data.id,
+        code: data.code,
+        name: data.name,
+        type: data.role,
+        join: new Date(data.createdAt),
+        score: data.score,
+      };
+      setSetting((prev) => ({ ...prev, itemList: [newEmployee, ...itemList] }));
+      showModal({
+        type: 'alert',
+        title: (
+          <>
+            <img src={AddUserIcon} alt='icon-add-user' />
+            직원 등록
+          </>
+        ),
+        children: (
+          <NoticeModal>
+            직원을 등록했습니다. <br />
+            <br />
+            생성된 코드는 <b>{data.code}</b> 입니다.
+          </NoticeModal>
+        ),
+      });
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const addEmployee = (name: string, type: number) => {
+    addEmplyeeMutation.mutate({ name, type });
   };
 
-  const getPartBoolList = (part: CookPart[]) => {
-    if (part === null) {
-      return [false, false, false, false, false];
-    }
-    return (['그릴', '오븐', '팬', '콜드', '스타일'] as CookPart[]).map((item: CookPart) =>
-      part.includes(item),
-    );
-  };
+  const updateEmployeeMutation = useMutation('updateStaff', fetchUpdateStaff, {
+    onSuccess: async (res) => {
+      const data = await res.json();
 
-  const addEmployee = (name: string, type: '요리' | '배달', part: boolean[]) => {
-    showModal({
-      type: 'alert',
-      title: (
-        <>
-          <img src={AddUserIcon} alt='icon-add-user' />
-          직원 등록
-        </>
-      ),
-      children: (
-        <NoticeModal>
-          직원을 등록했습니다. <br />
-          <br />
-          생성된 코드는 - 입니다.
-        </NoticeModal>
-      ),
-    });
-    const newEmployee = {
-      id: itemList[0].id! + 1,
-      code: '-',
-      name,
-      type,
-      part: getPartList(part),
-      join: new Date(),
-      score: 0,
-    };
-    setSetting((prev) => ({ ...prev, itemList: [newEmployee, ...itemList] }));
-  };
+      const updatedEmployee = {
+        id: data.id,
+        code: data.code,
+        name: data.name,
+        type: data.role,
+        join: new Date(data.createdAt),
+        score: data.score,
+      };
 
-  const updateEmployee = (id: number, name: string, type: '요리' | '배달', part: boolean[]) => {
-    const { idx, ...item } = getItem(id);
-    const nextEmployee = { ...item, name, type, part: getPartList(part) };
-    setSetting((prev) => ({
-      ...prev,
-      itemList: [...itemList.slice(0, idx), nextEmployee, ...itemList.slice(idx + 1)],
-    }));
+      const idx = itemList.findIndex((item) => item.id === data.id);
+
+      setSetting((prev) => ({
+        ...prev,
+        itemList: [...itemList.slice(0, idx), updatedEmployee, ...itemList.slice(idx + 1)],
+      }));
+
+      toast.success('직원 정보 수정 성공!');
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const updateEmployee = (id: number, name: string, type: number) => {
+    updateEmployeeMutation.mutate({ id, name, type });
   };
 
   const removeEmployee = (id: number) => {
@@ -271,48 +197,31 @@ const useSetting = () => {
     rerenderModal({
       handleConfirm: () => {
         if (updateUserId === -1) {
-          addEmployee(text, newType, newPart);
+          addEmployee(text, newType);
         } else {
-          updateEmployee(updateUserId, text, newType, newPart);
+          updateEmployee(updateUserId, text, newType);
         }
       },
     });
   };
 
   const selectEmployeeTypeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const text = e.currentTarget.value as '요리' | '배달';
-    const nextPart = text === '요리' ? [...newPart] : [false, false, false, false, false];
+    const text = e.currentTarget.value as '배달' | '요리' | '스타일';
+    const type = EmployeeTypeDic[text];
     if (text === '요리') {
-      setSetting((prev) => ({ ...prev, newType: text }));
+      setSetting((prev) => ({ ...prev, newType: type }));
     } else {
       setSetting((prev) => ({
         ...prev,
-        newType: text,
-        newPart: nextPart,
+        newType: type,
       }));
     }
     rerenderModal({
       handleConfirm: () => {
         if (updateUserId === -1) {
-          addEmployee(newName, text, nextPart);
+          addEmployee(newName, type);
         } else {
-          updateEmployee(updateUserId, newName, text, nextPart);
-        }
-      },
-    });
-  };
-
-  const checkEmployeePartHandler = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
-    const isChecked = e.currentTarget.checked;
-    const nextPart = [...newPart];
-    nextPart[idx] = isChecked;
-    setSetting((prev) => ({ ...prev, newPart: nextPart }));
-    rerenderModal({
-      handleConfirm: () => {
-        if (updateUserId === -1) {
-          addEmployee(newName, newType, nextPart);
-        } else {
-          updateEmployee(updateUserId, newName, newType, nextPart);
+          updateEmployee(updateUserId, newName, type);
         }
       },
     });
@@ -322,8 +231,7 @@ const useSetting = () => {
     setSetting((prev) => ({
       ...prev,
       newName: '',
-      newType: '요리',
-      newPart: [false, false, false, false, false],
+      newType: 1,
       updateUserId: -1,
     }));
     showModal({
@@ -339,13 +247,12 @@ const useSetting = () => {
   };
 
   const openUpdateEmployeeModal = (id: number) => {
-    const { name, type, part } = getItem(id)!;
+    const { name, type } = getItem(id)!;
 
     setSetting((prev) => ({
       ...prev,
       newName: name as string,
-      newType: type as '요리' | '배달',
-      newPart: getPartBoolList(part!) as boolean[],
+      newType: type as number,
       updateUserId: id,
     }));
 
@@ -364,7 +271,6 @@ const useSetting = () => {
   return {
     newName,
     newType,
-    newPart,
     itemList,
     removeEmployee,
     removeMember,
@@ -372,7 +278,6 @@ const useSetting = () => {
     setEmployeeList,
     openAddEmployeeModal,
     openUpdateEmployeeModal,
-    checkEmployeePartHandler,
     inputEmployeeNameHandler,
     selectEmployeeTypeHandler,
   };

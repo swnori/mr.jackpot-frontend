@@ -41,3 +41,27 @@ export const fetchIssueCoupon = ({
     Amount: price,
     expiresAt: dateFormat(date, true),
   });
+
+/**
+ * 고객 목록 조회
+ */
+export const fetchGetMemberList = () => fetchApi.get('/ceo/customer/list');
+
+/**
+ * 직원 목록 조회
+ */
+export const fetchGetStaffList = () => fetchApi.get('/ceo/staff/list');
+
+/**
+ * 직원 등록
+ * @param { name, type }
+ */
+export const fetchRegisterStaff = ({ name, type }: { name: string; type: number }) =>
+  fetchApi.post('/ceo/staff/register', { name, roleId: type });
+
+/**
+ * 직원 수정
+ * @param { id, name, type }
+ */
+export const fetchUpdateStaff = ({ id, name, type }: { id: number; name: string; type: number }) =>
+  fetchApi.post('/ceo/staff/update', { id, name, roleId: type });
