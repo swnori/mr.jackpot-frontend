@@ -62,7 +62,7 @@ const useStock = () => {
   });
 
   const updateItem = (id: number, amount: number) => {
-    let nextAmount = getItemById(id)!.amount;
+    let nextAmount = getItemById(id)!.count;
     if (updateMode === 'in') {
       nextAmount += amount;
     } else if (updateMode === 'out' && nextAmount >= amount) {
