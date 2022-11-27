@@ -37,7 +37,7 @@ const CookStockPage = () => {
           .map((item, idx) => (
             <TableRow
               key={idx}
-              dataList={[item.id, item.name, item.unit, item.amount]}
+              dataList={[item.id, item.name, item.unit, item.count]}
               onDelete={() => removeItem(idx)}
               onUpdate={() => openUpdateItemModal(idx)}
             />
