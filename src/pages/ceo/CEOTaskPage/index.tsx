@@ -1,71 +1,68 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMutation } from 'react-query';
+import { useLayoutEffect, useState } from 'react';
+
 import { TaskContainer, TaskTitle } from './style';
 
 import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 
+import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
 import { dateFormat, KRWFormat } from '@/utils/format';
 
-const dummyData = [
-  {
-    id: 7,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-10T09:48:22'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 6,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-10T03:00:02'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 5,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-09T20:34:12'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 4,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-09T19:12:03'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 3,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-09T18:53:22'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 2,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-09T17:30:22'),
-    price: 223000,
-    stateId: 1,
-  },
-  {
-    id: 1,
-    dinnerName: '발렌타인 디너, 잉글리시 디너',
-    time: new Date('2022-10-09T08:48:22'),
-    price: 223000,
-    stateId: 1,
-  },
-];
+import { UX_DELAY } from '@/constants/timer';
+import { fetchGetOrderList } from '@/apis/staff';
+
+interface OrderValue {
+  id: number;
+  dinnerName: string;
+  time: Date;
+  price: number;
+  stateId: number;
+}
 
 const CEOTaskPage = () => {
   const link = useLink();
+  const [orderList, setOrderList] = useState<OrderValue[]>([]);
+  const { getDinnerById } = useMenu();
+
+  const getOrderListMutation = useMutation('getCEOOrderList', fetchGetOrderList, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      setOrderList(
+        data
+          .filter((item: any) => item.stateId === 5)
+          .map((item: any) => ({
+            id: item.orderId,
+            dinnerName: item.dinnerList.reduce((pre: string, cur: any) => {
+              const { name } = getDinnerById(cur)!;
+              if (pre === '') {
+                return name;
+              }
+              return `${pre}, ${name}`;
+            }, ''),
+            time: new Date(item.reserveAt),
+            price: item.price,
+            stateId: item.stateId,
+          })),
+      );
+    },
+  });
+
+  useLayoutEffect(() => {
+    getOrderListMutation.mutate();
+    const interval = setInterval(() => getOrderListMutation.mutate(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
   return (
     <TaskContainer>
       <TaskTitle>접수된 예약 목록</TaskTitle>
       <Table headerList={['ID', 'Order', 'Time', 'Price', 'Status']}>
-        {dummyData.map((order) => (
+        {orderList.map((order) => (
           <TableRow
             key={order.id}
             dataList={[
