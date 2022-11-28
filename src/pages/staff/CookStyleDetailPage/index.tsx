@@ -1,4 +1,8 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { useLayoutEffect, useState } from 'react';
 
 import {
   CookStyleDetailBackBtn,
@@ -13,62 +17,73 @@ import DinnerInfoSection from '@/components/StaffOrderInfo/DinnerInfoSection';
 
 import { useLink } from '@/hooks/useLink';
 
-import { ValueOf } from '@/utils/type';
-
 import { MenuOrder } from '@/types/order';
-import { MenuType } from '@/types/menu';
 
+import { UX_DELAY } from '@/constants/timer';
 import CheckIcon from '@/assets/icons/icon-check.svg';
 import BackIcon from '@/assets/icons/icon-arrow-back.svg';
+import { fetchGetOrderDetail, fetchTaskNextStep } from '@/apis/staff';
 
 const dummyData = {
   id: 24,
-  type: 0,
-  price: 100000,
-  menuList: [
-    { id: 0, menuId: 0, option: [41, 46], count: 1, stateId: 8 },
-    { id: 1, menuId: 9, option: [null, null], count: 4, stateId: 8 },
-    { id: 2, menuId: 5, option: [51, null], count: 1, stateId: 8 },
-    { id: 3, menuId: 11, option: [null, null], count: 1, stateId: 0 },
-    { id: 4, menuId: 13, option: [null, null], count: 1, stateId: 0 },
-  ] as MenuOrder[],
+  type: 1,
+  menuList: [] as MenuOrder[],
   style: 1,
   stateId: 4,
 };
 
-const nextState = {
-  0: 8,
-  8: 0,
-};
-
 const CookStyleDetailPage = () => {
   const link = useLink();
+  const { oid, did } = useParams();
   const initial = {
     dinnerId: dummyData.id,
     type: dummyData.type,
-    price: dummyData.price,
     style: dummyData.style,
     menuList: dummyData.menuList,
     stateId: dummyData.stateId,
   };
-  const [data, setData] = useState(initial);
-  const dinnerClickHandler = (idx: number, type?: ValueOf<typeof MenuType>) => {
-    if (type === MenuType.STYLE) {
-      setData((prev) => {
-        const nextMenu = {
-          ...prev.menuList[idx],
-          stateId: nextState[prev.menuList[idx].stateId as 0 | 8],
-        };
-        const nextMenuList = [
-          ...prev.menuList.slice(0, idx),
-          nextMenu,
-          ...prev.menuList.slice(idx + 1),
-        ];
-        return { ...prev, menuList: nextMenuList };
+  const [info, setInfo] = useState(initial);
+
+  const orderInfoMutation = useMutation('staffStyleDetail', fetchGetOrderDetail, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      const dinner = data.order.dinnerList.find((item: any) => item.id === Number(did));
+
+      setInfo({
+        dinnerId: Number(did),
+        type: dinner.dinnerId,
+        style: dinner.styleId,
+        stateId: dinner.stateId,
+        menuList: dinner.menuList,
       });
-    }
+    },
+    onError: () => {
+      toast.error('에러!');
+    },
+  });
+
+  const getDinnerInfo = () => {
+    orderInfoMutation.mutate({ id: Number(oid) });
   };
-  const isAllComplete = data.menuList.every((menu) => menu.stateId === 8);
+
+  const taskNextStepMutation = useMutation('staffStyleNextStep', fetchTaskNextStep, {
+    onSuccess: () => {
+      getDinnerInfo();
+      toast.success('포장 완료!');
+    },
+    onError: () => {},
+  });
+
+  const isAllComplete = info.menuList.every((menu) => menu.stateId === 3);
+
+  useLayoutEffect(() => {
+    getDinnerInfo();
+    const interval = setInterval(() => getDinnerInfo(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <CookStyleDetailContainer>
       <CookStyleDetailTitle>
@@ -77,8 +92,11 @@ const CookStyleDetailPage = () => {
           <CookStyleDetailBackBtnImg src={BackIcon} />
         </CookStyleDetailBackBtn>
       </CookStyleDetailTitle>
-      <DinnerInfoSection data={data} onClick={dinnerClickHandler} showState />;
-      <CookStyleDetailBtn disabled={!isAllComplete}>
+      <DinnerInfoSection data={info} showState />;
+      <CookStyleDetailBtn
+        onClick={() => taskNextStepMutation.mutate({ id: Number(did) })}
+        disabled={!isAllComplete}
+      >
         포장 완료 <CookStyleDetailBtnImg src={CheckIcon} />
       </CookStyleDetailBtn>
     </CookStyleDetailContainer>

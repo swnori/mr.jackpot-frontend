@@ -30,7 +30,7 @@ const CookRoute = () => {
       <Route path='/order' element={<CookMainPage />} />
       <Route path='/order/:id' element={<CookOrderInfoPage />} />
       <Route path='/task' element={<CookTaskPage />} />
-      <Route path='/task/:id' element={<CookStyleDetailPage />} />
+      <Route path='/task/:oid/:did' element={<CookStyleDetailPage />} />
       <Route path='/stock' element={<CookStockPage />} />
     </Routes>
   );

@@ -75,3 +75,9 @@ export const QCModalContainer = styled.div`
 
   font-size: 3rem;
 `;
+
+export const NoTaskText = styled.span`
+  justify-self: center;
+  align-items: center;
+  font-size: ${FontSize.XL};
+`;
