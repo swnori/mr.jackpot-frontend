@@ -1,4 +1,6 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMutation } from 'react-query';
+import { useLayoutEffect, useState } from 'react';
 
 import { TaskContainer, TaskTitle } from './style';
 
@@ -8,54 +10,76 @@ import Table from '@/components/Table';
 import useMenu from '@/hooks/useMenu';
 import { useLink } from '@/hooks/useLink';
 
-interface CookData {
-  OId: number;
-  DId: number;
-  MId?: number;
-  menuId?: number;
-  option?: [number | null, number | null];
-  count?: number;
-  dish?: string;
-
-  dinnerName?: string;
-  style?: number;
-
-  stateId: number;
-}
-
-const dummyData = [
-  { OId: 1, DId: 2, MId: 4, menuId: 0, option: [45, 48], count: 1, dish: '종이', stateId: 0 },
-  { OId: 1, DId: 2, MId: 3, menuId: 0, option: [43, 48], count: 1, dish: '종이', stateId: 3 },
-  { OId: 1, DId: 1, MId: 2, menuId: 0, option: [41, 47], count: 1, dish: '종이', stateId: 3 },
-  { OId: 1, DId: 1, MId: 1, menuId: 0, option: [42, 46], count: 1, dish: '종이', stateId: 8 },
-] as CookData[];
-
-const styleDummyData = [
-  { OId: 1, DId: 4, dinnerName: '샴페인 축제 디너', style: 1, stateId: 0 },
-  { OId: 1, DId: 3, dinnerName: '발렌타인 디너', style: 1, stateId: 3 },
-  { OId: 1, DId: 2, dinnerName: '잉글리시 디너', style: 0, stateId: 3 },
-  { OId: 1, DId: 1, dinnerName: '발렌타인 디너', style: 0, stateId: 8 },
-] as CookData[];
-
-const nextState = {
-  0: 3,
-  3: 8,
-  8: 0,
-};
+import { UX_DELAY } from '@/constants/timer';
+import { fetchGetTaskList, fetchTaskNextStep } from '@/apis/staff';
 
 const CookTaskPage = () => {
-  const isStyle = true;
+  const isStyle =
+    window.sessionStorage.getItem('role') && window.sessionStorage.getItem('role') === 'styler';
+
   const link = useLink();
-  const { getMenuById, getStyleById } = useMenu();
-  const [taskList, setTaskList] = useState(isStyle ? styleDummyData : dummyData);
+  const { getMenuById, getStyleById, getDinnerById } = useMenu();
+  const [taskList, setTaskList] = useState([]);
   const headerList = isStyle
     ? ['D-ID', 'O-ID', 'Dinner', 'Style', 'Status']
     : ['M-ID', 'D-ID', 'O-ID', 'Menu', 'Opt.1', 'Opt.2', 'Dish', 'Count', 'Status'];
+  const taskListMutation = useMutation('staffTaskList', fetchGetTaskList, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      if (isStyle) {
+        setTaskList(
+          data
+            .map((item: any) => ({
+              OId: item.orderId,
+              DId: item.id,
+              dinnerName: getDinnerById(item.dinnerId)!.name,
+              style: item.styleId,
+              stateId: item.stateId,
+            }))
+            .sort((a: any, b: any) => b.DId - a.DId),
+        );
+      } else {
+        setTaskList(
+          data
+            .map((item: any) => ({
+              OId: item.orderId,
+              DId: item.dinnerId,
+              MId: item.id,
+              menuId: item.menuId,
+              option: item.optionList,
+              stateId: item.stateId,
+              dish: '종이',
+            }))
+            .sort((a: any, b: any) => b.MId - a.MId),
+        );
+      }
+    },
+  });
+
+  const getTaskList = () => {
+    taskListMutation.mutate();
+  };
+
+  const taskNextStepMutation = useMutation('staffNextStep', fetchTaskNextStep, {
+    onSuccess: () => {
+      getTaskList();
+    },
+    onError: () => {},
+  });
+
+  useLayoutEffect(() => {
+    getTaskList();
+    const interval = setInterval(() => getTaskList(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <TaskContainer>
       <TaskTitle>할 일 목록</TaskTitle>
       <Table headerList={headerList}>
-        {taskList.map((item, idx) => {
+        {taskList.map((item: any, idx) => {
           const menu = getMenuById(item.menuId!)!;
           const style = getStyleById(item.style!)!;
           const dataList = isStyle
@@ -73,10 +97,9 @@ const CookTaskPage = () => {
               ];
           const onClickHandler = () => {
             if (isStyle) {
-              link.to(`/staff/cook/task/${item.DId}`);
+              link.to(`/staff/cook/task/${item.OId}/${item.DId}`);
             } else {
-              const nextTask = { ...item, stateId: nextState[item.stateId as 0 | 3 | 8] };
-              setTaskList((prev) => [...prev.slice(0, idx), nextTask, ...prev.slice(idx + 1)]);
+              taskNextStepMutation.mutate({ id: item.MId });
             }
           };
           return <TableRow key={idx} onClick={onClickHandler} dataList={dataList} lastIsState />;

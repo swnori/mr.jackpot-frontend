@@ -87,7 +87,6 @@ const CEOOrderInfoPage = () => {
           style: dinner.styleId,
           stateId: dinner.stateId,
           menuList: dinner.menuList,
-          price: 0,
         };
       });
 
@@ -190,7 +189,6 @@ const CEOOrderInfoPage = () => {
           const data = {
             dinnerId: dinner.id!,
             type: dinner.type,
-            price: dinner.price!,
             style: dinner.style,
             menuList: dinner.menuList!,
             stateId: dinner.stateId!,

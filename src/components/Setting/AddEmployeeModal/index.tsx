@@ -29,8 +29,8 @@ const AddEmployeeModal = () => {
           value={EmployeeTypeArr[newType as 1 | 2 | 3]}
         >
           <option>요리</option>
-          <option>배달</option>
           <option>스타일</option>
+          <option>배달</option>
         </SettingModalSelect>
       </SettingModalInputContainer>
     </SettingModalContainer>

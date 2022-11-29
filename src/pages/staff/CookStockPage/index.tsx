@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 
 import { AddItemBtn, AddItemBtnImg, StockContainer, StockTitle } from './style';
 
@@ -7,17 +8,34 @@ import Table from '@/components/Table';
 import DesktopSearch from '@/components/DesktopSearch';
 
 import useStock from '@/hooks/useStock';
+import usePeriodicAPICall from '@/hooks/usePeriodicAPICall';
+
+import { StockItem } from '@/types/stock';
 
 import AddItemIcon from '@/assets/icons/icon-round-add.svg';
+import { fetchGetStockList } from '@/apis/staff';
 
 const CookStockPage = () => {
   const [keyword, setKeyword] = useState('');
-  const { itemList, removeItem, openAddItemModal, openUpdateItemModal } = useStock();
+  const { itemList, setItemList, removeItem, openAddItemModal, openUpdateItemModal } = useStock();
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const word = e.currentTarget.value;
     setKeyword(word);
   };
+
+  const getStockList = async () => {
+    const res = await fetchGetStockList();
+    const data = await res.json();
+    return data;
+  };
+
+  const data = usePeriodicAPICall<StockItem[]>(itemList, getStockList, 2000);
+  useEffect(() => {
+    if (data?.length) {
+      setItemList(data);
+    }
+  }, [data]);
 
   return (
     <StockContainer>
@@ -34,12 +52,13 @@ const CookStockPage = () => {
       <Table headerList={['ID', 'Name', 'Unit', 'Amount']}>
         {itemList
           .filter((item) => keyword === '' || item.name.includes(keyword))
+          .sort((a, b) => b.id - a.id)
           .map((item, idx) => (
             <TableRow
               key={idx}
               dataList={[item.id, item.name, item.unit, item.count]}
-              onDelete={() => removeItem(idx)}
-              onUpdate={() => openUpdateItemModal(idx)}
+              onDelete={() => removeItem(item.id)}
+              onUpdate={() => openUpdateItemModal(item.id)}
             />
           ))}
       </Table>

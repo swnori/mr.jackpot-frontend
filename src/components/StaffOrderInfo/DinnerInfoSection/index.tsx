@@ -16,7 +16,6 @@ import OrderState from '@/components/OrderState';
 import useMenu from '@/hooks/useMenu';
 
 import { ValueOf } from '@/utils/type';
-import { KRWFormat } from '@/utils/format';
 
 import { MenuOrder } from '@/types/order';
 import { MenuType } from '@/types/menu';
@@ -27,7 +26,6 @@ import BottomIcon from '@/assets/icons/icon-arrow-bottom.svg';
 interface DinnerInfoData {
   dinnerId: number;
   type: number;
-  price: number;
   style: number;
   menuList: MenuOrder[];
   stateId: number;
@@ -63,10 +61,6 @@ const DinnerInfoSection = ({ data, showState = false, onClick }: DinnerInfoValue
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>디너 이름</StaffOrderInfoTitle>
         <StaffOrderInfoDesc>{getDinnerById(data.type)!.name}</StaffOrderInfoDesc>
-      </StaffOrderInfoWrapper>
-      <StaffOrderInfoWrapper>
-        <StaffOrderInfoTitle>가격</StaffOrderInfoTitle>
-        <StaffOrderInfoDesc>{KRWFormat(data.price)}</StaffOrderInfoDesc>
       </StaffOrderInfoWrapper>
       <StaffOrderInfoWrapper>
         <StaffOrderInfoTitle>스타일</StaffOrderInfoTitle>

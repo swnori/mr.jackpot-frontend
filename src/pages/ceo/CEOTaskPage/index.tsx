@@ -62,20 +62,22 @@ const CEOTaskPage = () => {
     <TaskContainer>
       <TaskTitle>접수된 예약 목록</TaskTitle>
       <Table headerList={['ID', 'Order', 'Time', 'Price', 'Status']}>
-        {orderList.map((order) => (
-          <TableRow
-            key={order.id}
-            dataList={[
-              order.id,
-              order.dinnerName,
-              dateFormat(order.time),
-              KRWFormat(order.price),
-              order.stateId,
-            ]}
-            onClick={() => link.to(`/ceo/task/${order.id}`)}
-            lastIsState
-          />
-        ))}
+        {orderList
+          .sort((a, b) => b.id - a.id)
+          .map((order) => (
+            <TableRow
+              key={order.id}
+              dataList={[
+                order.id,
+                order.dinnerName,
+                dateFormat(order.time),
+                KRWFormat(order.price),
+                order.stateId,
+              ]}
+              onClick={() => link.to(`/ceo/task/${order.id}`)}
+              lastIsState
+            />
+          ))}
       </Table>
     </TaskContainer>
   );

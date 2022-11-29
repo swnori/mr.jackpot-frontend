@@ -1,23 +1,67 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMutation } from 'react-query';
+import { useLayoutEffect, useState } from 'react';
+
 import { MainContainer, MainTitle } from './style';
 
 import TableRow from '@/components/Table/TableRow';
 import Table from '@/components/Table';
 
-const dummyData = [
-  { id: 4, dinnerName: '발렌타인 디너, 잉글리시 디너', stateId: 0 },
-  { id: 3, dinnerName: '발렌타인 디너, 잉글리시 디너', stateId: 5 },
-  { id: 2, dinnerName: '발렌타인 디너, 잉글리시 디너', stateId: 8 },
-  { id: 1, dinnerName: '발렌타인 디너, 잉글리시 디너', stateId: 3 },
-];
+import useMenu from '@/hooks/useMenu';
+
+import { UX_DELAY } from '@/constants/timer';
+import { fetchGetOrderList } from '@/apis/staff';
+
+interface OrderValue {
+  id: number;
+  dinnerName: string;
+  stateId: number;
+}
 
 const DeliveryMainPage = () => {
+  const [orderList, setOrderList] = useState<OrderValue[]>([]);
+  const { getDinnerById } = useMenu();
+
+  const getOrderListMutation = useMutation('getCEOOrderList', fetchGetOrderList, {
+    onSuccess: async (res) => {
+      const data = await res.json();
+      setOrderList(
+        data.map((item: any) => ({
+          id: item.orderId,
+          dinnerName: item.dinnerList.reduce((pre: string, cur: any) => {
+            const { name } = getDinnerById(cur)!;
+            if (pre === '') {
+              return name;
+            }
+            return `${pre}, ${name}`;
+          }, ''),
+          stateId: item.stateId,
+        })),
+      );
+    },
+  });
+
+  useLayoutEffect(() => {
+    getOrderListMutation.mutate();
+    const interval = setInterval(() => getOrderListMutation.mutate(), UX_DELAY);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <MainContainer>
       <MainTitle>주문 처리 현황</MainTitle>
       <Table headerList={['ID', 'Order', 'Status']}>
-        {dummyData.map((item) => (
-          <TableRow key={item.id} dataList={[item.id, item.dinnerName, item.stateId]} lastIsState />
-        ))}
+        {orderList
+          .sort((a, b) => b.id - a.id)
+          .map((item) => (
+            <TableRow
+              key={item.id}
+              dataList={[item.id, item.dinnerName, item.stateId]}
+              lastIsState
+            />
+          ))}
       </Table>
     </MainContainer>
   );

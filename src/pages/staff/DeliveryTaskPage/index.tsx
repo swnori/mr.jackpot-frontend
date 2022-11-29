@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import StarRatingComponent from 'react-star-rating-component';
 import { useState } from 'react';
 
 import {
-  DinnerListContainer,
   Margin,
   QCModalContainer,
   TaskBtn,
@@ -11,13 +11,10 @@ import {
   TaskTitle,
 } from './style';
 
-import DinnerInfoSection from '@/components/StaffOrderInfo/DinnerInfoSection';
 import ClientInfoSection from '@/components/StaffOrderInfo/ClientInfoSection';
 import DeliveryState from '@/components/DeliveryState';
 
 import useModal from '@/hooks/useModal';
-
-import { MenuOrder } from '@/types/order';
 
 import QCIcon from '@/assets/icons/icon-inventory.svg';
 
@@ -33,31 +30,6 @@ const dummyData = {
     orderDate: new Date('2022-11-14T15:31:46'),
     stateId: 4,
   },
-  dinnerList: [
-    {
-      id: 24,
-      type: 0,
-      price: 100000,
-      menuList: [
-        { id: 0, menuId: 0, option: [41, 46], count: 1, isDefault: false },
-        { id: 1, menuId: 9, option: [null, null], count: 4, isDefault: false },
-        { id: 2, menuId: 5, option: [51, null], count: 1, isDefault: false },
-      ] as MenuOrder[],
-      style: 1,
-    },
-    {
-      id: 25,
-      type: 3,
-      price: 100000,
-      menuList: [
-        { id: 3, menuId: 0, option: [44, 47], count: 1, isDefault: false },
-        { id: 4, menuId: 0, option: [41, 46], count: 1, isDefault: false },
-        { id: 5, menuId: 9, option: [null, null], count: 4, isDefault: false },
-        { id: 6, menuId: 1, option: [55, null], count: 1, isDefault: false },
-      ] as MenuOrder[],
-      style: 1,
-    },
-  ],
 };
 
 const QualityCheckModal = () => {
@@ -87,12 +59,13 @@ const DeliveryTaskPage = () => {
       handleConfirm: () => setStateId(8),
     });
   };
+
   return (
     <TaskContainer>
       <TaskTitle>
         {isOrder ? '주문 정보' : '회수 정보'} <DeliveryState isOrder={isOrder} />
       </TaskTitle>
-      <ClientInfoSection data={{ ...dummyData.clientInfo, stateId }} />
+      <ClientInfoSection data={{ ...dummyData.clientInfo }} />
 
       <Margin />
 
@@ -127,7 +100,7 @@ const DeliveryTaskPage = () => {
           다음 주문 받기
         </TaskBtn>
       ) : null}
-
+      {/*
       <TaskTitle>디너 정보</TaskTitle>
 
       <DinnerListContainer>
@@ -143,6 +116,7 @@ const DeliveryTaskPage = () => {
           return <DinnerInfoSection key={dinner.id} data={data} />;
         })}
       </DinnerListContainer>
+      */}
     </TaskContainer>
   );
 };

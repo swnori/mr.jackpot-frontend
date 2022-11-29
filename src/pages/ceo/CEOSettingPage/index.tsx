@@ -91,6 +91,7 @@ const CEOSettingPage = () => {
         <Table headerList={['ID', 'Code', 'Name', 'Type', 'Join', 'Score']}>
           {itemList
             .filter((item) => keyword === '' || item.name!.includes(keyword))
+            .sort((a, b) => b.id! - a.id!)
             .map((user) => (
               <TableRow
                 key={user.id}

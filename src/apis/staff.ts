@@ -43,3 +43,64 @@ export const fetchGetOrderList = () => fetchApi.get('/staff/order/list');
  */
 export const fetchGetOrderDetail = ({ id }: { id: number }) =>
   fetchApi.get(`/staff/order/info?orderid=${id}`);
+
+/**
+ * 할 일 목록 조회
+ */
+export const fetchGetTaskList = () => fetchApi.get('/staff/task/tasklist');
+
+/**
+ * 할 일 진행
+ * @param { id }
+ */
+export const fetchTaskNextStep = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 요리 시작
+ * @param { id }
+ */
+export const fetchStartCook = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 요리 끝
+ * @param { id }
+ */
+export const fetchEndCook = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 스타일 끝
+ * @param { id }
+ */
+export const fetchEndStyle = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id, type: 'all' });
+
+/**
+ * 배달 시작
+ * @param { id }
+ */
+export const fetchStartDelivery = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 배달 끝
+ * @param { id }
+ */
+export const fetchEndDelivery = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 회수 시작
+ * @param { id }
+ */
+export const fetchStartCollect = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });
+
+/**
+ * 회수 끝
+ * @param { id }
+ */
+export const fetchEndCollect = ({ id }: { id: number }) =>
+  fetchApi.post('/staff/task/nextstep', { id });

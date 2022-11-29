@@ -61,8 +61,9 @@ const useLogIn = () => {
   const staffLoginMutation = useMutation('staffLogin', fetchStaffLogin, {
     onSuccess: (data) => {
       window.sessionStorage.setItem('access-token', data['access-token']);
-      if (data.role === 'delivery') {
-        link.to('/staff/delivery/order');
+      window.sessionStorage.setItem('role', data.staffInfo.role);
+      if (data.staffInfo.role === 'delivery') {
+        link.to('/staff/delivery/main');
       } else {
         link.to('/staff/cook/order');
       }

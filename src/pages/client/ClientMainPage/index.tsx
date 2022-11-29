@@ -14,6 +14,8 @@ import { KRWFormat } from '@/utils/format';
 
 import DinnerImg from '@/assets/images/dinner.png';
 
+const priceArr = [50000, 40000, 37000, 128000];
+
 const ClientMainPage = () => {
   const link = useLink();
   const { setDinnerDefault } = useOrder();
@@ -50,7 +52,7 @@ const ClientMainPage = () => {
         원하시는 디너를 골라주세요
       </MainNoticeWrapper>
       <DinnerListContainer>
-        {filteredDinnerList.map((item) => (
+        {filteredDinnerList.map((item, idx) => (
           <MobileItem
             key={item.id}
             type='button'
@@ -58,7 +60,7 @@ const ClientMainPage = () => {
             img={DinnerImg}
             title={item.name}
             subTitle={item.desc}
-            desc={KRWFormat(item.price)}
+            desc={KRWFormat(priceArr[idx])}
             onClick={() => goDinnerPage(item.id)}
           />
         ))}
