@@ -2,7 +2,7 @@
     <img src="https://user-images.githubusercontent.com/42960217/204437791-4315a4e2-a4ce-49b1-8bb0-b3598fcfb9be.png" width="100" alt="project-logo" />
     <h2> 🍽️ mr.jackpot-frontend 🍽️ </h2>
     <p>
-        2022-2 소프트웨어 공학 프로젝트: _미스터대박 디너_ 의 FE Repository
+        2022-2 소프트웨어 공학 프로젝트: <em>미스터 대박 디너 서비스</em> 의 FE Repository
     </p>
 </div>
 
